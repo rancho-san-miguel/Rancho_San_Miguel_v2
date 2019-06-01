@@ -12,9 +12,9 @@ class Ganado(models.Model):
     nombre = models.CharField(max_length=15)
     arete = models.CharField(primary_key=True, max_length=15)
     siniga = models.CharField(max_length=15)
-    sexo = models.IntegerField()
-    propietario = models.IntegerField()
-    ganadera = models.IntegerField()
+    sexo = models.CharField(max_length=10)
+    propietario = models.CharField(max_length=20)
+    ganadera = models.CharField(max_length=30)
     arete_padre = models.CharField(max_length=15)
     arete_madre = models.CharField(max_length=15)
     f_nacimiento = models.DateField()
@@ -25,8 +25,9 @@ class Ganado(models.Model):
     localizacion_fierro = models.CharField(max_length=20, blank=True, null=True)
     localizacion_tatuaje = models.CharField(max_length=20)
     estado = models.CharField(max_length=10)
-    img = models.CharField(max_length=100)
-    img2 = models.CharField(max_length=100)
+    galeria_venta = models.BooleanField(default=False)
+    img = models.ImageField(verbose_name="Imagen", upload_to='Ganado', blank=True, null=True)
+    img2 = models.ImageField(verbose_name="Imagen2", upload_to='Ganado', blank=True, null=True)
 
     class Meta:
         #managed = False
@@ -168,9 +169,7 @@ class Planes(models.Model):
     class Meta:
         #managed = False
         db_table = 'planes'
-#############################################################################
-#############################################################################
-#############################################################################
+
 
 class ComprasPorcinos(models.Model):
     no_compra = models.AutoField(primary_key=True)

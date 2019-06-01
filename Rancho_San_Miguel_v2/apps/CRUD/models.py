@@ -11,26 +11,28 @@ from django.db import models
 class Ganado(models.Model):
     nombre = models.CharField(max_length=15)
     arete = models.CharField(primary_key=True, max_length=15)
-    siniga = models.CharField(max_length=15)
-    sexo = models.IntegerField()
-    propietario = models.IntegerField()
-    ganadera = models.IntegerField()
+    siniga = models.CharField(max_length=15, blank=True, null=True)
+    sexo = models.CharField(max_length=10)
+    propietario = models.CharField(max_length=20)
+    ganadera = models.CharField(max_length=30)
     arete_padre = models.CharField(max_length=15)
     arete_madre = models.CharField(max_length=15)
     f_nacimiento = models.DateField()
     tipo_nacimiento = models.CharField(max_length=10)
     tipo_parto = models.CharField(max_length=10)
     potrero = models.CharField(max_length=30)
-    peso_nacimiento = models.IntegerField()
+    peso_nacimiento = models.DecimalField(max_digits=11, decimal_places=0)
     localizacion_fierro = models.CharField(max_length=20, blank=True, null=True)
-    localizacion_tatuaje = models.CharField(max_length=20)
+    localizacion_tatuaje = models.CharField(max_length=20, blank=True, null=True)
     estado = models.CharField(max_length=10)
-    img = models.CharField(max_length=100)
-    img2 = models.CharField(max_length=100)
+    galeria_venta = models.BooleanField(default=False)
+    img = models.CharField(max_length=100, blank=True, null=True)
+    img2 = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         #managed = False
         db_table = 'ganado'
+
 
 
 class ControlVentaGanado(models.Model):
@@ -201,13 +203,16 @@ class DeudoresAcreedores(models.Model):
 
 class Galeria(models.Model):
     nombre = models.CharField(max_length=40)
-    img = models.CharField(max_length=100)
+    img = models.ImageField(verbose_name="Imagen", upload_to='Galeria')
     created = models.DateTimeField()
     updated = models.IntegerField()
 
     class Meta:
         #managed = False
         db_table = 'galeria'
+
+    def __str__(self):
+        return self.nombre
 
 
 class Gastos(models.Model):

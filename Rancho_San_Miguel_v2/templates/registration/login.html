@@ -1,0 +1,31 @@
+{% extends 'base/baselogin.html' %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+<br>
+<br>
+<br>
+  <div class="span6" style="float: none; margin: 0 auto;">
+    <form method="post" action="{% url 'login' %}" class="form-signin">{% csrf_token %}
+        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Iniciar Sesión</h1>
+
+        <!--{{ form.username }}-->
+        {% render_field form.username placeholder="Nombre de usuario" class="form-control" required="" %}
+        <br>
+
+        {% render_field form.password placeholder="Contraseña" class="form-control" required="" %}
+
+        <br>
+        <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i>Entrar</button>
+        <!--<input type="submit" value="Enter" />-->
+        <!--<input type="hidden" name="next" value="{{ next }}" />-->
+    </form>
+  </div>
+<p><a id="forgot_pswd" href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a></p>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Eliminar ventas de Bovino
+{% endblock %}
+
+{% block contenido %}
+<form method="post">
+    {% csrf_token %}
+    <h2>Quieres eliminar el objeto con el id:{{ object.id }}</h2>
+    <button class="btn btn-danger" type="submit">Si, Eliminar</button>
+    <a class="btn btn-primary" href="{% url 'venta_list' %}">No, Cancelar</a>
+</form>
+{% endblock %}

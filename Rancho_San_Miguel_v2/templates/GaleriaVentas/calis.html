@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Galeria
+{% endblock %}
+
+{% block title2 %}
+Galería
+{% endblock %}
+
+
+{% block contenido %}
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if object_list %}
+                {% for i in object_list %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td>{{ i.nombre }}</td>
+                        <td><img src="{{ i.img.url }}" class="col-md-1"></td>
+                        <!--<td>{{ i.created }}</td>-->
+                        <!--<td>{{ i.updated }}</td>-->
+                        <td>
+                            <a class="btn btn-primary" href="#">Ver</a>
+                            <a class="btn btn-success" href="#">Editar</a>
+                            <a class="btn btn-danger" href="#">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <h2>No hay registros de la Galeria</h2>
+            {% endif %}
+        </tbody>
+    </table>
+    <div class="container" align="center">
+        <ul class="pager">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+    </ul>
+    </div>
+
+{% endblock %}

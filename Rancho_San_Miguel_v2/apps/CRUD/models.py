@@ -202,9 +202,9 @@ class DeudoresAcreedores(models.Model):
 
 class Galeria(models.Model):
     nombre = models.CharField(max_length=40)
-    img = models.CharField(max_length=100)
-    created = models.DateTimeField()
-    updated = models.IntegerField()
+    img = models.ImageField(verbose_name="Imagen", upload_to='Galeria', blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         #managed = False
@@ -250,8 +250,8 @@ class MovimientosDya(models.Model):
 class Notificaciones(models.Model):
     descripcion = models.CharField(max_length=240)
     fecha = models.DateField()
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         #managed = False

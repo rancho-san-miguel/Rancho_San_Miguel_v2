@@ -1,0 +1,36 @@
+
+{% extends 'base/base.html' %}
+
+{% block title %}
+Detalles de bitacoras
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <th>Datos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    <p><strong>#:</strong> {{ object.id }}</p>
+                    <p><strong>Arete:</strong> {{ object.arete }}</p>
+                    <p><strong>Motivo:</strong> {{ object.motivo }}</p>
+                    <p><strong>Descripcion:</strong> {{ object.descripcion }}</p>
+                    <p><strong>Lugar:</strong> {{ object.lugar }}</p>
+                    <p><strong>Fecha:</strong> {{ object.fecha }}</p>
+                    <p><strong>Created:</strong> {{ object.created }}</p>
+                    <p><strong>Updated:</strong> {{ object.updated }}</p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{% url 'control_list' %}">Regresar</a>
+    <br>
+    <br>
+    <br>
+
+{% endblock %}

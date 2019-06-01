@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Usuario
+{% endblock %}
+
+
+
+{% block estilo %}
+{% load widget_tweaks %}
+<style>
+.snps-inline-select {
+    width: auto;
+    display: inline-block;
+}
+</style>
+{% endblock %}
+
+
+{% block contenido %}
+
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label>Usuario</label>
+    {{ form.username }}
+    <br>
+
+    <label>Nombre</label>
+    {{ form.first_name }}
+    <br>
+
+    <label>Apellidos</label>
+    {{ form.last_name }}
+    <br>
+
+    <label>Correo</label>
+    {{ form.email }}
+    <br>
+
+    <label>Contraseña</label>
+    {% render_field form.password1  class="form-control" %}
+    <br>
+
+    <label>Confirmar contraseña</label>
+    {% render_field form.password2  class="form-control" %}
+    <br>
+    <label>Reglas para la contraseña</label>
+    {{ form.password1.help_text }}
+
+    <div class="trans">
+        <button class="btn btn-success" type="submit">Guardar</button>
+    </div>
+
+    <br>
+</form>
+
+{% endblock %}

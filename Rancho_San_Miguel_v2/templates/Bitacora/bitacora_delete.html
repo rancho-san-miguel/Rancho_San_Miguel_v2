@@ -1,0 +1,15 @@
+
+{% extends 'base/base.html' %}
+
+{% block title %}
+Detalles de Bitacora
+{% endblock %}
+
+{% block contenido %}
+<form method="post">
+    {% csrf_token %}
+    <h2>Quieres eliminar el objeto con el id:{{ object.id }} y el arete {{ object.arete }}</h2>
+    <button class="btn btn-danger" type="submit">Si, Eliminar</button>
+    <a class="btn btn-primary" href="{% url 'bit_list' %}">No, Cancelar</a>
+</form>
+{% endblock %}

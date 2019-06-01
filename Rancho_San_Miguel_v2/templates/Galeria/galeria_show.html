@@ -1,0 +1,34 @@
+
+{% extends 'base/base.html' %}
+
+{% block title %}
+Detalles de la escuela
+{% endblock %}
+
+{% block contenido %}
+
+
+
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success">
+            <tr>
+                <th>Datos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <p><strong>#:</strong> {{ object.id }}</p>
+                    <p><strong>Nombre:</strong> {{ object.nombre }}</p>
+                    <p><strong>Fecha de creación:</strong> {{ object.created }}</p>
+                    <p><strong>Fecha de actualización:</strong>{{ object.updated }}</p>
+                    <p><img src="{{ object.img.url }}" class="col-md-3"></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{% url 'galeria_list' %}">Regresar</a>
+
+
+{% endblock %}

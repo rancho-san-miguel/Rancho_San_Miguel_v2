@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Contacto</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Arcade - Architecture Template">
+	<meta name="keywords" content="arcade, architecture, onepage, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	{% load staticfiles %}
+	<!--<link href="{% static 'img/favicon.ico' %}" rel="shortcut icon"/>-->
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+
+</head>
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+	
+	<!-- Header section start -->   
+	<header class="header-area">
+		<a href="#" class="logo-area">
+			<img src="{% static 'inicio/LOGO Rancho png.png' %}" alt="" width="180" height="90">
+		</a>
+		<div class="nav-switch">
+			<i class="fa fa-bars"></i>
+		</div>
+		<!--<div class="phone-number">+675 334 567 223</div>-->
+		<nav class="nav-menu">
+			<ul>
+				<li><a href="{% url 'index' %}">Inicio</a></li>
+				<li><a href="{% url 'about' %}">Información</a></li>
+				<li><a href="{% url 'bovino_galeria_venta_list' %}">Venta</a></li>
+				<li><a href="{% url 'galeria_list2' %}">Galería</a></li>
+				<li><a href="{% url 'contact' %}">Contacto</a></li>
+				{% if user.is_authenticated %}
+					<li><a href="{% url 'logout' %}">Logout</a></li>
+					<li><a href="{% url 'index2' %}">Panel</a></li>
+				{% else %}
+					<li><a href="{% url 'login' %}">Login</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+	</header>
+	<!-- Header section end -->   
+
+
+	<!-- Page header section start -->
+	<section class="page-header-section set-bg" data-setbg="{% static 'inicio/v14.jpg' %}">
+		<div class="container">
+			<h1 style="text-align: center; -webkit-text-stroke: 1px black; color:white;" class="header-title">Contáctanos<span></span></h1>
+		</div>
+	</section>
+	<!-- Page header section end -->
+
+
+	<!-- Page section start -->
+	<section class="page-section pt100">
+		<div class="container pb100">
+			<div class="section-title pt-5">
+				<h1>Estamos a sus órdenes</h1>
+			</div>
+			<div class="row">
+				<div class="col-lg-3 contact-info mb-5 mb-lg-0">
+					<p>Address: 1481 Creektlalalh, CA 93424 </p>
+					<p>Phone: +52 345 795 3324</p>
+					<p>Email: sanmiguel@gmail.com</p>
+					<div class="cf-social">
+						<a href="#"><i class="fa fa-google-plus"></i></a>
+						<a href="#"><i class="fa fa-pinterest"></i></a>
+						<a href="https://www.facebook.com/SanMiguelTemoloasco/about?lst=100001713947278%3A100008981527615%3A1553197655&section=education"><i class="fa fa-facebook"></i></a>
+						<a href="#"><i class="fa fa-twitter"></i></a>
+					</div>
+				</div>
+				<div class="col-lg-5 pt-4">
+					<img src="{% static 'inicio/rancho4.jpg' %}" alt="">
+				</div>
+				<!--<div class="col-lg-9">-->
+					<!--<form class="contact-form">-->
+						<!--<input type="text" placeholder="Enter your name">-->
+						<!--<input type="text" placeholder="Enter your email address">-->
+						<!--<textarea placeholder="Message ..."></textarea>-->
+						<!--<button class="site-btn sb-dark">Send</button>-->
+					<!--</form>-->
+				<!--</div>-->
+			</div>
+		</div>
+		<!--<div class="map-area" id="map-canvas"></div>-->
+	</section>
+	<!-- Page section end -->
+
+
+
+	<!-- Footer section start -->
+	<footer class="footer-section">
+		<div class="footer-social">
+			<div class="social-links">
+				<a href="#"><i class="fa fa-instagram"></i></a>
+				<a href="#"><i class="fa fa-facebook"></i></a>
+				<a href="#"><i class="fa fa-twitter"></i></a>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9 offset-lg-3">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="footer-item">
+								<ul>
+									<li><a href="#">Home</a></li>
+									<li><a href="#">About us</a></li>
+									<li><a href="#">Services</a></li>
+									<li><a href="#">Portfolio</a></li>
+									<li><a href="#">Blog</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="footer-item">
+								<ul>
+									<li><a href="#">Terms & Conditions</a></li>
+									<li><a href="#">FAQ</a></li>
+									<li><a href="#">Help Desk</a></li>
+									<li><a href="#">Job Aplications</a></li>
+									<li><a href="#">Site Map</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="footer-item">
+								<ul>
+									<li><a href="#">Privacy</a></li>
+									<li><a href="#">Contact us</a></li>
+									<li><a href="#">Newsletter</a></li>
+									<li><a href="#">Clients Testimonials</a></li>
+									<li><a href="#">FAQ</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+     <!--<div class="copyright">Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved.  <br>This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></div>-->
+    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+	</footer>
+	<!-- Footer section end -->
+
+
+
+	<!--====== Javascripts & Jquery ======-->
+	<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.owl-filter.js' %}"></script>
+	<script src="{% static 'js/magnific-popup.min.js' %}"></script>
+	<script src="{% static 'js/circle-progress.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+	
+	<!-- load for map -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0YyDTa0qqOjIerob2VTIwo_XVMhrruxo"></script>
+	<script src="{% static 'js/map.js' %}"></script>
+
+</body>
+</html>

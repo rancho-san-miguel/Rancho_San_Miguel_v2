@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Eliminar registros de cerdos
+{% endblock %}
+
+{% block contenido %}
+<form method="post">
+    {% csrf_token %}
+    <h2>¿Seguro que quieres eliminar el registro de venta de {{ form.cantidad }} cerdos realizada el {{ form.created }}?</h2>
+    <button class="btn btn-danger" type="submit">Si, Eliminar</button>
+    <a class="btn btn-primary" href="{% url 'cerdos_list' %}">No, Cancelar</a>
+</form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Galeria
+{% endblock %}
+
+
+{% block contenido %}
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div>
+        <label>{{ form.nombre.label }}:</label>
+        {{ form.nombre }}
+        <label>{{ form.img.label }}:</label>
+        {{ form.img }}
+        <br>
+        <div class="trans">
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

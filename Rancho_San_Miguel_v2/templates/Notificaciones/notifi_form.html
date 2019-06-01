@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Notificaciones
+{% endblock %}
+
+{% block estilo %}
+<style>
+.snps-inline-select {
+    width: auto;
+    display: inline-block;
+}
+</style>
+{% endblock %}
+
+
+{% block contenido %}
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div>
+        <label>{{ form.descripcion.label }}:</label>
+        {{ form.descripcion }}
+        <br>
+        <label>{{ form.fecha.label }}:</label>
+        {{ form.fecha }}
+        <br>
+        <br>
+        <div class="trans">
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

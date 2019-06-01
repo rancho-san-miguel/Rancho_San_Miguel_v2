@@ -1,0 +1,40 @@
+
+{% extends 'base/base.html' %}
+
+{% block title %}
+Detalles de bovino
+{% endblock %}
+
+{% block contenido %}
+    <!--<p><img src="{{ object.img.url }}" class="col-md-3"></p>-->
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <th>Actividades del dia</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if form %}
+            {% for i in form %}
+                <tr>
+                    <th>
+                        <p><strong>Descripcion:</strong> {{ i.descripcion }}</p>
+                    </th>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <h2>No hay nada</h2>
+        {% endif %}
+        </tbody>
+    </table>
+
+
+
+
+    <a class="btn btn-primary" href="{% url 'index2' %}">Regresar</a>
+    <br>
+    <br>
+    <br>
+
+{% endblock %}

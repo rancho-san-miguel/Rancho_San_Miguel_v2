@@ -1,0 +1,15 @@
+
+{% extends 'base/base.html' %}
+
+{% block title %}
+Detalles de Galeria
+{% endblock %}
+
+{% block contenido %}
+<form method="post">
+    {% csrf_token %}
+    <h2>Quieres eliminar el objeto con el nombre "{{ object.nombre }}"</h2>
+    <button class="btn btn-danger" type="submit">Si, Eliminar</button>
+    <a class="btn btn-primary" href="{% url 'galeria_list' %}">No, Cancelar</a>
+</form>
+{% endblock %}

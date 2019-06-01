@@ -1,0 +1,45 @@
+
+{% extends 'base/base.html' %}
+
+{% block title %}
+Dar de baja productos en el almacen
+{% endblock %}
+
+{% block contenido %}
+    <!--<p><img src="{{ object.img.url }}" class="col-md-3"></p>-->
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <th>Datos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    <p><strong>#:</strong> {{ form1.id }}</p>
+                    <p><strong>Producto:</strong> {{ form1.producto }}</p>
+                    <p><strong>Cantidad:</strong> {{ form1.cantidad }}</p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <!--{{ form.cantidad }}-->
+        <!--<label>{{ form.cantidad.label }}</label>-->
+        <label>{{ form2.cantidad.label }}</label>
+        {{ form2.cantidad }}
+        <br>
+        <label>{{ form2.descripcion.label }}</label>
+        {{ form2.descripcion }}
+        <br>
+        <div class="trans">
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </div>
+    </form>
+    <br>
+    <br>
+    <br>
+
+{% endblock %}

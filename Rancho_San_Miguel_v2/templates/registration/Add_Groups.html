@@ -1,0 +1,109 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Usuario
+{% endblock %}
+
+
+
+{% block estilo %}
+{% load widget_tweaks %}
+<style>
+.snps-inline-select {
+    width: auto;
+    display: inline-block;
+}
+</style>
+{% endblock %}
+
+
+{% block contenido %}
+
+
+
+<!--{{ form.groups.all }}-->
+
+
+<!--{% for field in form.groups.all %}-->
+    <!--{{ field }}-->
+<!--{% endfor %}-->
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h3>Permisos que tiene:
+    {{ form.first_name }} {{ form.last_name }}</h3>
+
+
+    <input type="checkbox" name="caja1" value="gal"{% for field in form.groups.all %} {% if field.name == 'Galeria' %} checked {% endif %} {% endfor %}>
+    <label> Galeria</label>
+    <br>
+
+
+    <input type="checkbox" name="caja3" value="gana"{% for field in form.groups.all %} {% if field.name == 'Ganaderia' %} checked {% endif %} {% endfor %}>
+    <label> Ganaderia</label>
+    <br>
+    <input type="checkbox" name="caja6" value="ganado"{% for field in form.groups.all %} {% if field.name == 'Ganado' %} checked {% endif %} {% endfor %}>
+    <label> Ver ganado</label>
+    <br>
+    <input type="checkbox" name="caja7" value="ganado"{% for field in form.groups.all %} {% if field.name == 'GanadoAdd' %} checked {% endif %} {% endfor %}>
+    <label> Agregar ganado</label>
+    <br>
+    <input type="checkbox" name="caja10" value="ganado"{% for field in form.groups.all %} {% if field.name == 'GanadoUpd' %} checked {% endif %} {% endfor %}>
+    <label> Editar ganado</label>
+    <br>
+    <input type="checkbox" name="caja8" value="ganado"{% for field in form.groups.all %} {% if field.name == 'GanadoDel' %} checked {% endif %} {% endfor %}>
+    <label> Eliminar ganado</label>
+    <br>
+    <input type="checkbox" name="caja9" value="ganado"{% for field in form.groups.all %} {% if field.name == 'GanadoVen' %} checked {% endif %} {% endfor %}>
+    <label> Venta ganado</label>
+    <br>
+    <input type="checkbox" name="caja12" value="ganado"{% for field in form.groups.all %} {% if field.name == 'HisVenBov' %} checked {% endif %} {% endfor %}>
+    <label> Historial de ventas</label>
+    <br>
+    <input type="checkbox" name="caja14" value="ganado"{% for field in form.groups.all %} {% if field.name == 'Leche' %} checked {% endif %} {% endfor %}>
+    <label> Venta de leche</label>
+    <br>
+    <input type="checkbox" name="caja13" value="ganado"{% for field in form.groups.all %} {% if field.name == 'Bitacora' %} checked {% endif %} {% endfor %}>
+    <label> Bitacora</label>
+    <br>
+    <input type="checkbox" name="caja15" value="ganado"{% for field in form.groups.all %} {% if field.name == 'Control' %} checked {% endif %} {% endfor %}>
+    <label> Control</label>
+    <br>
+
+    <input type="checkbox" name="caja4" value="porci"{% for field in form.groups.all %} {% if field.name == 'Porcinos' %} checked {% endif %} {% endfor %}>
+    <label> Porcinos</label>
+    <br>
+
+    <input type="checkbox" name="caja5" value="agro"{% for field in form.groups.all %} {% if field.name == 'Agricultura' %} checked {% endif %} {% endfor %}>
+    <label> Agricultura</label>
+    <br>
+    <input type="checkbox" name="caja11" value="agro"{% for field in form.groups.all %} {% if field.name == 'AgriculturaAdd' %} checked {% endif %} {% endfor %}>
+    <label> Registrar agricutura</label>
+    <br>
+    <input type="checkbox" name="caja16" value="agro"{% for field in form.groups.all %} {% if field.name == 'Produccion' %} checked {% endif %} {% endfor %}>
+    <label> Produccion</label>
+    <br>
+    <input type="checkbox" name="caja17" value="agro"{% for field in form.groups.all %} {% if field.name == 'Almacen' %} checked {% endif %} {% endfor %}>
+    <label> Almacen</label>
+    <br>
+    <input type="checkbox" name="caja18" value="agro"{% for field in form.groups.all %} {% if field.name == 'HisVenAgro' %} checked {% endif %} {% endfor %}>
+    <label> Historial ventas de agricultura</label>
+    <br>
+    <input type="checkbox" name="caja19" value="agro"{% for field in form.groups.all %} {% if field.name == 'HisRet' %} checked {% endif %} {% endfor %}>
+    <label> Historial de retiro</label>
+    <br>
+
+    <input type="checkbox" name="caja2" value="notifi"{% for field in form.groups.all %} {% if field.name == 'Notificaciones' %} checked {% endif %} {% endfor %}>
+    <label> Notificaciones</label>
+    <br>
+
+
+
+    <div class="trans">
+        <button class="btn btn-success" type="submit">Guardar</button>
+    </div>
+
+    <br>
+</form>
+
+{% endblock %}

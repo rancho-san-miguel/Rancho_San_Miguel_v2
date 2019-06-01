@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Ganado
+{% endblock %}
+
+{% block title2 %}
+Ventas de ganado
+{% endblock %}
+
+{% block contenido %}
+    {% if object_list %}
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <!--<th>#</th>-->
+                <th>Nombre</th>
+                <th>Arete</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                {% for i in object_list %}
+                    <tr>
+                        <!--<td>{{ i.id }}</td>-->
+                        <td>{{ i.nombre }}</td>
+                        <td>{{ i.arete }}</td>
+                        <!--<td>{{ i.created }}</td>-->
+                        <!--<td>{{ i.updated }}</td>-->
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'venta_show' i.pk %}">Ver</a>
+                            <!--<a class="btn btn-success" href="#">Editar</a>-->
+                            <!--<a class="btn btn-danger" href="{% url 'venta_delete' i.pk %}">Eliminar</a>-->
+                        </td>
+                    </tr>
+                {% endfor %}
+
+        </tbody>
+    </table>
+    {% else %}
+        <h2>No hay registros de ventas de ganado</h2>
+    {% endif %}
+    <div class="container" align="center">
+        <ul class="pager">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </ul>
+    </div>
+
+{% endblock %}

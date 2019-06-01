@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.CRUD',
     'apps.home',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -130,9 +132,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Despues de logearse se redirecciona a la pantalla
-#LOGIN_REDIRECT_URL = reverse_lazy('index2')
+LOGIN_REDIRECT_URL = reverse_lazy('index2')
 # Despues de des-logearse se redirecciona a la pantalla
-#LOGOUT_REDIRECT_URL = reverse_lazy('index')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

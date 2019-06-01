@@ -1,5 +1,9 @@
 from django import forms
-from .models import Ganado
+from .models import Ganado, Notificaciones, Galeria
+
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 import datetime
@@ -76,4 +80,55 @@ class Ganado_Form(forms.ModelForm):
             'galeria_venta': forms.CheckboxInput(),
             'img': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
             'img2': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
+        }
+
+class Notificaciones_form(forms.ModelForm):
+    class Meta:
+        model = Notificaciones
+        fields = {
+            'descripcion',
+            'fecha',
+        }
+        labels = {
+            'descripcion':'Descripción',
+            'fecha':'Fecha del evento',
+        }
+        widgets = {
+            'descripcion':forms.Textarea(attrs={'class': 'form-control','placeholder':'Descripción de las actividades a realizar'}),
+            'fecha':forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+class SignUpForm(UserCreationForm):
+    # password1 = forms.CharField()
+    # password2 = forms.CharField()
+    class Meta(UserCreationForm):
+        model = User
+
+        fields = UserCreationForm.Meta.fields + ('first_name','last_name','email')
+        widgets = {
+            'username':forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de usuario'}),
+            # 'username':forms.CharField(help_text='First name'),
+            'first_name':forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombres'}),
+            'last_name':forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellidos'}),
+            'email':forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Correo electronico'}),
+            'password1' : forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña'}),
+            'password2':forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña otra vez'}),
+        }
+
+class GaleriaForm(forms.ModelForm):
+    class Meta:
+        model = Galeria
+        fields = {
+            'nombre',
+            'img',
+        }
+
+        labels = {
+            'nombre': 'Nombre',
+            'img': 'Imagen',
+        }
+
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Titulo de la imagen'}),
+            'img': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
         }

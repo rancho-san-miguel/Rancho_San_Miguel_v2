@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Eliminar ventas de Leche
+{% endblock %}
+
+{% block contenido %}
+<form method="post">
+    {% csrf_token %}
+    <h2>Seguro que quieres eliminar el registro de la venta del dia "{{ form.created }}" con la cantidad de "{{ form.cantidad }}" L.</h2>
+    <button class="btn btn-danger" type="submit">Si, Eliminar</button>
+    <a class="btn btn-primary" href="{% url 'leche_list' %}">No, Cancelar</a>
+</form>
+{% endblock %}

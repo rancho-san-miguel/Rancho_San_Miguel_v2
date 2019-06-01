@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Notificaciones
+{% endblock %}
+
+{% block title2 %}
+Notificaciones
+{% endblock %}
+
+{% block contenido %}
+    <a class="btn btn-primary" href="{% url 'notificaciones_crear' %}">Agregar notificación</a>
+    {% if object_list %}
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <!--<th>#</th>-->
+                <th>Descripción</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                {% for i in object_list %}
+                    <tr>
+                        <!--<td>{{ i.id }}</td>-->
+                        <td>{{ i.descripcion }}</td>
+                        <td>{{ i.fecha }}</td>
+                    </tr>
+                {% endfor %}
+
+        </tbody>
+    </table>
+    {% else %}
+        <h2>No hay notificaciones</h2>
+    {% endif %}
+    <div class="container" align="center">
+        <ul class="pager">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </ul>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Registro bovino
+{% endblock %}
+
+{% block estilo %}
+<style>
+.snps-inline-select {
+    width: auto;
+    display: inline-block;
+}
+</style>
+{% endblock %}
+
+
+{% block contenido %}
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+
+    <label>{{ form.cantidad.label }}:</label>
+    {{ form.cantidad }}
+    <br>
+
+    <label>{{ form.total.label }}:</label>
+    {{ form.total }}
+    <br>
+
+    <label>{{ form.fecha.label }}:</label>
+    {{ form.fecha }}
+    <br>
+    <br>
+
+    <div class="trans">
+        <button class="btn btn-success" type="submit">Guardar</button>
+    </div>
+
+    <br>
+
+</form>
+
+{% endblock %}

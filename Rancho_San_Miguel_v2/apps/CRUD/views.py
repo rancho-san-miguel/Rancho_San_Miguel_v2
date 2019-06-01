@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.shortcuts import redirect, render
 
-from .models import Ganado
+from .models import Ganado, ComprasPorcinos, InventarioPorcino
 from .models import Notificaciones
 from .models import Galeria
 
-from .forms import Ganado_Form,Notificaciones_form, GaleriaForm
+from .forms import Ganado_Form,Notificaciones_form, GaleriaForm, CompraPorcino_form
 
 
 from django.urls import reverse_lazy
@@ -16,12 +16,38 @@ from datetime import datetime
 from django.contrib.auth.models import User, Group
 from .forms import SignUpForm
 
+from .filters import Ganado_filter
+
 class Bovino_Create(CreateView):
     model = Ganado
     form_class = Ganado_Form
     template_name = 'RegBov/regbov_form.html'
     success_url = reverse_lazy('bovino_crear')#Cambiar a list
     # success_url = reverse_lazy('bovino_list')
+
+class Bovino_List(ListView):
+    queryset = Ganado.objects.all()
+    # queryset = Ganado.objects.exclude(estado='Vendida').order_by('id')
+    # queryset = GANADO.objects.exclude(estado='Vendida')
+    template_name = 'RegBov/regbov_list.html'
+    paginate_by = 5
+
+def Bovino_Search(request):
+    query = Ganado.objects.all()
+    # query_filter = Ganado_filter(request.GET, queryset=query)
+    if request.method == 'POST':
+        fecha = request.POST['caja']
+        fecha1 = fecha
+        fecha = str(fecha+"-01-01")
+        fecha2 = str(fecha1+"-12-31")
+        print("FEHCA-------------********************-------------", fecha)
+        print("FEHCA-------------********************-------------", fecha2)
+        # query = Ganado.objects.get(f_nacimiento=)
+        query = Ganado.objects.filter(f_nacimiento__range=[fecha,fecha2])
+    dic = {
+        'object_list':query,
+    }
+    return render(request, 'RegBov/regbov_list.html', dic)
 
 
 
@@ -98,6 +124,34 @@ class GaleriaUpdate(UpdateView):
 class GaleriaList2(ListView):
     queryset = Galeria.objects.all()
     template_name = 'home/portfolio.html'
+#-------------------------------------------------------------------------------------------------------------
+"porcinos"
+class Compra_Cerdos_List(ListView):
+    queryset = ComprasPorcinos.objects.all()
+    template_name = 'Ventas/ventas_cerdos_list.html'
+    paginate_by = 5
+
+def Compra_Cerdos_Create(request):
+    query = InventarioPorcino.objects.get_or_create(cantidad='0')
+    var2 = InventarioPorcino.objects.all()
+    if request.method == 'POST':
+        form = CompraPorcino_form(request.POST)
+        if form.is_valid():
+            var = form.save()
+            suma = int(var2[0].cantidad)+int(var.cantidad)
+
+            var3 = InventarioPorcino.objects.get(pk=var2[0].id)
+            var3.cantidad = suma
+            var3.save()
+
+        return redirect('cerdos_list')
+    else:
+        form = CompraPorcino_form()
+    dic = {
+        'form':form,
+    }
+    return render(request, 'Ventas/ventas_cerdos_form.html', dic)
+
 
 
 #----------------------------------------------------------------------------------------------------------

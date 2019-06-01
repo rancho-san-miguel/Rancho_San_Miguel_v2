@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block title %}
-Registro bovino
+Venta cerdos
 {% endblock %}
 
 {% block estilo %}
@@ -21,12 +21,20 @@ Registro bovino
     {{ form.cantidad }}
     <br>
 
-    <label>{{ form.total.label }}:</label>
-    {{ form.total }}
+    <label>{{ form.precio_unidad.label }}:</label>
+    {{ form.precio_unidad }}
+    <br>
+
+    <label>{{ form.total_compra.label }}:</label>
+    {{ form.total_compra }}
     <br>
 
     <label>{{ form.fecha.label }}:</label>
     {{ form.fecha }}
+    <br>
+
+    <label>{{ form.vendedor.label }}:</label>
+    {{ form.vendedor }}
     <br>
     <br>
 

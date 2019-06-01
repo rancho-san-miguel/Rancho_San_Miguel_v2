@@ -43,7 +43,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <!--<a style="font-size: 15px;" class="dropdown-item" href="{% url 'bovino_crear' %}">Registrar</a>-->
                             {% for field in user.groups.all %} {% if field.name == 'Ganado' %}
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'bovino_list' %}">Ganado</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'bovino_search' %}">Ganado</a>
                             {% endif %}{% endfor %}
                             {% for field in user.groups.all %} {% if field.name == 'HisVenBov' %}
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'venta_list' %}">Historial de ventas</a>

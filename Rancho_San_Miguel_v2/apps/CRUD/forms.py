@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ganado, Notificaciones, Galeria
+from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos
 
 
 from django.contrib.auth.forms import UserCreationForm
@@ -131,4 +131,31 @@ class GaleriaForm(forms.ModelForm):
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Titulo de la imagen'}),
             'img': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
+        }
+
+class CompraPorcino_form(forms.ModelForm):
+    class Meta:
+        model = ComprasPorcinos
+        fields = {
+            'cantidad',
+            'precio_unidad',
+            'total_compra',
+            'fecha',
+            'vendedor',
+        }
+
+        labels = {
+            'cantidad': 'Cantidad',
+            'precio_unidad': 'Precio unidad',
+            'total_compra': 'Total compra',
+            'fecha':'Fehca',
+            'vendedor':'Vendedor',
+        }
+
+        widgets = {
+            'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad de cerdos'}),
+            'precio_unidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Precio'}),
+            'total_compra': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total'}),
+            'fecha': forms.SelectDateWidget(years=range(y.year - 20, y.year + 2),attrs={'class': 'form-control snps-inline-select'}),
+            'vendedor': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Vendedor'}),
         }

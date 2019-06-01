@@ -32,9 +32,8 @@ Venta y compra porcina
                         <!--<td>{{ i.created }}</td>-->
                         <!--<td>{{ i.updated }}</td>-->
                         <td>
-                            <!--<a class="btn btn-primary" href="{% url 'venta_show' i.pk %}">Ver</a>-->
-                            <!--&lt;!&ndash;<a class="btn btn-success" href="#">Editar</a>&ndash;&gt;-->
-                            <a class="btn btn-danger" href="{% url 'cerdos_delete' i.pk %}">Eliminar</a>
+
+                            <a class="btn btn-danger" href="{# url 'cerdos_delete' i.pk #}">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -11,7 +11,7 @@ from django.db import models
 class Ganado(models.Model):
     nombre = models.CharField(max_length=15)
     arete = models.CharField(primary_key=True, max_length=15)
-    siniga = models.CharField(max_length=15)
+    siniga = models.CharField(max_length=15, blank=True, null=True)
     sexo = models.CharField(max_length=10)
     propietario = models.CharField(max_length=20)
     ganadera = models.CharField(max_length=30)
@@ -21,9 +21,9 @@ class Ganado(models.Model):
     tipo_nacimiento = models.CharField(max_length=10)
     tipo_parto = models.CharField(max_length=10)
     potrero = models.CharField(max_length=30)
-    peso_nacimiento = models.IntegerField()
+    peso_nacimiento = models.DecimalField(max_digits=11, decimal_places=0)
     localizacion_fierro = models.CharField(max_length=20, blank=True, null=True)
-    localizacion_tatuaje = models.CharField(max_length=20)
+    localizacion_tatuaje = models.CharField(max_length=20, blank=True, null=True)
     estado = models.CharField(max_length=10)
     galeria_venta = models.BooleanField(default=False)
     img = models.ImageField(verbose_name="Imagen", upload_to='Ganado', blank=True, null=True)
@@ -169,7 +169,9 @@ class Planes(models.Model):
     class Meta:
         #managed = False
         db_table = 'planes'
-
+#############################################################################
+#############################################################################
+#############################################################################
 
 class ComprasPorcinos(models.Model):
     no_compra = models.AutoField(primary_key=True)

@@ -29,7 +29,11 @@
             <div class="container-fluid">
                 <ul class="navbar-nav">
                     <li class="nav-item">
+<<<<<<< HEAD
                         <a style="font-size: 20px;" class="nav-link text-white" href="{# url 'index' #}" >Inicio</a>
+=======
+                        <a style="font-size: 20px;" class="nav-link text-white" href="{% url 'index' %}" >Inicio</a>
+>>>>>>> origin/master
                     </li>
                     {% for field in user.groups.all %} {% if field.name == 'Galeria' %}
                     <li class="nav-item">
@@ -102,7 +106,11 @@
 
                     {% if user.is_superuser %}
                     <li class="nav-item ">
+<<<<<<< HEAD
                         <a style="font-size: 20px;" class="nav-link  text-white" href="{# url 'listar_usuario' #}">Usuarios</a>
+=======
+                        <a style="font-size: 20px;" class="nav-link  text-white" href="{% url 'listar_usuario' %}">Usuarios</a>
+>>>>>>> origin/master
                     </li>
                     {% endif %}
 

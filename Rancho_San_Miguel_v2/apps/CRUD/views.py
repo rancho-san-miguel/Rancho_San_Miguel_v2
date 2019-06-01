@@ -3,10 +3,10 @@ from django.shortcuts import redirect, render
 
 from .models import Ganado
 from .models import Notificaciones
-from .models import Galeria
+from .models import Galeria , ControlGanado
 
 from .forms import Ganado_Form,Notificaciones_form, GaleriaForm
-
+from .forms import Control_ganado_form
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView, DetailView
@@ -23,6 +23,32 @@ class Bovino_Create(CreateView):
     success_url = reverse_lazy('bovino_crear')#Cambiar a list
     # success_url = reverse_lazy('bovino_list')
 
+#----------------------------------------------------------------------
+class Controlg_Create(CreateView):
+    model = ControlGanado
+    form_class = Control_ganado_form
+    template_name = 'control_ganado/control_form.html'
+    success_url = reverse_lazy('control_list')
+
+class Controlg_List(ListView):
+    queryset = ControlGanado.objects.all()
+    template_name = 'control_ganado/control_list.html'
+    paginate_by = 5
+
+class Controlg_Show(DetailView):
+    model = ControlGanado
+    template_name = 'control_ganado/control_show.html'
+
+class Controlg_Update(UpdateView):
+    model = ControlGanado
+    form_class = Control_ganado_form
+    template_name = 'control_ganado/control_form.html'
+    success_url = reverse_lazy('control_list')
+class Controlg_Delete(DeleteView):
+    model = ControlGanado
+    template_name = 'control_ganado/control_delete.html'
+    success_url = reverse_lazy('control_list')
+#---------------------------------------------------------------------------------------------------------------------
 
 
 #................................................................................................

@@ -4,7 +4,7 @@ from .views import Query_Notificaciones, Notificaciones_Create, Notificaciones_L
 from .views import CrearUsuario, ListarUsuarios, AddGrupos
 from .views import GaleriaCreate, GaleriaList, GaleriaDelete, GaleriaDetail, GaleriaUpdate
 from .views import GaleriaList2
-
+from .views import Controlg_Update, Controlg_Show, Controlg_List, Controlg_Delete, Controlg_Create
 
 urlpatterns = [
     path('bovino/', Bovino_Create.as_view(), name="bovino_crear"),
@@ -23,4 +23,10 @@ urlpatterns = [
     path('galeriashow/<int:pk>/', GaleriaDetail.as_view(), name='galeria_show'),
     path('galeriaupdate/<int:pk>/', GaleriaUpdate.as_view(), name='galeria_update'),
     path('galerialist2/', GaleriaList2.as_view(), name='galeria_list2'),
+# Control_ganado
+    path('controlganado/', Controlg_Create.as_view(), name="control_crear"),
+    path('controllist/', Controlg_List.as_view(), name="control_list"),
+    path('controlshow/<int:pk>', Controlg_Show.as_view(), name="control_show"),
+    path('controlupdate/<int:pk>', Controlg_Update.as_view(), name="control_update"),
+    path('controldelete/<int:pk>', Controlg_Delete.as_view(), name="control_delete"),
 ]

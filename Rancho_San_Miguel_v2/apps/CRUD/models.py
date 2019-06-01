@@ -81,7 +81,7 @@ class BitacoraGanado(models.Model):
 
 
 class ControlGanado(models.Model):
-    mot = Choices('Control peso', 'Control Sanitario', 'Preventivo', )
+    mot = Choices('Control de peso', 'Control sanitario', 'Control preventivo', 'Otro')
     arete = models.ForeignKey('Ganado', models.DO_NOTHING, db_column='arete')
     motivo = models.CharField(choices=mot, max_length=50)
     descripcion = models.CharField(max_length=240)

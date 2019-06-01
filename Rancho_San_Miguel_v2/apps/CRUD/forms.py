@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos
+from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado
 
 
 from django.contrib.auth.forms import UserCreationForm
@@ -158,4 +158,29 @@ class CompraPorcino_form(forms.ModelForm):
             'total_compra': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total'}),
             'fecha': forms.SelectDateWidget(years=range(y.year - 20, y.year + 2),attrs={'class': 'form-control snps-inline-select'}),
             'vendedor': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Vendedor'}),
+        }
+
+class Control_ganado_form(forms.ModelForm):
+    class Meta:
+        model = ControlGanado
+        fields = {
+            'arete',
+            'motivo',
+            'descripcion',
+            'lugar',
+            'fecha',
+        }
+        labels = {
+            'arete':'Arete',
+            'motivo': 'Motivo',
+            'descripcion':'Descripción',
+            'lugar':'Lugar',
+            'fecha':'Fecha',
+        }
+        widgets = {
+            'arete': forms.Select(attrs={'class': 'form-control'}),
+            'motivo': forms.Select(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control'}),
+            'lugar': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha': forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),
         }

@@ -8,24 +8,32 @@
 from django.db import models
 from model_utils import Choices
 
+from django.db.models.signals import post_delete, pre_save
+from django.dispatch import receiver
+
 
 class Ganado(models.Model):
+    opciones = Choices('Macho', 'Hembra')
+    opciones2 = Choices('Vendida', 'Viva', 'Muerta')
+    tc = Choices('Uníparo', 'Gemelar MH', 'Gemelar HH', 'Gemelar MM', 'Múltiple')
+    tp = Choices('Normal', 'Distónico', 'Difícil', 'Cesárea')
+    tt = Choices("Derecha",'Izquierda')
     nombre = models.CharField(max_length=15)
-    arete = models.CharField(primary_key=True, max_length=15)
+    arete = models.CharField(max_length=15, unique=True)
     siniga = models.CharField(max_length=15, blank=True, null=True)
-    sexo = models.CharField(max_length=10)
+    sexo = models.CharField(choices=opciones, max_length=10)
     propietario = models.CharField(max_length=20)
     ganadera = models.CharField(max_length=30)
     arete_padre = models.CharField(max_length=15)
     arete_madre = models.CharField(max_length=15)
     f_nacimiento = models.DateField()
-    tipo_nacimiento = models.CharField(max_length=10)
-    tipo_parto = models.CharField(max_length=10)
+    tipo_nacimiento = models.CharField(choices=tc,max_length=10)
+    tipo_parto = models.CharField(choices=tp,max_length=10)
     potrero = models.CharField(max_length=30)
     peso_nacimiento = models.DecimalField(max_digits=11, decimal_places=0)
     localizacion_fierro = models.CharField(max_length=20, blank=True, null=True)
-    localizacion_tatuaje = models.CharField(max_length=20, blank=True, null=True)
-    estado = models.CharField(max_length=10)
+    localizacion_tatuaje = models.CharField(choices=tt,max_length=20, blank=True, null=True)
+    estado = models.CharField(choices=opciones2, max_length=10)
     galeria_venta = models.BooleanField(default=False)
     img = models.ImageField(verbose_name="Imagen", upload_to='Ganado', blank=True, null=True)
     img2 = models.ImageField(verbose_name="Imagen2", upload_to='Ganado', blank=True, null=True)
@@ -41,8 +49,8 @@ class ControlVentaGanado(models.Model):
     total_venta = models.DecimalField(max_digits=10, decimal_places=0)
     comprador = models.CharField(max_length=30)
     fecha = models.DateField()
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         #managed = False
@@ -360,3 +368,23 @@ class VentasPorcinos(models.Model):
     class Meta:
         #managed = False
         db_table = 'ventas_porcinos'
+
+# Borrar la foto vieja si se le da al boton borrar
+@receiver(post_delete, sender=Ganado)
+def photo_post_delete_handler(sender, **kwargs):
+    listiningImage = kwargs['instance']
+    storage, path = listiningImage.img.storage, listiningImage.img.path
+    storage.delete(path)
+
+# Borrar la foro vieja si se actualiza
+@receiver(pre_save, sender=Ganado)
+def update_img(sender, instance, **kwargs):
+    if instance.pk:
+        try:
+            old_img = Ganado.objects.get(pk=instance.pk).img
+        except:
+            return
+        else:
+            new_img = instance.img
+            if old_img and old_img.url != new_img.url:
+                old_img.delete(save=False)

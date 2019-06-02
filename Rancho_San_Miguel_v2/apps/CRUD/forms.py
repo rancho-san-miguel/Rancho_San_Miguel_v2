@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado
+from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado, ControlVentaGanado
 
 
 from django.contrib.auth.forms import UserCreationForm
@@ -51,7 +51,7 @@ class Ganado_Form(forms.ModelForm):
             'potrero':'Potrero',
             'peso_nacimiento':'Peso al nacer',
             'localizacion_fierro':'Fierro',
-            'localizacion_tatuaje':'Tatuaje localización',
+            'localizacion_tatuaje':'Tatuaje en oreja',
             'estado':'Estado',
             'galeria_venta':'Agregar a la ventana de venta',
             'img':'Foto',
@@ -62,21 +62,21 @@ class Ganado_Form(forms.ModelForm):
         widgets = {
 
             'nombre':forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el nombre del bovino'}),
-            'arete':forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el codigo del arete del bovino'}),
+            'arete':forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete del bovino'}),
             'siniga': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame la siniga del bovino'}),
-            'sexo': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el sexo'}),
-            'propietario': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el prop'}),
-            'ganadera': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame ganad'}),
-            'arete_padre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el are p'}),
-            'arete_madre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el are m'}),
+            'sexo': forms.Select(attrs={'class': 'form-control'}),
+            'propietario': forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del propietario'}),
+            'ganadera': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame ganadera'}),
+            'arete_padre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete del padre'}),
+            'arete_madre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete de la madre'}),
             'f_nacimiento':forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),
-            'tipo_nacimiento':forms.TextInput(attrs={'class': 'form-control','placeholder':'tip nac'}),
-            'tipo_parto':forms.TextInput(attrs={'class': 'form-control','placeholder':'tip part'}),
-            'potrero':forms.TextInput(attrs={'class': 'form-control','placeholder':'potre'}),
-            'peso_nacimiento':forms.TextInput(attrs={'class': 'form-control','placeholder':'peso nac'}),
-            'localizacion_fierro':forms.TextInput(attrs={'class': 'form-control','placeholder':'loc fierro'}),
-            'localizacion_tatuaje':forms.TextInput(attrs={'class': 'form-control','placeholder':'loc tatu'}),
-            'estado':forms.TextInput(attrs={'class': 'form-control','placeholder':'estado'}),
+            'tipo_nacimiento':forms.Select(attrs={'class': 'form-control'}),
+            'tipo_parto':forms.Select(attrs={'class': 'form-control'}),
+            'potrero':forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el potrero'}),
+            'peso_nacimiento':forms.TextInput(attrs={'class': 'form-control','placeholder':'Peso de nacimiento'}),
+            'localizacion_fierro':forms.TextInput(attrs={'class': 'form-control','placeholder':'Localización del fierro'}),
+            'localizacion_tatuaje':forms.Select(attrs={'class': 'form-control'}),
+            'estado':forms.Select(attrs={'class': 'form-control'}),
             'galeria_venta': forms.CheckboxInput(),
             'img': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
             'img2': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
@@ -182,5 +182,28 @@ class Control_ganado_form(forms.ModelForm):
             'motivo': forms.Select(attrs={'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control'}),
             'lugar': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha': forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+
+class ControlVentaGanado_form(forms.ModelForm):
+    class Meta:
+        model = ControlVentaGanado
+        fields = {
+            'descripcion_venta',
+            'total_venta',
+            'comprador',
+            'fecha',
+        }
+        labels = {
+            'descripcion_venta':'Descripción de la venta',
+            'total_venta':'Total de la venta',
+            'comprador':'Comprador',
+            'fecha':'Fecha de la venta',
+        }
+        widgets = {
+            'descripcion_venta': forms.Textarea(attrs={'class': 'form-control'}),
+            'total_venta': forms.TextInput(attrs={'class': 'form-control','placeholder':'Total del bovino'}),
+            'comprador': forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del comprador'}),
             'fecha': forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),
         }

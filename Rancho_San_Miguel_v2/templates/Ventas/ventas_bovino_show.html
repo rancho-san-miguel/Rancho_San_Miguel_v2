@@ -17,21 +17,15 @@ Detalles de bovino
         <tbody>
             <tr>
                 <th>
-                    <p><strong>#:</strong> {{ form1.id }}</p>
-                    <p><strong>Nombre:</strong> {{ form2.nombre }}</p>
-                    <p><strong>Arete:</strong> {{ form2.arete }}</p>
-                    <p><strong>Siniga:</strong> {{ form2.siniga }}</p>
-                    <p><strong>Descripción:</strong> {{ form1.descripcion }}</p>
-                    <p><strong>Fecha de la venta:</strong> {{ form1.fecha }}</p>
-                    <p><strong>Total:</strong> {{ form1.total }}</p>
-                    <!--<p><img src="{{ form2.img.url }}" class="col-md-3"></p>-->
+                    <p><strong>Numero de venta:</strong> {{ object.no_venta }}</p>
+                    <p><strong>Descripción de la venta:</strong> {{ object.descripcion_venta }}</p>
+                    <p><strong>Total de la venta:</strong> {{ object.total_venta }}</p>
+                    <p><strong>Comprador:</strong> {{ object.comprador }}</p>
+                    <p><strong>Fecha:</strong> {{ object.fecha }}</p>
                 </th>
             </tr>
         </tbody>
     </table>
-
-
-
 
     <a class="btn btn-primary" href="{% url 'venta_list' %}">Regresar</a>
     <br>

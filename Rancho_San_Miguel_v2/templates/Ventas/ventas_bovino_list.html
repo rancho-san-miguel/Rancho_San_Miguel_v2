@@ -14,8 +14,9 @@ Ventas de ganado
         <thead class="bg-success" >
             <tr>
                 <!--<th>#</th>-->
-                <th>Nombre</th>
-                <th>Arete</th>
+                <th>Numero de venta</th>
+                <th>Comprador</th>
+                <th>Total</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -24,14 +25,13 @@ Ventas de ganado
                 {% for i in object_list %}
                     <tr>
                         <!--<td>{{ i.id }}</td>-->
-                        <td>{{ i.nombre }}</td>
-                        <td>{{ i.arete }}</td>
+                        <td>{{ i.no_venta }}</td>
+                        <td>{{ i.comprador }}</td>
+                        <td>{{ i.total_venta }}</td>
                         <!--<td>{{ i.created }}</td>-->
                         <!--<td>{{ i.updated }}</td>-->
                         <td>
                             <a class="btn btn-primary" href="{% url 'venta_show' i.pk %}">Ver</a>
-                            <!--<a class="btn btn-success" href="#">Editar</a>-->
-                            <!--<a class="btn btn-danger" href="{% url 'venta_delete' i.pk %}">Eliminar</a>-->
                         </td>
                     </tr>
                 {% endfor %}

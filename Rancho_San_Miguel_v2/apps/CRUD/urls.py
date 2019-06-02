@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import Bovino_Create
-from .views import Query_Notificaciones, Notificaciones_Create, Notificaciones_Listar
-from .views import CrearUsuario, ListarUsuarios, AddGrupos
+from .views import Bovino_Create, Bovino_Search, Bovino_Show, Bovino_List, Bovino_Update, Bovino_Delete
+from .views import Query_Notificaciones, Notificaciones_Create, Notificaciones_Listar, Bovino_update_ventas_create
+from .views import CrearUsuario, ListarUsuarios, AddGrupos, Venta_Bovino_List, Venta_Bovino_Show
 from .views import GaleriaCreate, GaleriaList, GaleriaDelete, GaleriaDetail, GaleriaUpdate
 from .views import GaleriaList2
 from .views import Controlg_Update, Controlg_Show, Controlg_List, Controlg_Delete, Controlg_Create
@@ -9,7 +9,16 @@ from .views import Compra_Cerdos_Create, Compra_Cerdos_List
 
 
 urlpatterns = [
+    path('bovinoshow/<int:pk>', Bovino_Show.as_view(), name="bovino_show"),
     path('bovino/', Bovino_Create.as_view(), name="bovino_crear"),
+    path('bovino/search/', Bovino_Search, name="bovino_search"),
+    path('bovino/list/', Bovino_Search, name="bovino_list"),
+    path('bovinoupdate/<int:pk>',Bovino_Update.as_view(), name="bovino_update"),
+    path('bovinodelete/<int:pk>', Bovino_Delete.as_view(), name="bovino_delete"),
+    path('bovinoventa/<int:pk>', Bovino_update_ventas_create, name="bovino_venta"),
+    path('ventalist/', Venta_Bovino_List.as_view(), name="venta_list"),
+    path('ventashow/<int:pk>', Venta_Bovino_Show.as_view(), name="venta_show"),
+
     #Notificaciones
     path('notificaciones/', Query_Notificaciones, name="notificacion"),
     path('notificaciones/listar/', Notificaciones_Listar.as_view(), name="notificacion_listar"),

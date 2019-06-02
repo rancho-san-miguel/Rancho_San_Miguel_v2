@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.shortcuts import redirect, render
 
-from .models import Ganado, ComprasPorcinos, InventarioPorcino
+from .models import Ganado, ComprasPorcinos, InventarioPorcino, ControlVentaGanado
 from .models import Notificaciones
 from .models import Galeria , ControlGanado
 
 from .forms import Ganado_Form,Notificaciones_form, GaleriaForm
-from .forms import Control_ganado_form
+from .forms import Control_ganado_form, ControlVentaGanado_form
 from .forms import Ganado_Form,Notificaciones_form, GaleriaForm, CompraPorcino_form
 
 
@@ -24,8 +24,8 @@ class Bovino_Create(CreateView):
     model = Ganado
     form_class = Ganado_Form
     template_name = 'RegBov/regbov_form.html'
-    success_url = reverse_lazy('bovino_crear')#Cambiar a list
-    # success_url = reverse_lazy('bovino_list')
+    # success_url = reverse_lazy('bovino_crear')#Cambiar a list
+    success_url = reverse_lazy('bovino_list')
 
 class Bovino_List(ListView):
     queryset = Ganado.objects.all()
@@ -33,6 +33,21 @@ class Bovino_List(ListView):
     # queryset = GANADO.objects.exclude(estado='Vendida')
     template_name = 'RegBov/regbov_list.html'
     paginate_by = 5
+
+class Bovino_Show(DetailView):
+    model = Ganado
+    template_name = 'RegBov/regbov_show.html'
+
+class Bovino_Update(UpdateView):
+    model = Ganado
+    form_class = Ganado_Form
+    template_name = 'RegBov/regbov_form.html'
+    success_url = reverse_lazy('bovino_list')
+
+class Bovino_Delete(DeleteView):
+    model = Ganado
+    template_name = 'RegBov/regbov_delete.html'
+    success_url = reverse_lazy('bovino_list')
 
 def Bovino_Search(request):
     query = Ganado.objects.all()
@@ -50,6 +65,33 @@ def Bovino_Search(request):
         'object_list':query,
     }
     return render(request, 'RegBov/regbov_list.html', dic)
+
+def Bovino_update_ventas_create(request, pk):
+    query = Ganado.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ControlVentaGanado_form(request.POST)
+        if form.is_valid():
+            form.save()
+            query.delete()
+        return redirect('venta_list')
+    else:
+        form = ControlVentaGanado_form()
+    dic = {
+        'datos':query,
+        'form':form,
+    }
+
+    return render(request, 'RegBov/regbov_ventas_form.html', dic)
+
+class Venta_Bovino_List(ListView):
+    queryset = ControlVentaGanado.objects.all()
+    template_name = 'Ventas/ventas_bovino_list.html'
+    paginate_by = 5
+
+class Venta_Bovino_Show(DetailView):
+    model = ControlVentaGanado
+    template_name = 'Ventas/ventas_bovino_show.html'
+
 
 #----------------------------------------------------------------------
 class Controlg_Create(CreateView):

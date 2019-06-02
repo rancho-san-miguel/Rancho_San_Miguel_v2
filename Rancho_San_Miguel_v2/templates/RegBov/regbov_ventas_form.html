@@ -17,51 +17,6 @@ Venta bovino
 {% block contenido %}
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
     <div>
-        <!--<label>{{ form.nombre.label }}:</label>-->
-        <!--{{ form.nombre }}-->
-
-        <!--<label>{{ form.arete.label }}:</label>-->
-        <!--{{ form.arete }}-->
-
-        <!--<label>{{ form.siniga.label }}:</label>-->
-        <!--{{ form.siniga }}-->
-
-        <!--<label>{{ form.sexo.label }}:</label>-->
-        <!--{{ form.sexo }}-->
-
-        <!--<label>{{ form.propietario.label }}:</label>-->
-        <!--{{ form.propietario }}-->
-
-        <!--<label>{{ form.ganadera.label }}:</label>-->
-        <!--{{ form.ganadera }}-->
-
-        <!--<label>{{ form.no_padre.label }}:</label>-->
-        <!--{{ form.no_padre }}-->
-
-        <!--<label>{{ form.no_madre.label }}:</label>-->
-        <!--{{ form.no_madre }}-->
-
-
-        <!--<label>{{ form.fecha_nacimiento.label }}:</label><br>-->
-        <!--{{ form.fecha_nacimiento }}<br>-->
-
-        <!--<label>{{ form.tipo_nacimiento.label }}:</label>-->
-        <!--{{ form.tipo_nacimiento }}-->
-
-        <!--<label>{{ form.tipo_parto.label }}:</label>-->
-        <!--{{ form.tipo_parto }}-->
-
-        <!--<label>{{ form.tipo_servicio.label }}:</label>-->
-        <!--{{ form.tipo_servicio }}-->
-
-        <!--<label>{{ form.fecha_servicio.label }}:</label>-->
-        <!--{{ form.fecha_servicio }}-->
-
-        <!--<label>{{ form.localizacion_fierro.label }}:</label>-->
-        <!--{{ form.localizacion_fierro }}-->
-
-        <!--<label>{{ form.potrero.label }}:</label>-->
-        <!--{{ form.potrero }}-->
 
         <table class="table table-striped table-bordered">
         <thead class="bg-success" >
@@ -97,31 +52,21 @@ Venta bovino
         </tbody>
     </table>
 
-        <!--<label>Estado del bovino:</label>-->
-        <!--{{ form.estado }}-->
-        <!--<br>-->
-        <!--<label>{{ form.img.label }}:</label>-->
-        <!--{{ form.img }}-->
-        <!--<br>-->
-        <!--<br>-->
-
-        <!--<label>Verifica al bovino a vender</label>-->
-        <!--{{ form2.id_bovino }}-->
 
         <br>
 
-        <label>{{ form2.descripcion.label }}</label>
-        {{ form2.descripcion }}
+        <label>{{ form.descripcion_venta.label }}</label>
+        {{ form.descripcion_venta }}
+        <!--<p>{{ form }}</p>-->
+        <label>{{ form.total_venta.label }}</label>
+        {{ form.total_venta }}
 
-        <label>{{ form2.total.label }}</label>
-        {{ form2.total }}
+        <label>{{ form.comprador.label }}</label>
+        {{ form.comprador }}
 
-        <br>
-        <br>
-
-        <label>{{ form2.fecha.label }}</label>
-        {{ form2.fecha }}
-
+        <br><br>
+        <label>{{ form.fecha.label }}</label>
+        {{ form.fecha }}
         <br>
         <br>
 

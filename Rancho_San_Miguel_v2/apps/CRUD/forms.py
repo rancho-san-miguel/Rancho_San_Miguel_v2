@@ -354,6 +354,7 @@ class GaleriaForm(forms.ModelForm):
 
 #Venta de leche form by Miku
 
+
 class Ventas_Leche_form(forms.ModelForm):
     class Meta:
         model = VentaLeche

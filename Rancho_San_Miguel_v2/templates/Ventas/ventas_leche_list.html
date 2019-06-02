@@ -16,9 +16,9 @@ Venta de leche
     <tr>
         <!--<th>#</th>-->
         <th>Cantidad</th>
+        <th>Precio</th>
         <th>Total</th>
         <th>Fecha</th>
-        <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
@@ -27,15 +27,12 @@ Venta de leche
     <tr>
         <!--<td>{{ i.id }}</td>-->
         <td>{{ i.cantidad }}</td>
+        <td>{{ i.precio }}</td>
         <td>{{ i.total }}</td>
         <td>{{ i.fecha }}</td>
         <!--<td>{{ i.created }}</td>-->
         <!--<td>{{ i.updated }}</td>-->
-        <td>
-            <!--<a class="btn btn-primary" href="{% url 'venta_show' i.pk %}">Ver</a>-->
-            <!--&lt;!&ndash;<a class="btn btn-success" href="#">Editar</a>&ndash;&gt;-->
-            <a class="btn btn-danger" href="{% url 'leche_delete' i.pk %}">Eliminar</a>
-        </td>
+
     </tr>
     {% endfor %}
 

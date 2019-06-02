@@ -1,16 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import redirect, render
 
-from .models import Ganado, ComprasPorcinos, InventarioPorcino,VentasPorcinos, ControlVentaGanado
-from .models import Notificaciones, InventarioAgricola,MovimientosDya
-from .models import Galeria , ControlGanado, ControlVentaGanado, Produccion, ComprasPorcinos, DeudoresAcreedores, Gastos
-
-from .forms import Ganado_Form,Notificaciones_form, GaleriaForm
-from .forms import Control_ganado_form,MovDeudoresAcredoresForm,GastosForm, ControlVentaGanado_form, En_Proceso_form
-from .forms import Ganado_Form,Notificaciones_form, GaleriaForm, CompraPorcino_form,VentaPorcino_form,DeudoresAcredoresForm
-from .forms import Control_ganado_form, ControlVentaGanado_form
-from .forms import Ganado_Form,Notificaciones_form, GaleriaForm, CompraPorcino_form
-
+from .models import *
+from .forms import *
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView, DetailView
@@ -563,3 +555,40 @@ def AddGrupos(request, pk):
         'form':usuario,
     }
     return render(request,'registration/Add_Groups.html', dic)
+
+
+
+#---------------------------------------------------------------------------------------------------------------------
+"Venta de leche"
+
+# class Venta_Leche_Create(CreateView):
+#     model = VentaLeche
+#     form_class = Ventas_Leche_form
+#     template_name = 'Ventas/ventas_leche_form.html'
+#     success_url = reverse_lazy('leche_list')
+
+def Venta_Leche_Create(request):
+    if request.method == 'POST':
+        print("---------------------------------------------------------------------------------")
+        form=Ventas_Leche_form(request.POST)
+        if form.is_valid():
+            var=form.save()
+            var.total=var.cantidad*var.precio
+            print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", var.total)
+            var.save()
+        return redirect('leche_list')
+    else:
+        form=Ventas_Leche_form()
+    dic={
+        'form':form,
+    }
+    return render(request, 'Ventas/ventas_leche_form.html',dic )
+
+
+class Venta_Leche_List(ListView):
+    queryset = VentaLeche.objects.all()
+    #queryset = HISTORIAL_VENTAS_LECHE.objects.exclude(estado=True).order_by('id')
+    template_name = 'Ventas/ventas_leche_list.html'
+    paginate_by = 5
+
+

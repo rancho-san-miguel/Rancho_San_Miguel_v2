@@ -68,6 +68,7 @@ class VentasGanado(models.Model):
 
 class ControlBitacoraGanado(models.Model):
     no_registrob = models.IntegerField(primary_key=True)
+    bovino = models.ManyToManyField(Ganado)
     descripcion = models.CharField(max_length=240)
     lugar = models.CharField(max_length=15)
     fecha = models.DateField()
@@ -78,14 +79,15 @@ class ControlBitacoraGanado(models.Model):
         #managed = False
         db_table = 'control_bitacora_ganado'
 
+#
 
-class BitacoraGanado(models.Model):
-    no_registrob = models.ForeignKey('ControlBitacoraGanado', models.DO_NOTHING, db_column='no_registrob')
-    arete = models.ForeignKey('Ganado', models.DO_NOTHING, db_column='arete')
+# class BitacoraGanado(models.Model):
+#     no_registrob = models.ForeignKey('ControlBitacoraGanado', models.DO_NOTHING, db_column='no_registrob')
+#     arete = models.ForeignKey('Ganado', models.DO_NOTHING, db_column='arete')
 
-    class Meta:
-        #managed = False
-        db_table = 'bitacora_ganado'
+    # class Meta:
+    #     #managed = False
+    #     db_table = 'bitacora_ganado'
 
 
 class ControlGanado(models.Model):
@@ -346,7 +348,7 @@ class VentaLeche(models.Model):
     no_venta = models.AutoField(primary_key=True)
     cantidad = models.IntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=0)
-    total = models.DecimalField(max_digits=10, decimal_places=0)
+    total = models.DecimalField(max_digits=10, decimal_places=0,default='0')
     fecha = models.DateField()
 
     class Meta:

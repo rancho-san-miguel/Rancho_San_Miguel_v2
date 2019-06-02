@@ -1,6 +1,6 @@
 from django import forms
 from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado,VentasPorcinos, Produccion
-from .models import DeudoresAcreedores,MovimientosDya,Gastos
+from .models import DeudoresAcreedores,MovimientosDya,Gastos,  VentaLeche
 from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado, ControlVentaGanado
 from .models import InventarioAgricola
 
@@ -376,4 +376,29 @@ class GaleriaForm(forms.ModelForm):
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Titulo de la imagen'}),
             'img': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
+        }
+
+#Venta de leche form by Miku
+
+
+class Ventas_Leche_form(forms.ModelForm):
+    class Meta:
+        model = VentaLeche
+        fields = {
+            'cantidad',
+            'precio',
+            # 'total',
+            'fecha',
+        }
+        labels = {
+            'cantidad':'Cantidad',
+            'precio':'Precio',
+            # 'total':'Total',
+            'fecha':'Fecha',
+        }
+        widgets = {
+            'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad Litros de Leche'}),
+            'precio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Costo ejemplo: 15.20'}),
+            # 'total': forms.TextInput(attrs={'class': 'form-control','placeholder':'Costo ejemplo: 15.20'}),
+            'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
         }

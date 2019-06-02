@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+
+{% block title2 %}
+Deudores Y Acreedores
+{%endblock%}
+
+{%block contenido%}
+
+    <a class="btn btn-primary" href="{% url 'Deudore_Acreedores_create' %}">Agregar</a>
+    {% if object_list %}
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <th>#</th>
+                <th>Tipo</th>
+                <th>Motivo</th>
+                <th>Deuda</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                {% for i in object_list %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td>{{ i.tipo }}</td>
+                        <td>{{ i.motivo }}</td>
+                        <td>{{ i.deuda }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'Deudore_Acreedores_show' i.pk %}">Ver</a>
+                            <a class="btn btn-success" href="{% url 'Abonar' i.pk %}">Abonar</a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <h2>No hay registros en el historial</h2>
+            {% endif %}
+        </tbody>
+    </table>
+    <div class="container" align="center">
+        <ul class="pager">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {%endif%}
+        {%if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Next</a>
+        {%endif%}
+    </ul>
+    </div>
+
+{% endblock %}

@@ -202,8 +202,8 @@ class DeudoresAcreedores(models.Model):
     motivo = models.CharField(max_length=240)
     deuda = models.DecimalField(max_digits=10, decimal_places=0)
     fecha = models.DateField()
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         #managed = False
@@ -222,13 +222,14 @@ class Galeria(models.Model):
 
 
 class Gastos(models.Model):
-    tipo = models.CharField(max_length=50)
+    opciones = Choices('Insumos','Insumos Agricolas','otros')
+    tipo = models.CharField(choices=opciones,max_length=50)
     motivo = models.CharField(max_length=240)
     monto = models.DecimalField(max_digits=10, decimal_places=0)
-    img = models.CharField(max_length=100)
+    img = models.ImageField(verbose_name="Imagen", upload_to='Galeria', blank=True, null=True)
     fecha = models.DateField()
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         #managed = False
@@ -249,8 +250,11 @@ class InventarioPorcino(models.Model):
 class MovimientosDya(models.Model):
     no = models.ForeignKey(DeudoresAcreedores, models.DO_NOTHING, db_column='no')
     descripcion = models.CharField(max_length=240)
-    monto = models.DecimalField(max_digits=10, decimal_places=0)
+    deuda = models.DecimalField(max_digits=10, decimal_places=0)
     fecha = models.DateField()
+
+    def __str__(self):
+        return self.no._related_fields
 
     class Meta:
         #managed = False

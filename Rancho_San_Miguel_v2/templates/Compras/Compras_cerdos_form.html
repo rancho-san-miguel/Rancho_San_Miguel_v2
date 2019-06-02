@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+{% block title %}
+Venta Porcina
+{% endblock %}
+
+{% block estilo %}
+<style>
+.snps-inline-select {
+    width: auto;
+    display: inline-block;
+}
+</style>
+{% endblock %}
+
+
+{% block contenido %}
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+
+
+    <label>{{ form.cantidad.label }}:</label>
+    {{ form.cantidad }}
+    <br>
+
+    <label>{{ form.precio_unidad.label }}:</label>
+    {{ form.precio_unidad }}
+    <br>
+
+    <label>{{ form.total_venta.label }}:</label>
+    {{ form.total_venta }}
+    <br>
+
+    <label>{{ form.fecha.label }}:</label>
+    {{ form.fecha }}
+
+    <br>
+
+    <label>{{ form.comprador.label }}:</label>
+    {{ form.comprador }}
+    <br>
+
+    <br>
+
+    <div class="trans">
+        <button class="btn btn-success" type="submit">Vender</button>
+    </div>
+
+    <br>
+
+</form>
+
+{% endblock %}

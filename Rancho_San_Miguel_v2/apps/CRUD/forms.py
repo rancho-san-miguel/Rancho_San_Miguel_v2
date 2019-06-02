@@ -1,4 +1,6 @@
 from django import forms
+from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado,VentasPorcinos
+from .models import DeudoresAcreedores,MovimientosDya,Gastos
 from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado, ControlVentaGanado
 
 
@@ -184,6 +186,93 @@ class Control_ganado_form(forms.ModelForm):
             'lugar': forms.TextInput(attrs={'class': 'form-control'}),
             'fecha': forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),
         }
+
+
+
+
+
+class DeudoresAcredoresForm(forms.ModelForm):
+    class Meta:
+        model = DeudoresAcreedores
+        fields = {
+
+            'tipo',
+            'motivo',
+            'deuda',
+            'fecha',
+        }
+
+        labels = {
+
+            'tipo': 'Tipo',
+            'motivo': 'Motivo',
+            'deuda': 'Deuda',
+            'fecha': 'Fecha',
+         }
+
+        widgets = {
+
+            'tipo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tipo de persona deudor o acredor'}),
+            'motivo': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Motivo '}),
+            'deuda': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Deuda'}),
+            'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+
+
+
+
+class MovDeudoresAcredoresForm(forms.ModelForm):
+    class Meta:
+        model = MovimientosDya
+        fields = {
+            'no',
+            'descripcion',
+            'deuda',
+            'fecha',
+        }
+
+        labels = {
+            'no': 'No',
+            'descripcion': 'Descripcion',
+            'deuda': 'Deuda',
+            'fecha': 'Fecha',
+         }
+
+        widgets = {
+             'no': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'numero'}),
+            'descripcion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Movimiento'}),
+            'deuda': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Deuda'}),
+            'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+class GastosForm(forms.ModelForm):
+    class Meta:
+        model = Gastos
+        fields = {
+            'tipo',
+            'motivo',
+            'monto',
+            'img',
+            'fecha',
+
+        }
+
+        labels = {
+            'tipo': 'Tipo',
+            'motivo': 'Motivo',
+            'monto': 'Monto',
+            'img': 'Imagen',
+            'fecha': 'Fecha',
+            }
+
+        widgets = {
+            'tipo': forms.Select(attrs={'class': 'form-control'}),
+            'motivo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Motivo de la compra'}),
+            'monto': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total de la compra'}),
+            'img': forms.ClearableFileInput(attrs={'class': 'form-control-file mt-3'}),
+            'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
+            }
 
 
 class ControlVentaGanado_form(forms.ModelForm):

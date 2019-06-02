@@ -1,11 +1,16 @@
 from django.shortcuts import render
 from django.shortcuts import redirect, render
 
+from .models import Ganado, ComprasPorcinos, InventarioPorcino,VentasPorcinos, ControlVentaGanado
+from .models import Notificaciones,VentasPorcinos,MovimientosDya
+from .models import Galeria , ControlGanado, DeudoresAcreedores, Gastos
 from .models import Ganado, ComprasPorcinos, InventarioPorcino, ControlVentaGanado
 from .models import Notificaciones
 from .models import Galeria , ControlGanado
 
 from .forms import Ganado_Form,Notificaciones_form, GaleriaForm
+from .forms import Control_ganado_form,MovDeudoresAcredoresForm,GastosForm, ControlVentaGanado_form
+from .forms import Ganado_Form,Notificaciones_form, GaleriaForm, CompraPorcino_form,VentaPorcino_form,DeudoresAcredoresForm
 from .forms import Control_ganado_form, ControlVentaGanado_form
 from .forms import Ganado_Form,Notificaciones_form, GaleriaForm, CompraPorcino_form
 
@@ -17,8 +22,9 @@ from datetime import datetime
 
 from django.contrib.auth.models import User, Group
 from .forms import SignUpForm
+from django.contrib import messages
 
-from .filters import Ganado_filter
+
 
 class Bovino_Create(CreateView):
     model = Ganado
@@ -222,7 +228,132 @@ def Compra_Cerdos_Create(request):
     }
     return render(request, 'Ventas/ventas_cerdos_form.html', dic)
 
+#################pppp
+###############################
+class DeudoresAcreedoresCreate(CreateView):
+    model = DeudoresAcreedores
+    form_class = DeudoresAcredoresForm
+    template_name = 'DeudoreAcreedores/Deudore_Acreedores_form.html'
+    success_url = reverse_lazy('Deudore_Acreedores_list')
 
+class DeudoresAcreedoresList(ListView):
+    queryset = DeudoresAcreedores.objects.all()
+    template_name = 'DeudoreAcreedores/Deudore_Acreedores_list.html'
+    paginate_by = 5
+
+class DeudoresAcreedoresDetail(DetailView):
+    model = DeudoresAcreedores
+    template_name = 'DeudoreAcreedores/Deudore_Acreedores_show.html'
+
+class DeudoresAcreedoresDelete(DeleteView):
+    model = DeudoresAcreedores
+    template_name =  'DeudoreAcreedores/Deudore_Acreedores_delete.html'
+    success_url = reverse_lazy('Deudore_Acreedores_list')
+
+class DeudoresAcreedoresUpdate(UpdateView):
+    model = DeudoresAcreedores
+    form_class = DeudoresAcredoresForm
+    template_name = 'DeudoreAcreedores/Deudore_Acreedores_form.html'
+    success_url = reverse_lazy('Deudore_Acreedores_list')
+
+
+
+
+
+def Abonos(request, pk):
+    query1 = DeudoresAcreedores.objects.get(pk=pk)
+    # print("Cantidad-----------------------------------------------------------------------------")
+    # print(query1.cantidad)
+    if request.method == 'POST':
+        form = MovDeudoresAcredoresForm(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.deuda
+
+            if int(query1.deuda) >= int(var.deuda):
+                query1.deuda = int(query1.deuda) - int(var.deuda)
+                query1.save()
+                var.save()
+            else:
+                messages.info(request, 'Error. No cuentas con el suficiente inventario para venderlo')
+                var.delete()
+        return redirect('Abono_list')
+    else:
+        form = MovDeudoresAcredoresForm()
+
+    dic = {
+        'form':query1,
+        'form2':form,
+    }
+    return render(request, 'DeudoreAcreedores/AbonosCrear.html', dic)
+
+
+class AbonosList(ListView):
+    queryset = MovimientosDya.objects.all()
+    template_name = 'DeudoreAcreedores/AbonosList.html'
+    paginate_by = 5
+
+###############################
+##################################
+
+class Venta_Cerdos_List(ListView):
+    queryset = VentasPorcinos.objects.all()
+    template_name = 'Compras/Compras_cerdos_list.html'
+    paginate_by = 5
+
+def Venta_Cerdos_Create(request):
+    query = InventarioPorcino.objects.get_or_create(cantidad='0')
+    var2 = InventarioPorcino.objects.all()
+    if request.method == 'POST':
+        form = VentaPorcino_form(request.POST)
+        if form.is_valid():
+            var = form.save()
+            suma = int(var2[0].cantidad)-int(var.cantidad)
+
+            var3 = InventarioPorcino.objects.get(pk=var2[0].id)
+            var3.cantidad = suma
+            var3.save()
+
+        return redirect('cerdos_listVenta')
+    else:
+        form = VentaPorcino_form()
+    dic = {
+        'form':form,
+    }
+    return render(request, 'Compras/Compras_cerdos_form.html', dic)
+
+
+###########################
+###########################
+class HistoriaCreate(CreateView):
+    model = Gastos
+    form_class = GastosForm
+    template_name = 'Compras/Historial_Compras_form.html'
+    success_url = reverse_lazy('Historial_Compras_list')
+
+class HistoriaList(ListView):
+    queryset = Gastos.objects.all()
+    template_name = 'Compras/Historial_Compras_list.html'
+    paginate_by = 5
+
+class HistoriaDetail(DetailView):
+    model = Gastos
+    template_name = 'Compras/Historial_Compras_show.html'
+
+class HistoriaDelete(DeleteView):
+    model = Gastos
+    template_name =  'Compras/Historial_Compras_delete.html'
+    success_url = reverse_lazy('Historial_Compras_list')
+
+class HistoriaUpdate(UpdateView):
+    model = Gastos
+    form_class = GastosForm
+    template_name = 'Compras/Historial_Compras_form.html'
+    success_url = reverse_lazy('Historial_Compras_list')
+
+
+###########################
+###########################
 
 #----------------------------------------------------------------------------------------------------------
 "Usuarios"

@@ -5,11 +5,11 @@ Cerdos
 {% endblock %}
 
 {% block title2 %}
-Compra Porcina
+Venta Porcina
 {% endblock %}
 
 {% block contenido %}
-<a class="btn btn-success" href="{% url 'cerdos_crear' %}">Vender</a>
+<a class="btn btn-success" href="{% url 'cerdos_crearVenta' %}">Vender</a>
 <!--<a class="btn btn-primary" href="#">Compra</a>-->
 {% if object_list %}
     <table class="table table-striped table-bordered">
@@ -20,7 +20,8 @@ Compra Porcina
                <th> Presio Unidad</th>
                 <th>Total</th>
                 <th>Fecha</th>
-                 <th>Vendedor</th>
+                 <th>Comprador</th>
+
             </tr>
         </thead>
         <tbody>
@@ -29,16 +30,16 @@ Compra Porcina
                         <td>{{ i.no_compra }}</td>
                         <td>{{ i.cantidad }}</td>
                         <td>{{ i.precio_unidad }}</td>
-                        <td>{{ i.total_compra }}</td>
+                        <td>{{ i.total_venta }}</td>
                         <td>{{ i.fecha }}</td>
-                        <td>{{ i.vendedor }}</td>
+                        <td>{{ i.comprador }}</td>
 
                     </tr>
                 {% endfor %}
         </tbody>
     </table>
     {% else %}
-        <h2>No hay registro de compra porcina</h2>
+        <h2>No hay registro de venta porcina</h2>
     {% endif %}
 
     <div class="container" align="center">

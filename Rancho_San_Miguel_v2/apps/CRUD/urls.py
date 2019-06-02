@@ -6,6 +6,9 @@ from .views import GaleriaCreate, GaleriaList, GaleriaDelete, GaleriaDetail, Gal
 from .views import GaleriaList2
 from .views import Controlg_Update, Controlg_Show, Controlg_List, Controlg_Delete, Controlg_Create
 from .views import Compra_Cerdos_Create, Compra_Cerdos_List
+from .views import Venta_Cerdos_Create, Venta_Cerdos_List,Abonos,AbonosList
+from .views import DeudoresAcreedoresCreate,DeudoresAcreedoresDetail,DeudoresAcreedoresList,DeudoresAcreedoresDelete,DeudoresAcreedoresUpdate
+from .views import HistoriaCreate,HistoriaDelete,HistoriaDetail,HistoriaList,HistoriaUpdate
 
 
 urlpatterns = [
@@ -37,11 +40,35 @@ urlpatterns = [
     #Porcinos
     path('porcino/crear/', Compra_Cerdos_Create, name="cerdos_crear"),
     path('porcino/list/', Compra_Cerdos_List.as_view(), name="cerdos_list"),
+
+
     #path('porcino/delete/<int:pk>', Venta_Cerdos_Delete, name="cerdos_delete"),
+
+
+    path('porcino_C_crear/',Venta_Cerdos_Create, name="cerdos_crearVenta"),
+    path('porcino_C_list/', Venta_Cerdos_List.as_view(), name="cerdos_listVenta"),
 # Control_ganado
     path('controlganado/', Controlg_Create.as_view(), name="control_crear"),
     path('controllist/', Controlg_List.as_view(), name="control_list"),
     path('controlshow/<int:pk>', Controlg_Show.as_view(), name="control_show"),
     path('controlupdate/<int:pk>', Controlg_Update.as_view(), name="control_update"),
     path('controldelete/<int:pk>', Controlg_Delete.as_view(), name="control_delete"),
+    ###########################################################
+    ###########################################################
+    path('DeudoresAcreedores/', DeudoresAcreedoresCreate.as_view(), name='Deudore_Acreedores_create'),
+    path('DeudoresAcreedoreslist/', DeudoresAcreedoresList.as_view(), name='Deudore_Acreedores_list'),
+    path('DeudoresAcreedoresdelete/<int:pk>/', DeudoresAcreedoresDelete.as_view(), name='Deudore_Acreedores_delete'),
+    path('DeudoresAcreedoresshow/<int:pk>/', DeudoresAcreedoresDetail.as_view(), name='Deudore_Acreedores_show'),
+    path('DeudoresAcreedoresupdate/<int:pk>/', DeudoresAcreedoresUpdate.as_view(), name='Deudore_Acreedores_update'),
+
+    path('Abonos/<int:pk>', Abonos, name="Abonar"),
+    path('Abonoslist/venta', AbonosList.as_view(), name="Abono_list"),
+
+
+
+    path('historia/', HistoriaCreate.as_view(), name='Historial_Compras_create'),
+    path('historialist/', HistoriaList.as_view(), name='Historial_Compras_list'),
+    path('historiadelete/<int:pk>/', HistoriaDelete.as_view(), name='Historial_Compras_delete'),
+    path('historiahow/<int:pk>/', HistoriaDetail.as_view(), name='Historial_Compras_show'),
+    path('historiaupdate/<int:pk>/', HistoriaUpdate.as_view(), name='Historial_Compras_update'),
 ]

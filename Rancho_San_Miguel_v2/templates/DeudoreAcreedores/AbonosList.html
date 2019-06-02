@@ -1,47 +1,50 @@
 {% extends 'base/base.html' %}
 
 {% block title %}
-Cerdos
+Abonos
 {% endblock %}
 
 {% block title2 %}
-Compra Porcina
+Abonos
 {% endblock %}
 
 {% block contenido %}
-<a class="btn btn-success" href="{% url 'cerdos_crear' %}">Vender</a>
-<!--<a class="btn btn-primary" href="#">Compra</a>-->
-{% if object_list %}
+
     <table class="table table-striped table-bordered">
         <thead class="bg-success" >
             <tr>
-                <th>#</th>
-                <th>Cantidad</th>
-               <th> Presio Unidad</th>
-                <th>Total</th>
+                <!--<th>#</th>-->
+                <th>Relacion</th>
+                <th>Descripcion</th>
+                <th>Abono</th>
                 <th>Fecha</th>
-                 <th>Vendedor</th>
+                <!--<th>Acciones</th>-->
             </tr>
         </thead>
         <tbody>
+            {% if object_list %}
+
                 {% for i in object_list %}
                     <tr>
-                        <td>{{ i.no_compra }}</td>
-                        <td>{{ i.cantidad }}</td>
-                        <td>{{ i.precio_unidad }}</td>
-                        <td>{{ i.total_compra }}</td>
+                        <td>{{ i.no }}</td>
+                        <td>{{ i.descripcion }}</td>
+                        <td>{{ i.deuda }}</td>
                         <td>{{ i.fecha }}</td>
-                        <td>{{ i.vendedor }}</td>
-
                     </tr>
+
                 {% endfor %}
+            {% else %}
+                <h2>No hay registros abonos</h2>
+            {% endif %}
         </tbody>
     </table>
-    {% else %}
-        <h2>No hay registro de compra porcina</h2>
-    {% endif %}
-
-    <div class="container" align="center">
+ <div class="container" align="left">
+     <ul class="pager">
+         <a class = " btn btn-primary "  href = " {% url 'Deudore_Acreedores_list' %} " > Regresar </a>
+     </ul>
+ </div>
+<br>
+    <div class="container" align="left">
         <ul class="pager">
         {% if page_obj.has_previous %}
             <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Anterior</a>

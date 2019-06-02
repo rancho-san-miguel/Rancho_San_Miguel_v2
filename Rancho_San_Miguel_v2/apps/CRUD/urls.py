@@ -10,6 +10,7 @@ from .views import En_Proceso_Create,En_Proceso_Delete,En_Proceso_List,En_Proces
 from .views import Venta_Cerdos_Create, Venta_Cerdos_List,Abonos,AbonosList
 from .views import DeudoresAcreedoresCreate,DeudoresAcreedoresDetail,DeudoresAcreedoresList,DeudoresAcreedoresDelete,DeudoresAcreedoresUpdate
 from .views import HistoriaCreate,HistoriaDelete,HistoriaDetail,HistoriaList,HistoriaUpdate
+from .views import Venta_Leche_Create, Venta_Leche_List
 
 
 urlpatterns = [
@@ -77,4 +78,8 @@ urlpatterns = [
     path('producciones/enproceso/delete/<int:pk>', En_Proceso_Delete.as_view(), name='cultivo_en_proceso_delete'),
     path('producciones/enproceso/show/<int:pk>', En_Proceso_Show.as_view(), name='cultivo_en_proceso_show'),
     path('producciones/enproceso/finalizar/<int:pk>', En_Proceso_Fin, name='finalizar_produccion'),
+
+    #Venta de leche
+    path('leche/crear/', Venta_Leche_Create, name="leche_crear"),
+    path('leche/list/', Venta_Leche_List.as_view(), name="leche_list"),
 ]

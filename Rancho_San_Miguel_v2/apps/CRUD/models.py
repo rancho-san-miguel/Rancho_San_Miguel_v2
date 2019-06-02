@@ -79,6 +79,7 @@ class ControlBitacoraGanado(models.Model):
         #managed = False
         db_table = 'control_bitacora_ganado'
 
+#
 
 # class BitacoraGanado(models.Model):
 #     no_registrob = models.ForeignKey('ControlBitacoraGanado', models.DO_NOTHING, db_column='no_registrob')

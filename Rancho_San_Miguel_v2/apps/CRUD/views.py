@@ -12,7 +12,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import datetime
 
 from django.contrib.auth.models import User, Group
-from .forms import SignUpForm
 from django.contrib import messages
 
 
@@ -592,3 +591,294 @@ class Venta_Leche_List(ListView):
     paginate_by = 5
 
 
+
+
+#----------------------------------------------------------------------------------------------------------------------
+"Planes"
+
+class PlanCreate(CreateView):
+    model = Planes
+    form_class = Planes_form
+    template_name = 'Plan/planeacion.html'
+    success_url = reverse_lazy('list_plan')
+
+class PlanList(ListView):
+    queryset = Planes.objects.all()
+    template_name = 'Plan/planeacion_list.html'
+    paginate_by = 5
+
+def PlanAgroCreate(request,pk):
+    query = Planes.objects.get(no_planeacion=pk)
+    if request.method == 'POST':
+        form = Plan_Agro_form(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.no_planeacion = query.no_planeacion
+            var.produccion_estimada = var.hectareas * var.costo
+            var.total = var.produccion_estimada * var.cantidad
+            var.save()
+        return redirect('list_plan')
+    else:
+        form = Plan_Agro_form()
+    dic = {
+        'form':form,
+    }
+    return render(request, 'Plan/PlanAgroCreate.html', dic)
+
+
+def PlanAgroList(request, pk):
+    queryset = PlaneacionAgricola.objects.filter(no_planeacion=pk)
+    dic = {
+        'object_list':queryset,
+    }
+    return render(request, 'Plan/PlanAgroList.html', dic)
+
+class PlanAgroUpdate(UpdateView):
+    model = PlaneacionAgricola
+    form_class = Plan_Agro_form
+    template_name = 'Plan/PlanAgroCreate.html'
+    success_url = reverse_lazy('list_plan')
+
+class PlanAgroShow(DetailView):
+    model = PlaneacionAgricola
+    template_name = 'Plan/PlanAgroShow.html'
+
+class PlanAgroDelete(DeleteView):
+    model = PlaneacionAgricola
+    template_name = 'Plan/PlanAgroDelete.html'
+    success_url = reverse_lazy('list_plan')
+
+
+def PlanBovCreate(request,pk):
+    query = Planes.objects.get(no_planeacion=pk)
+    if request.method == 'POST':
+        form = Plan_Bovino_form(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.no_planeacion = query.no_planeacion
+            var.ingreso_anual = var.precio * var.venta
+            print("----------------/////////////////-------------------",var.ingreso_anual)
+            var.save()
+        return redirect('list_plan')
+    else:
+        form = Plan_Bovino_form()
+    dic = {
+        'form':form,
+    }
+    return render(request, 'Plan/PlanBovCreate.html', dic)
+
+def PlanBovList(request, pk):
+    queryset = PlaneacionBovina.objects.filter(no_planeacion=pk)
+    dic = {
+        'object_list':queryset,
+    }
+    return render(request, 'Plan/PlanBovList.html', dic)
+
+class PlanBovUpdate(UpdateView):
+    model = PlaneacionBovina
+    form_class = Plan_Bovino_form
+    template_name = 'Plan/PlanBovCreate.html'
+    success_url = reverse_lazy('list_plan')
+
+class PlanBovShow(DetailView):
+    model = PlaneacionBovina
+    template_name = 'Plan/PlanBovShow.html'
+
+class PlanBovDelete(DeleteView):
+    model = PlaneacionBovina
+    template_name = 'Plan/PlanBovDelete.html'
+    success_url = reverse_lazy('list_plan')
+
+
+def PlanLecheCreate(request,pk):
+    query = Planes.objects.get(no_planeacion=pk)
+    if request.method == 'POST':
+        form = Plan_Leche_form(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.no_planeacion = query.no_planeacion
+            var.ingreso_diario = var.produccion_promedio * var.precio_litro
+            var.estimado_anual = var.ingreso_diario * var.dias
+            var.save()
+        return redirect('list_plan')
+    else:
+        form = Plan_Leche_form()
+    dic = {
+        'form':form,
+    }
+    return render(request, 'Plan/PlanLecheCreate.html', dic)
+
+def PlanLecList(request, pk):
+    queryset = PlaneacionLeche.objects.filter(no_planeacion=pk)
+    dic = {
+        'object_list':queryset,
+    }
+    return render(request, 'Plan/PlanLecList.html', dic)
+
+
+class PlanLecUpdate(UpdateView):
+    model = PlaneacionLeche
+    form_class = Plan_Leche_form
+    template_name = 'Plan/PlanLecheCreate.html'
+    success_url = reverse_lazy('list_plan')
+
+
+class PlanLecheShow(DetailView):
+    model = PlaneacionLeche
+    template_name = 'Plan/PlanLecShow.html'
+
+class PlanLecDelete(DeleteView):
+    model = PlaneacionLeche
+    template_name = 'Plan/PlanLecDelete.html'
+    success_url = reverse_lazy('list_plan')
+
+
+def PlanPorCreate(request,pk):
+    query = Planes.objects.get(no_planeacion=pk)
+    if request.method == 'POST':
+        form = Plan_Porcina_form(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.no_planeacion = query.no_planeacion
+            var.ingresos = (var.cerdos + var.lechones) * var.precio_venta
+            var.inversion = (var.cerdos + var.lechones) * var.precio_compra
+            var.save()
+        return redirect('list_plan')
+    else:
+        form = Plan_Porcina_form()
+    dic = {
+        'form':form,
+    }
+    return render(request, 'Plan/PlanPorCreate.html', dic)
+
+
+def PlanPorList(request, pk):
+    queryset = PlaneacionPorcina.objects.filter(no_planeacion=pk)
+    dic = {
+        'object_list':queryset,
+    }
+    return render(request, 'Plan/PlanPorcList.html', dic)
+
+
+class PlanPorcUpdate(UpdateView):
+    model = PlaneacionPorcina
+    form_class = Plan_Porcina_form
+    template_name = 'Plan/PlanPorCreate.html'
+    success_url = reverse_lazy('list_plan')
+
+
+class PlanPorcinoShow(DetailView):
+    model = PlaneacionPorcina
+    template_name = 'Plan/PlanPorcShow.html'
+
+
+class PlanPorcDelete(DeleteView):
+    model = PlaneacionPorcina
+    template_name = 'Plan/PlanPorcDelete.html'
+    success_url = reverse_lazy('list_plan')
+
+def PlanProyGastCreate(request,pk):
+    query = Planes.objects.get(no_planeacion=pk)
+    if request.method == 'POST':
+        form = Proyeccion_Gastos_form(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.no_planeacion = query.no_planeacion
+            var.semanal = var.cantidad * 7
+            var.total_anual = var.semanal * 52
+            var.save()
+        return redirect('list_plan')
+    else:
+        form = Proyeccion_Gastos_form()
+    dic = {
+        'form':form,
+    }
+    return render(request, 'Plan/PlanProyGastCreate.html', dic)
+
+def PlanProyGastList(request, pk):
+    queryset = ProyeccionGastos.objects.filter(no_planeacion=pk)
+    dic = {
+        'object_list':queryset,
+    }
+    return render(request, 'Plan/PlanProyGastList.html', dic)
+
+class PlanProyGasUpdate(UpdateView):
+    model = ProyeccionGastos
+    form_class = Proyeccion_Gastos_form
+    template_name = 'Plan/PlanProyGastCreate.html'
+    success_url = reverse_lazy('list_plan')
+
+class PlanProyGasShow(DetailView):
+    model = ProyeccionGastos
+    template_name = 'Plan/PlanProyGasShow.html'
+
+class PlanProyGasDelete(DeleteView):
+    model = ProyeccionGastos
+    template_name = 'Plan/PlanProyGasDelete.html'
+    success_url = reverse_lazy('list_plan')
+
+
+#Comparacion bovinos
+def ComparacionBovino(request):
+    Fecha_Actual = Notificaciones_function()
+
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+
+    fecha1 = str(year)+"-01-01"
+    fecha2 = str(year)+"-12-31"
+    fecha_actual = str
+    query1 = ControlVentaGanado.objects.filter(fecha__range=[fecha1,fecha2])
+
+    vaca1 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
+        tipo='Vientre en producción limousin')
+
+    vaca2 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
+        tipo='Vientre en crecimiento limousin')
+
+    vaca3 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
+        tipo='Vientre en producción brangus')
+
+    vaca4 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
+        tipo='Vientre en crecimiento brangus')
+
+    vaca5 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
+        tipo='Sementales')
+
+    vaca6 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
+        tipo='Becerros')
+
+
+    v1 = len(vaca1)
+    v2 = len(vaca2)
+    v3 = len(vaca3)
+    v4 = len(vaca4)
+    v5 = len(vaca5)
+    v6 = len(vaca6)
+
+
+
+    query3 = Planes.objects.filter(fecha__range=[fecha1,fecha2])
+
+    query2 = PlaneacionBovina.objects.filter(no_planeacion=query3[0])
+
+    size = len(query1)
+
+    suma = 0
+    for i in range(len(query2)):
+        suma = suma + int(query2[0].venta)
+
+    dic = {
+        'total':size,
+        'query':query1,
+        'query2':query2,
+        'suma':suma,
+        'v1': v1,
+        'v2': v2,
+        'v3': v3,
+        'v4': v4,
+        'v5': v5,
+        'v6': v6,
+    }
+    return render(request, 'Comparacion/Comp_Bov.html', dic)

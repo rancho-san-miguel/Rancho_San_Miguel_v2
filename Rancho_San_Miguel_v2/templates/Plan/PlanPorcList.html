@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Plan porcino
+{% endblock %}
+
+{% block title2 %}
+Plan porcino
+{% endblock %}
+
+
+{% block contenido %}
+    {% if object_list %}
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success">
+            <tr>
+                <th>Cantidad de cerdos</th>
+                <th>Cantidad de lechones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in object_list %}
+                    <tr>
+                        <td>{{ i.cerdos }}</td>
+                        <td>{{ i.lechones }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'plan_porcino_show' i.pk %}">&nbsp;&nbsp;&nbsp;&nbsp;Ver&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                            <a class="btn btn-success" href="{% url 'plan_porcino_update' i.pk %}">&nbsp;&nbsp;Editar&nbsp;&nbsp;</a>
+                            <a class="btn btn-danger" href="{% url 'plan_porcino_delete' i.pk %}">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <h2>No hay registros</h2>
+    {% endif %}
+    <div class="container" align="center">
+        <ul class="pager">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </ul>
+    </div>
+
+{% endblock %}

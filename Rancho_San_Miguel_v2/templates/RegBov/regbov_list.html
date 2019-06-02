@@ -44,6 +44,7 @@ Ganado
                         <!--<td>{{ i.updated }}</td>-->
                         <td>
                             <a  class="btn btn-primary" href="{% url 'bovino_show' i.pk %}">Ver</a>
+                            <!--Nota quitar de aqui la venta-->
                             <a class="btn btn-info" href="{% url 'bovino_venta' i.pk %}">Vender</a>
                             {% for field in user.groups.all %} {% if field.name == 'GanadoUpd' %}
                             <a class="btn btn-success" href="{% url 'bovino_update' i.pk %}">Editar</a>

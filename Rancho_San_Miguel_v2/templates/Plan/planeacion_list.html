@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Planeacion
+{% endblock %}
+
+{% block title2 %}
+Planeación
+{% endblock %}
+
+{% block contenido %}
+    <a class="btn btn-primary" href="{% url 'crear_plan' %}">Nuevo plan</a>
+{% if object_list %}
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <th>No planeación</th>
+                <th>Fecha</th>
+                <th>Agricola</th>
+                <th>Bovino</th>
+                <th>Leche</th>
+                <th>Porcino</th>
+                <th>Proycción de gastos</th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for i in object_list %}
+                    <tr>
+                        <!--<td>{{ i.id }}</td>-->
+                        <td>{{ i.no_planeacion }}</td>
+                        <td>{{ i.fecha }}</td>
+
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'plan_agro_create' i.pk %}">Crear</a>
+                            <a class="btn btn-success" href="{% url 'plan_agro_list' i.pk %}">Ver</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'plan_bov_create' i.pk %}">Crear</a>
+                            <a class="btn btn-success" href="{% url 'plan_bov_list' i.pk %}">Ver</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'plan_leche_create' i.pk %}">Crear</a>
+                            <a class="btn btn-success" href="{% url 'plan_leche_list' i.pk %}">Ver</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'plan_porcina_create' i.pk %}">Crear</a>
+                            <a class="btn btn-success" href="{% url 'plan_porcino_list' i.pk %}">Ver</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'plan_proyec_gasto_create' i.pk %}">Crear</a>
+                            <a class="btn btn-success" href="{% url 'plan_proyec_gasto_list' i.pk %}">Ver</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+        </tbody>
+    </table>
+    {% else %}
+        <h2>No hay registros</h2>
+    {% endif %}
+    <div class="container" align="center">
+        <ul class="pager">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+    </ul>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Plan
+{% endblock %}
+
+
+{% block contenido %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <label>{{ form.ciclo.label }}:</label>
+        {{ form.ciclo }}
+
+        <label>{{ form.cultivo.label }}:</label>
+        {{ form.cultivo }}
+
+        <label>{{ form.hectareas.label }}:</label>
+        {{ form.hectareas }}
+
+        <label>{{ form.costo.label }}:</label>
+        {{ form.costo }}
+
+        <!--<label>{{ form.produccion_estimada.label }}:</label>-->
+        <!--{{ form.produccion_estimada }}-->
+
+        <label>{{ form.cantidad.label }}:</label>
+        {{ form.cantidad }}
+
+        <!--<label>{{ form.total.label }}:</label>-->
+        <!--{{ form.total }}-->
+
+        <br>
+        <div class="trans">
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

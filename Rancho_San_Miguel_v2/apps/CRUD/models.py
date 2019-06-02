@@ -44,8 +44,11 @@ class Ganado(models.Model):
 
 
 class ControlVentaGanado(models.Model):
+    op1 = Choices('Vientre en producción limousin', 'Vientre en crecimiento limousin', 'Vientre en producción brangus',
+                  'Vientre en crecimiento brangus', 'Sementales', 'Becerros')
     no_venta = models.AutoField(primary_key=True)
     descripcion_venta = models.CharField(max_length=240)
+    tipo = models.CharField(choices=op1,max_length=20)
     total_venta = models.DecimalField(max_digits=10, decimal_places=0)
     comprador = models.CharField(max_length=30)
     fecha = models.DateField()
@@ -184,6 +187,10 @@ class Planes(models.Model):
     class Meta:
         #managed = False
         db_table = 'planes'
+
+    def __str__(self):
+        return str(self.no_planeacion)
+
 #############################################################################
 #############################################################################
 #############################################################################
@@ -241,9 +248,6 @@ class Gastos(models.Model):
         db_table = 'gastos'
 
 
-
-
-
 class InventarioPorcino(models.Model):
     cantidad = models.IntegerField()
 
@@ -278,14 +282,16 @@ class Notificaciones(models.Model):
 
 
 class PlaneacionAgricola(models.Model):
-    no_planeacion = models.ForeignKey('Planes', models.DO_NOTHING, db_column='no_planeacion')
-    ciclo = models.IntegerField()
-    cultivo = models.IntegerField()
+    op1 = Choices(1,2)
+    # no_planeacion = models.ForeignKey('Planes', models.DO_NOTHING, db_column='no_planeacion')
+    no_planeacion = models.CharField(max_length=50, default="0")
+    ciclo = models.IntegerField(choices=op1)
+    cultivo =  models.CharField(max_length=50)
     hectareas = models.IntegerField()
     costo = models.IntegerField()
-    produccion_estimada = models.IntegerField()
+    produccion_estimada = models.IntegerField(default="0")
     cantidad = models.IntegerField()
-    total = models.IntegerField()
+    total = models.IntegerField(default="0")
 
     class Meta:
         #managed = False
@@ -293,12 +299,14 @@ class PlaneacionAgricola(models.Model):
 
 
 class PlaneacionBovina(models.Model):
-    no_planeacion = models.ForeignKey('Planes', models.DO_NOTHING, db_column='no_planeacion')
-    tipo_ganado = models.CharField(max_length=50)
+    op1 = Choices('Vientre en producción limousin','Vientre en crecimiento limousin','Vientre en producción brangus',
+                  'Vientre en crecimiento brangus', 'Sementales','Becerros')
+    no_planeacion = models.CharField(max_length=50, default="0")
+    tipo_ganado = models.CharField(choices=op1,max_length=50)
     hato = models.IntegerField()
     venta = models.IntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=0)
-    ingreso_anual = models.DecimalField(max_digits=10, decimal_places=0)
+    ingreso_anual = models.DecimalField(max_digits=10, decimal_places=0, default="0")
 
     class Meta:
         #managed = False
@@ -306,11 +314,13 @@ class PlaneacionBovina(models.Model):
 
 
 class PlaneacionLeche(models.Model):
-    no_planeacion = models.ForeignKey('Planes', models.DO_NOTHING, db_column='no_planeacion')
+    no_planeacion = models.CharField(max_length=50, default="0")
     vacas_produccion = models.IntegerField()
     produccion_promedio = models.IntegerField()
-    ingreso_diario = models.DecimalField(max_digits=10, decimal_places=0)
-    estimado_anual = models.DecimalField(max_digits=10, decimal_places=0)
+    precio_litro = models.IntegerField()
+    dias = models.IntegerField()
+    ingreso_diario = models.DecimalField(max_digits=10, decimal_places=0, default='0')
+    estimado_anual = models.DecimalField(max_digits=10, decimal_places=0, default='0')
 
     class Meta:
         #managed = False
@@ -318,12 +328,13 @@ class PlaneacionLeche(models.Model):
 
 
 class PlaneacionPorcina(models.Model):
-    no_planeacion = models.ForeignKey('Planes', models.DO_NOTHING, db_column='no_planeacion')
+    no_planeacion = models.CharField(max_length=50, default="0")
     cerdos = models.IntegerField()
     lechones = models.IntegerField()
     precio_venta = models.DecimalField(max_digits=10, decimal_places=0)
-    inversion = models.DecimalField(max_digits=10, decimal_places=0)
-    ingresos = models.DecimalField(max_digits=10, decimal_places=0)
+    precio_compra = models.DecimalField(max_digits=10, decimal_places=0)
+    inversion = models.DecimalField(max_digits=10, decimal_places=0, default='0')
+    ingresos = models.DecimalField(max_digits=10, decimal_places=0, default='0')
 
     class Meta:
         #managed = False
@@ -331,13 +342,14 @@ class PlaneacionPorcina(models.Model):
 
 
 class ProyeccionGastos(models.Model):
-    no_planeacion = models.ForeignKey(Planes, models.DO_NOTHING, db_column='no_planeacion')
-    tipo_gasto = models.CharField(max_length=40)
+    op1 = Choices('Sueldos','Conbustible','Insumo de alimentos','Rentas', 'Derecho de agua', 'Otros')
+    no_planeacion = models.CharField(max_length=50, default="0")
+    tipo_gasto = models.CharField(choices=op1,max_length=40)
     descripcion = models.CharField(max_length=50)
     cantidad = models.IntegerField()
-    semanal = models.DecimalField(max_digits=10, decimal_places=0)
-    total_anual = models.DecimalField(max_digits=10, decimal_places=0)
-    eventual = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True)
+    semanal = models.DecimalField(max_digits=10, decimal_places=0, default='0')
+    total_anual = models.DecimalField(max_digits=10, decimal_places=0, default='0')
+    # eventual = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True)
 
     class Meta:
         #managed = False

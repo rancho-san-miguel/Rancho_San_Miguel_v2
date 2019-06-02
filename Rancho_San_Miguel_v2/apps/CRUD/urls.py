@@ -6,12 +6,17 @@ from .views import GaleriaCreate, GaleriaList, GaleriaDelete, GaleriaDetail, Gal
 from .views import GaleriaList2
 from .views import Controlg_Update, Controlg_Show, Controlg_List, Controlg_Delete, Controlg_Create
 from .views import Compra_Cerdos_Create, Compra_Cerdos_List
+from .views import PlanCreate, PlanList, PlanAgroCreate, PlanAgroList, PlanAgroUpdate, PlanAgroShow, PlanAgroDelete
+from .views import PlanBovCreate, PlanBovList, PlanBovUpdate, PlanBovShow, PlanBovDelete, PlanLecheCreate, PlanLecList
+from .views import PlanLecUpdate, PlanLecheShow, PlanLecDelete, PlanPorCreate, PlanPorList, PlanPorcUpdate, PlanPorcinoShow
+from .views import PlanPorcDelete, PlanProyGastCreate, PlanProyGastList, PlanProyGasUpdate, PlanProyGasShow, PlanProyGasDelete
 from .views import En_Proceso_Create,En_Proceso_Delete,En_Proceso_List,En_Proceso_Show, En_Proceso_Update, En_Proceso_Fin, ordenar_producciones
 from .views import Venta_Cerdos_Create, Venta_Cerdos_List,Abonos,AbonosList
 from .views import DeudoresAcreedoresCreate,DeudoresAcreedoresDetail,DeudoresAcreedoresList,DeudoresAcreedoresDelete,DeudoresAcreedoresUpdate
 from .views import HistoriaCreate,HistoriaDelete,HistoriaDetail,HistoriaList,HistoriaUpdate
 from .views import Venta_Leche_Create, Venta_Leche_List
 
+from .views import ComparacionBovino
 
 urlpatterns = [
     path('bovinoshow/<int:pk>', Bovino_Show.as_view(), name="bovino_show"),
@@ -48,6 +53,7 @@ urlpatterns = [
     path('porcino_C_crear/',Venta_Cerdos_Create, name="cerdos_crearVenta"),
     path('porcino_C_list/', Venta_Cerdos_List.as_view(), name="cerdos_listVenta"),
 # Control_ganado
+    # Control_ganado
     path('controlganado/', Controlg_Create.as_view(), name="control_crear"),
     path('controllist/', Controlg_List.as_view(), name="control_list"),
     path('controlshow/<int:pk>', Controlg_Show.as_view(), name="control_show"),
@@ -82,4 +88,34 @@ urlpatterns = [
     #Venta de leche
     path('leche/crear/', Venta_Leche_Create, name="leche_crear"),
     path('leche/list/', Venta_Leche_List.as_view(), name="leche_list"),
+    #Planeacion
+    path('plan/crear/', PlanCreate.as_view(), name='crear_plan'),
+    path('plan/list/', PlanList.as_view(), name='list_plan'),
+    path('plan/agro/create/<int:pk>', PlanAgroCreate, name='plan_agro_create'),
+    path('plan/agro/list/<int:pk>', PlanAgroList, name='plan_agro_list'),
+    path('plan/agro/update/<int:pk>', PlanAgroUpdate.as_view(), name='plan_agro_update'),
+    path('plan/agro/show/<int:pk>', PlanAgroShow.as_view(), name='plan_agro_show'),
+    path('plan/agro/delete/<int:pk>', PlanAgroDelete.as_view(), name='plan_agro_delete'),
+    path('plan/bovino/create/<int:pk>', PlanBovCreate, name='plan_bov_create'),
+    path('plan/bovino/list/<int:pk>', PlanBovList, name='plan_bov_list'),
+    path('plan/bovino/update/<int:pk>', PlanBovUpdate.as_view(), name='plan_bov_update'),
+    path('plan/bovino/show/<int:pk>', PlanBovShow.as_view(), name='plan_bov_show'),
+    path('plan/bovino/delete/<int:pk>', PlanBovDelete.as_view(), name='plan_bov_delete'),
+    path('plan/leche/create/<int:pk>', PlanLecheCreate, name='plan_leche_create'),
+    path('plan/leche/list/<int:pk>', PlanLecList, name='plan_leche_list'),
+    path('plan/leche/update/<int:pk>', PlanLecUpdate.as_view(), name='plan_leche_update'),
+    path('plan/leche/show/<int:pk>', PlanLecheShow.as_view(), name='plan_leche_show'),
+    path('plan/leche/delete/<int:pk>', PlanLecDelete.as_view(), name='plan_leche_delete'),
+    path('plan/porcina/create/<int:pk>', PlanPorCreate, name='plan_porcina_create'),
+    path('plan/porcino/list/<int:pk>', PlanPorList, name='plan_porcino_list'),
+    path('plan/porcino/update/<int:pk>', PlanPorcUpdate.as_view(), name='plan_porcino_update'),
+    path('plan/porcino/show/<int:pk>', PlanPorcinoShow.as_view(), name='plan_porcino_show'),
+    path('plan/porcino/delete/<int:pk>', PlanPorcDelete.as_view(), name='plan_porcino_delete'),
+    path('plan/gastos/create/<int:pk>', PlanProyGastCreate, name='plan_proyec_gasto_create'),
+    path('plan/gastos/list/<int:pk>', PlanProyGastList, name='plan_proyec_gasto_list'),
+    path('plan/gastos/update/<int:pk>', PlanProyGasUpdate.as_view(), name='plan_proyec_gasto_update'),
+    path('plan/gastos/show/<int:pk>', PlanProyGasShow.as_view(), name='plan_proyec_gasto_show'),
+    path('plan/gastos/delete/<int:pk>', PlanProyGasDelete.as_view(), name='plan_proyec_gasto_delete'),
+    #Comparacion
+    path('comparacion/bovino/', ComparacionBovino, name='comparacion_bovino'),
 ]

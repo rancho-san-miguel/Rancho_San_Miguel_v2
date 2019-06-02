@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Plan
+{% endblock %}
+
+
+{% block contenido %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <label>{{ form.cerdos.label }}:</label>
+        {{ form.cerdos }}
+
+        <label>{{ form.lechones.label }}:</label>
+        {{ form.lechones }}
+
+        <label>{{ form.precio_venta.label }}:</label>
+        {{ form.precio_venta }}
+
+        <label>{{ form.precio_compra.label }}:</label>
+        {{ form.precio_compra }}
+
+        <!--<label>{{ form.inversion.label }}:</label>-->
+        <!--{{ form.inversion }}-->
+
+        <!--<label>{{ form.ingresos.label }}:</label>-->
+        <!--{{ form.ingresos }}-->
+
+        <br>
+        <div class="trans">
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

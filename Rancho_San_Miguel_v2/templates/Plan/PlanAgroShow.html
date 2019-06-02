@@ -1,0 +1,33 @@
+
+{% extends 'base/base.html' %}
+
+{% block title %}
+Detalles
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success">
+            <tr>
+                <th>Datos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <p><strong>Cultivo:</strong> {{ object.cultivo }}</p>
+                    <p><strong>Ciclo:</strong> {{ object.ciclo }}</p>
+                    <p><strong>Hectáreas:</strong> {{ object.hectareas }}</p>
+                    <p><strong>Costo:</strong> {{ object.costo }}</p>
+                    <p><strong>Producción estimada:</strong> {{ object.produccion_estimada }}</p>
+                    <p><strong>Cantidad:</strong> {{ object.cantidad }}</p>
+                    <p><strong>Total:</strong> {{ object.total }}</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{% url 'list_plan' %}">Regresar</a>
+
+
+{% endblock %}

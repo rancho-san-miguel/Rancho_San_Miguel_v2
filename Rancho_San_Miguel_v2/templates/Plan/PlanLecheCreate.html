@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Plan
+{% endblock %}
+
+
+{% block contenido %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <label>{{ form.vacas_produccion.label }}:</label>
+        {{ form.vacas_produccion }}
+
+        <label>{{ form.produccion_promedio.label }}:</label>
+        {{ form.produccion_promedio }}
+
+        <label>{{ form.precio_litro.label }}:</label>
+        {{ form.precio_litro }}
+
+        <label>{{ form.dias.label }}:</label>
+        {{ form.dias }}
+
+        <br>
+        <div class="trans">
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

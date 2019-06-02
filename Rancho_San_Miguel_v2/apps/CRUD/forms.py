@@ -1,8 +1,6 @@
 from django import forms
-from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado,VentasPorcinos, Produccion
-from .models import DeudoresAcreedores,MovimientosDya,Gastos,  VentaLeche
-from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado, ControlVentaGanado
-from .models import InventarioAgricola
+from .models import *
+
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -401,4 +399,177 @@ class Ventas_Leche_form(forms.ModelForm):
             'precio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Costo ejemplo: 15.20'}),
             # 'total': forms.TextInput(attrs={'class': 'form-control','placeholder':'Costo ejemplo: 15.20'}),
             'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+
+
+class ControlVentaGanado_form(forms.ModelForm):
+    class Meta:
+        model = ControlVentaGanado
+        fields = {
+            'descripcion_venta',
+            'tipo',
+            'total_venta',
+            'comprador',
+            'fecha',
+        }
+        labels = {
+            'descripcion_venta':'Descripción de la venta',
+            'tipo':'Tipo de bovino',
+            'total_venta':'Total de la venta',
+            'comprador':'Comprador',
+            'fecha':'Fecha de la venta',
+        }
+        widgets = {
+            'descripcion_venta': forms.Textarea(attrs={'class': 'form-control'}),
+            'tipo':forms.Select(attrs={'class': 'form-control'}),
+            'total_venta': forms.TextInput(attrs={'class': 'form-control','placeholder':'Total del bovino'}),
+            'comprador': forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del comprador'}),
+            'fecha': forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+class Planes_form(forms.ModelForm):
+    class Meta:
+        model = Planes
+        fields = {
+            'fecha'
+        }
+        labels = {
+            'fecha':'Fecha de la planeación'
+        }
+        widgets = {
+            'fecha':forms.SelectDateWidget(years=range(y.year,y.year),attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+class Plan_Agro_form(forms.ModelForm):
+    class Meta:
+        model = PlaneacionAgricola
+        fields = {
+            'ciclo',
+            'cultivo',
+            'hectareas',
+            'costo',
+            # 'produccion_estimada',
+            'cantidad',
+            # 'total',
+        }
+        labels = {
+            'ciclo': 'Ciclo',
+            'cultivo': 'Cultivo',
+            'hectareas': 'Hectáreas',
+            'costo': 'Costo',
+            # 'produccion_estimada': 'Producción estimada',
+            'cantidad': 'Cantidad',
+            # 'total': 'Total',
+        }
+        widgets = {
+            'ciclo': forms.Select(attrs={'class': 'form-control'}),
+            'cultivo': forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del cultivo'}),
+            'hectareas': forms.TextInput(attrs={'class': 'form-control','placeholder':'Numero de hectáreas'}),
+            'costo': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el costo de las hectáreas'}),
+            # 'produccion_estimada': forms.TextInput(attrs={'class': 'form-control','placeholder':'Estimación de la producción'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad'}),
+            # 'total': forms.TextInput(attrs={'class': 'form-control','placeholder':'Total'}),
+        }
+
+
+class Plan_Bovino_form(forms.ModelForm):
+    class Meta:
+        model = PlaneacionBovina
+        fields = {
+            'tipo_ganado',
+            'hato',
+            'venta',
+            'precio',
+            # 'ingreso_anual',
+        }
+        labels = {
+            'tipo_ganado': 'Tipo de ganado',
+            'hato':'Hato',
+            'venta':'Venta',
+            'precio':'Precio',
+            # 'ingreso_anual': 'Ingreso anual',
+        }
+        widgets = {
+            'tipo_ganado': forms.Select(attrs={'class': 'form-control'}),
+            'hato': forms.TextInput(attrs={'class': 'form-control','placeholder':'Hato'}),
+            'venta': forms.TextInput(attrs={'class': 'form-control','placeholder':'Venta'}),
+            'precio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Precio'}),
+            # 'ingreso_anual': forms.TextInput(attrs={'class': 'form-control','placeholder':'0.0'}),
+        }
+
+class Plan_Leche_form(forms.ModelForm):
+    class Meta:
+        model = PlaneacionLeche
+        fields = {
+            'vacas_produccion',
+            'produccion_promedio',
+            'precio_litro',
+            'dias',
+            # 'ingreso_diario',
+            # 'estimado_anual',
+        }
+        labels = {
+            'vacas_produccion': 'Vacas producción',
+            'produccion_promedio':'Producción promedio',
+            'precio_litro':'Precio por litro',
+            'dias':'Dias a estimar',
+            # 'ingreso_diario':'Ingreso diario',
+            # 'estimado_anual':'Estimado anual',
+        }
+        widgets = {
+            'vacas_produccion': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad de vacas en producción'}),
+            'produccion_promedio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad promedio'}),
+            'precio_litro': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio de la leche'}),
+            'dias': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad de dias'}),
+            # 'ingreso_diario':forms.TextInput(attrs={'class': 'form-control','placeholder':'Ingreso diario'}),
+            # 'estimado_anual':forms.TextInput(attrs={'class': 'form-control','placeholder':'Estimado anual'}),
+        }
+
+
+class Plan_Porcina_form(forms.ModelForm):
+    class Meta:
+        model = PlaneacionPorcina
+        fields = {
+            'cerdos',
+            'lechones',
+            'precio_venta',
+            'precio_compra',
+            # 'inversion',
+            # 'ingresos',
+        }
+        labels = {
+            'cerdos': 'Cerdos',
+            'lechones': 'Lechones',
+            'precio_venta': 'Precio de venta',
+            'precio_compra':'Precio de compra',
+            # 'inversion': 'Inversión',
+            # 'ingresos':'Ingresos',
+        }
+        widgets = {
+            'cerdos': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad de cerdos'}),
+            'lechones': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad de lechones'}),
+            'precio_venta': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio a la venta'}),
+            'precio_compra': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio de compra'}),
+            # 'inversion':forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad a invertir'}),
+            # 'ingresos':forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantida de ingresos'}),
+        }
+
+class Proyeccion_Gastos_form(forms.ModelForm):
+    class Meta:
+        model = ProyeccionGastos
+        fields = {
+            'tipo_gasto',
+            'descripcion',
+            'cantidad',
+        }
+        labels = {
+            'tipo_gasto': 'Tipo de gasto',
+            'descripcion': 'Descripción',
+            'cantidad': 'Costo',
+        }
+        widgets = {
+            'tipo_gasto': forms.Select(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripción'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Gastos por dia'}),
         }

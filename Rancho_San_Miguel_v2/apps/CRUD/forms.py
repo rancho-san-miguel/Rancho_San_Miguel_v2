@@ -2,7 +2,7 @@ from django import forms
 from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado,VentasPorcinos, Produccion
 from .models import DeudoresAcreedores,MovimientosDya,Gastos
 from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado, ControlVentaGanado
-
+from .models import InventarioAgricola
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -219,7 +219,33 @@ class DeudoresAcredoresForm(forms.ModelForm):
         }
 
 
-
+################################################################################
+################################################################################
+################################################################################
+class Registro_Agricola_form(forms.ModelForm):
+    class Meta:
+        model = InventarioAgricola
+        fields = {
+            'cultivo',
+            'unidad_medida',
+            'cantidad',
+            'precio',
+        }
+        labels = {
+            'cultivo':'Ingresa el nombre del producto',
+            'unidad_medida':'Unidad de medida',
+            'cantidad':'Ingresa la cantidad',
+            'precio':'Ingresa el precio',
+        }
+        widgets = {
+            'cultivo':forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del producto Ej. Maíz, Frijol'}),
+            'unidad_medida': forms.Select(attrs={'class': 'form-control'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control'}),
+            'precio': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+################################################################################
+################################################################################
+################################################################################
 
 
 class MovDeudoresAcredoresForm(forms.ModelForm):

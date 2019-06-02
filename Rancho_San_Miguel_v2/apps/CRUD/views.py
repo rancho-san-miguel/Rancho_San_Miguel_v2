@@ -2,14 +2,11 @@ from django.shortcuts import render
 from django.shortcuts import redirect, render
 
 from .models import Ganado, ComprasPorcinos, InventarioPorcino,VentasPorcinos, ControlVentaGanado
-from .models import Notificaciones,VentasPorcinos,MovimientosDya
-from .models import Galeria , ControlGanado, DeudoresAcreedores, Gastos
-from .models import Ganado, ComprasPorcinos, InventarioPorcino, ControlVentaGanado
-from .models import Notificaciones
-from .models import Galeria , ControlGanado
+from .models import Notificaciones, InventarioAgricola,MovimientosDya
+from .models import Galeria , ControlGanado, ControlVentaGanado, Produccion, ComprasPorcinos, DeudoresAcreedores, Gastos
 
 from .forms import Ganado_Form,Notificaciones_form, GaleriaForm
-from .forms import Control_ganado_form,MovDeudoresAcredoresForm,GastosForm, ControlVentaGanado_form
+from .forms import Control_ganado_form,MovDeudoresAcredoresForm,GastosForm, ControlVentaGanado_form, En_Proceso_form
 from .forms import Ganado_Form,Notificaciones_form, GaleriaForm, CompraPorcino_form,VentaPorcino_form,DeudoresAcredoresForm
 from .forms import Control_ganado_form, ControlVentaGanado_form
 from .forms import Ganado_Form,Notificaciones_form, GaleriaForm, CompraPorcino_form
@@ -17,6 +14,8 @@ from .forms import Ganado_Form,Notificaciones_form, GaleriaForm, CompraPorcino_f
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView, DetailView
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from datetime import datetime
 
@@ -125,9 +124,78 @@ class Controlg_Delete(DeleteView):
     template_name = 'control_ganado/control_delete.html'
     success_url = reverse_lazy('control_list')
 #---------------------------------------------------------------------------------------------------------------------
+########Produccion
+"En proceso/que esta cultivado"
+class En_Proceso_Create(CreateView):
+    model = Produccion
+    form_class = En_Proceso_form
+    template_name = 'Producciones/cultivo_en_proceso_form.html'
+    success_url = reverse_lazy('cultivo_en_proceso_list')
 
+class En_Proceso_List(ListView):
+    queryset = Produccion.objects.all()
+    template_name = 'Producciones/cultivo_en_proceso_list.html'
+    paginate_by = 5
 
-#................................................................................................
+class En_Proceso_Update(UpdateView):
+    model = Produccion
+    form_class = En_Proceso_form
+    template_name = 'Producciones/cultivo_en_proceso_form.html'
+    success_url = reverse_lazy('cultivo_en_proceso_list')
+
+class En_Proceso_Delete(DeleteView):
+    model = Produccion
+    template_name = 'Producciones/cultivo_en_proceso_delete.html'
+    success_url = reverse_lazy('cultivo_en_proceso_list')
+
+class En_Proceso_Show(DetailView):
+    model = Produccion
+    template_name = 'Producciones/cultivo_en_proceso_show.html'
+
+def En_Proceso_Fin(request, pk):
+    query1 = Produccion.objects.get(pk=pk)
+    query3 = InventarioAgricola.objects.get(cultivo=query1.cultivo)
+    print ("QUE ES ESTO**********************************************************************************", query3)
+    if request.method == 'POST':
+        n1 = int(request.POST['produccion_obtenida'])
+        n3 = request.POST['fecha_final']
+        Produccion.objects.filter(pk=pk).update(produccion_obtenida=n1,fecha_final=n3)
+
+        query3.cantidad = n1 + query3.cantidad
+        return redirect('cultivo_en_proceso_list')
+
+    dic = {
+        'object':query1,
+    }
+
+    return render(request, 'Producciones/finalizar_produccion.html', dic)
+#........................................
+#
+def ordenar_producciones(request):
+    query = Produccion.objects.all()
+    if request.method == 'POST':
+        dime = request.POST['ordenar_produccion']
+        if dime=="ptodos":
+            pass
+        elif dime=="pfinal":
+            query = Produccion.objects.filter(fecha_final__isnull=False)
+        elif dime == "pproce":
+            query = Produccion.objects.filter(fecha_final__isnull=True)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(query, 10)
+    try:
+        pros = paginator.page(page)
+    except PageNotAnInteger:
+        pros = paginator.page(1)
+    except EmptyPage:
+        pros = paginator.page(paginator.num_pages)
+    # query_filter = Ganado_filter(request.GET, queryset=query)
+    dic = {
+        'object_list': pros,
+    }
+
+    return render(request, 'Producciones/cultivo_en_proceso_list.html', dic)
+# ........................................................
 "Notificaciones"
 
 def Notificaciones_function():

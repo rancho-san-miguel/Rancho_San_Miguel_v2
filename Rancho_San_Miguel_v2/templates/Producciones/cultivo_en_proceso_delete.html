@@ -7,7 +7,7 @@ Eliminar registro del cultivo
 {% block contenido %}
 <form method="post">
     {% csrf_token %}
-    <h2>Deseas eliminar el objeto con el nombre "{{ object.producto }}"</h2>
+    <h2>¿Estas seguro que deseas eliminar la producción seleccionada?</h2>
     <button class="btn btn-danger" type="submit">Si, Eliminar</button>
     <a class="btn btn-primary" href="{% url 'cultivo_en_proceso_list' %}">No, Cancelar</a>
 </form>

@@ -112,6 +112,9 @@ class InventarioAgricola(models.Model):
         #managed = False
         db_table = 'inventario_agricola'
 
+    def __str__(self):
+        return self.cultivo
+
 
 class ControlVentasAgricolas(models.Model):
     no_registro = models.AutoField(primary_key=True)
@@ -157,16 +160,16 @@ class ComprasAgricolas(models.Model):
         #managed = False
         db_table = 'compras_agricolas'
 
-
-
 class Produccion(models.Model):
-    id = models.IntegerField(primary_key=True)
-    hectareas = models.IntegerField()
+    opciones = Choices(1, 2)
+    hectareas = models.IntegerField()  # Hectareas sembradas
     cultivo = models.ForeignKey(InventarioAgricola, models.DO_NOTHING, db_column='cultivo')
-    cantidad = models.IntegerField()
-    produccion = models.IntegerField()
-    unidad_medida = models.CharField(max_length=20)
-    ciclo = models.IntegerField()
+    cantidad = models.IntegerField()  # cantidad de semilla utilizada
+    produccion_obtenida = models.IntegerField(blank=True, null=True)  # Lo que se produjo
+    unidad_medida = models.CharField(max_length=20, blank=True, null=True)
+    ciclo = models.IntegerField(choices=opciones)
+    fecha_inicio = models.DateField()
+    fecha_final = models.DateField(blank=True, null=True)
 
     class Meta:
         #managed = False

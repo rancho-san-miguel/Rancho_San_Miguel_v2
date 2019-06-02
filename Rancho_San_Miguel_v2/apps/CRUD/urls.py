@@ -6,6 +6,7 @@ from .views import GaleriaCreate, GaleriaList, GaleriaDelete, GaleriaDetail, Gal
 from .views import GaleriaList2
 from .views import Controlg_Update, Controlg_Show, Controlg_List, Controlg_Delete, Controlg_Create
 from .views import Compra_Cerdos_Create, Compra_Cerdos_List
+from .views import En_Proceso_Create,En_Proceso_Delete,En_Proceso_List,En_Proceso_Show, En_Proceso_Update, En_Proceso_Fin, ordenar_producciones
 from .views import Venta_Cerdos_Create, Venta_Cerdos_List,Abonos,AbonosList
 from .views import DeudoresAcreedoresCreate,DeudoresAcreedoresDetail,DeudoresAcreedoresList,DeudoresAcreedoresDelete,DeudoresAcreedoresUpdate
 from .views import HistoriaCreate,HistoriaDelete,HistoriaDetail,HistoriaList,HistoriaUpdate
@@ -40,8 +41,6 @@ urlpatterns = [
     #Porcinos
     path('porcino/crear/', Compra_Cerdos_Create, name="cerdos_crear"),
     path('porcino/list/', Compra_Cerdos_List.as_view(), name="cerdos_list"),
-
-
     #path('porcino/delete/<int:pk>', Venta_Cerdos_Delete, name="cerdos_delete"),
 
 
@@ -71,4 +70,11 @@ urlpatterns = [
     path('historiadelete/<int:pk>/', HistoriaDelete.as_view(), name='Historial_Compras_delete'),
     path('historiahow/<int:pk>/', HistoriaDetail.as_view(), name='Historial_Compras_show'),
     path('historiaupdate/<int:pk>/', HistoriaUpdate.as_view(), name='Historial_Compras_update'),
+#Agricola en produccion
+    path('producciones/enproceso/create', En_Proceso_Create.as_view(), name='cultivo_en_proceso_create'),
+    path('producciones/enproceso/list', ordenar_producciones, name='cultivo_en_proceso_list'),
+    path('producciones/enproceso/update/<int:pk>', En_Proceso_Update.as_view(), name='cultivo_en_proceso_update'),
+    path('producciones/enproceso/delete/<int:pk>', En_Proceso_Delete.as_view(), name='cultivo_en_proceso_delete'),
+    path('producciones/enproceso/show/<int:pk>', En_Proceso_Show.as_view(), name='cultivo_en_proceso_show'),
+    path('producciones/enproceso/finalizar/<int:pk>', En_Proceso_Fin, name='finalizar_produccion'),
 ]

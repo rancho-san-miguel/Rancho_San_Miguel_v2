@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+{% block estilo %}
+<style>
+.snps-inline-select {
+    width: auto;
+    display: inline-block;
+}
+</style>
+{% endblock %}
+{% block title %}
+Finalizar cultivo
+{% endblock %}
+
+
+
+
+{% block contenido %}
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <!--<div class="col-md-6">-->
+    <label>Producción obtenida:</label>
+    <input class="form-control" type="text" name="produccion_obtenida">
+    <br>
+    <label>Fecha de finalizacion:</label>
+    <input class="form-control" id="date" type="date" min="2019-01-02" name="fecha_final">
+
+    <br>
+    <div class="trans">
+        <button class="btn btn-success" type="submit">Guardar</button>
+    </div>
+    <br>
+</form>
+
+{% endblock %}

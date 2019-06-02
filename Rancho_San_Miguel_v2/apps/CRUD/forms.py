@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado,VentasPorcinos
+from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado,VentasPorcinos, Produccion
 from .models import DeudoresAcreedores,MovimientosDya,Gastos
 from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado, ControlVentaGanado
 
@@ -275,6 +275,38 @@ class GastosForm(forms.ModelForm):
             }
 
 
+
+###########################################################################################################
+###########################################################################################################
+#En produccion
+###########################################################################################################
+###########################################################################################################
+
+class En_Proceso_form(forms.ModelForm):
+    class Meta:
+        model = Produccion
+        fields = {
+            'cultivo',
+            'hectareas',
+            'cantidad',
+            'ciclo',
+            'fecha_inicio',
+        }
+        labels = {
+            'cultivo': 'Cultivo a sembrar',
+            'hectareas': 'Hectareas a sembrar',
+            'cantidad':'Cantidad de semilla a sembrar',
+            'ciclo':'Selecciona el ciclo de siembra',
+            'fecha_inicio':'Fecha de inicio'
+        }
+        widgets = {
+            'Cultivo':forms.Select(attrs={'class': 'form-control'}),
+            'Hectareas':forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad':forms.TextInput(attrs={'class': 'form-control'}),
+            'ciclo':forms.Select(attrs={'class': 'form-control'}),
+            'fecha_inicio': forms.SelectDateWidget(attrs={'class': 'form-control','style': 'display :inline-block'}),
+        }
+
 class ControlVentaGanado_form(forms.ModelForm):
     class Meta:
         model = ControlVentaGanado
@@ -295,4 +327,27 @@ class ControlVentaGanado_form(forms.ModelForm):
             'total_venta': forms.TextInput(attrs={'class': 'form-control','placeholder':'Total del bovino'}),
             'comprador': forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del comprador'}),
             'fecha': forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),
+        }
+###########################################################################################################
+###########################################################################################################
+#Galeria
+###########################################################################################################
+###########################################################################################################
+
+class GaleriaForm(forms.ModelForm):
+    class Meta:
+        model = Galeria
+        fields = {
+            'nombre',
+            'img',
+        }
+
+        labels = {
+            'nombre': 'Nombre',
+            'img': 'Imagen',
+        }
+
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Titulo de la imagen'}),
+            'img': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
         }

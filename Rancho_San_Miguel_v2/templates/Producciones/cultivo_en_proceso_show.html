@@ -11,17 +11,25 @@ Detalles del registro del cultivo
     <table class="table table-striped table-bordered">
         <thead class="bg-success" >
             <tr>
-                <th>Datos</th>
+                <th>Información</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <th>
                     <p><strong>#:</strong> {{ object.id }}</p>
-                    <p><strong>Producto:</strong> {{ object.producto }}</p>
+                    <p><strong>Cultivo:</strong> {{ object.cultivo }}</p>
                     <p><strong>Hectáreas:</strong> {{ object.hectareas }}</p>
                     <p><strong>Cantidad:</strong> {{ object.cantidad }}</p>
-                    <p><strong>Producción estimada:</strong> {{ object.pe }}</p>
+                    {% if object.fecha_final %}
+                    <p><strong>Producción obtenida:</strong> {{ object.produccion_obtenida }}</p>
+                    {% endif %}
+                    <p><strong>Ciclo:</strong> {{ object.ciclo }}</p>
+                    <p><strong>Fecha de inicio:</strong> {{ object.fecha_inicio }}</p>
+                    {% if object.fecha_final %}
+
+                    <p><strong>Fecha de finalización:</strong> {{ object.fecha_final}}</p>
+                    {% endif %}
                 </th>
             </tr>
         </tbody>

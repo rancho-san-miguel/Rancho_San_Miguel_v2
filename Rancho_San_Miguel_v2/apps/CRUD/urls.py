@@ -10,8 +10,9 @@ from .views import En_Proceso_Create,En_Proceso_Delete,En_Proceso_List,En_Proces
 from .views import Venta_Cerdos_Create, Venta_Cerdos_List,Abonos,AbonosList
 from .views import DeudoresAcreedoresCreate,DeudoresAcreedoresDetail,DeudoresAcreedoresList,DeudoresAcreedoresDelete,DeudoresAcreedoresUpdate
 from .views import HistoriaCreate,HistoriaDelete,HistoriaDetail,HistoriaList,HistoriaUpdate
-from .views import Venta_Leche_Create, Venta_Leche_List
+from .views import Venta_Leche_Create, Venta_Leche_List, Comprar_Vender_list, Acomprar_create, AVender_create, Abaja_create
 
+from .views import InventarioA_Delete, InventarioA_Create, InventarioA_List, InventarioA_Update
 
 urlpatterns = [
     path('bovinoshow/<int:pk>', Bovino_Show.as_view(), name="bovino_show"),
@@ -64,7 +65,15 @@ urlpatterns = [
     path('Abonos/<int:pk>', Abonos, name="Abonar"),
     path('Abonoslist/venta', AbonosList.as_view(), name="Abono_list"),
 
-
+#En Invenrario agricola/almacen
+    path('inventario_agricola/almacen/create', InventarioA_Create.as_view(), name='inventario_crear'),
+    path('inventario_agricola/almacen/list', InventarioA_List.as_view(), name='inventario_list'),
+    path('inventario_agricola/almacen/modificar/<pk>', InventarioA_Update.as_view(), name='inventario_actualizar'),
+    path('inventario_agricola/almacen/eliminar/<pk>', InventarioA_Delete.as_view(), name='inventario_eliminar'),
+    path('compraventa_agricola/ver', Comprar_Vender_list, name='compraryvenderagricola'),
+    path('compra_agricola/registrar_compra/<pk>', Acomprar_create, name='compraragricola_crear'),
+    path('compra_agricola/registrar_venta/<pk>', AVender_create, name='venderagricola_crear'),
+    path('compra_agricola/registrar_retiro/<pk>', Abaja_create, name='retiraragricola_crear'),
 
     path('historia/', HistoriaCreate.as_view(), name='Historial_Compras_create'),
     path('historialist/', HistoriaList.as_view(), name='Historial_Compras_list'),

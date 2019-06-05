@@ -3,6 +3,8 @@ from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanad
 from .models import DeudoresAcreedores,MovimientosDya,Gastos,  VentaLeche
 from .models import Ganado, Notificaciones, Galeria,ComprasPorcinos,ControlGanado, ControlVentaGanado
 from .models import InventarioAgricola
+from .models import CompraVentaAgricola
+
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -99,6 +101,7 @@ class Notificaciones_form(forms.ModelForm):
             'descripcion':forms.Textarea(attrs={'class': 'form-control','placeholder':'Descripción de las actividades a realizar'}),
             'fecha':forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
         }
+
 
 class SignUpForm(UserCreationForm):
     # password1 = forms.CharField()

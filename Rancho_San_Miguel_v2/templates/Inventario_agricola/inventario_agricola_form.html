@@ -1,9 +1,4 @@
 {% extends 'base/base.html' %}
-
-{% block title %}
-Registro de cultivo
-{% endblock %}
-
 {% block estilo %}
 <style>
 .snps-inline-select {
@@ -12,15 +7,26 @@ Registro de cultivo
 }
 </style>
 {% endblock %}
-
+{% block title %}
+Iniciar un cultivo
+{% endblock %}
 
 {% block contenido %}
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
-    <!--<div class="col-md-6">-->
-    <label>{{ form.producto.label }}:</label>
-    {{ form.producto }}
-    <br>
 
+    <!--<div class="col-md-6">-->
+    <label>{{ form.cultivo.label }}:</label>
+    {{ form.cultivo }}
+    <br>
+    <label>{{ form.unidad_medida.label }}:</label>
+    {{ form.unidad_medida }}
+    <br>
+    <label>{{ form.cantidad.label }}:</label>
+    {{ form.cantidad }}
+    <br>
+    <label>{{ form.precio.label }}:</label>
+    {{ form.precio }}
+    <br>
     <div class="trans">
         <button class="btn btn-success" type="submit">Guardar</button>
     </div>

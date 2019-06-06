@@ -5,6 +5,7 @@ from django.shortcuts import render
 from ..CRUD.views import Notificaciones_function, Notificaciones
 
 
+
 def index(request):
     return render(request, 'home/index.html')
 

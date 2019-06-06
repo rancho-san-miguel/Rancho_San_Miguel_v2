@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Comparación
+{% endblock %}
+
+{% block title2 %}
+Comparación Porcino-Planeación
+{% endblock %}
+
+
+{% block contenido %}
+    {% if ventas_leche %}
+    <h3>Ventas</h3>
+        <table class="table table-striped table-bordered">
+            <thead class="bg-success">
+                <tr>
+                    <th>Litros vendidos</th>
+                    <th>Ganacias totales</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td>{{ ventas_leche }}</td>
+                        <td>{{ venta_ganancia }}</td>
+                    </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay registros de ventas</h2>
+    {% endif %}
+
+    {% if plan_ganancias %}
+    <h3>Total a vender</h3>
+        <table class="table table-striped table-bordered">
+            <thead class="bg-success">
+                <tr>
+                    <th>Dias planeados</th>
+                    <th>Ganancias planeadas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ dias }}</td>
+                    <td>{{ plan_ganancias }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay registros de la planeación</h2>
+    {% endif %}
+
+    <div class="container" align="center">
+        <ul class="pager">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </ul>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Eliminar Notificación
+{% endblock %}
+
+{% block contenido %}
+<form method="post">
+    {% csrf_token %}
+    <h2>Quieres eliminar a "{{ object.descripcion }}" del registro de ganado</h2>
+    <button class="btn btn-danger" type="submit">Si, Eliminar</button>
+    <a class="btn btn-primary" href="{% url 'index2' %}">No, Cancelar</a>
+</form>
+{% endblock %}

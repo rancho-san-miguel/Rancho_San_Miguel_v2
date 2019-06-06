@@ -1,0 +1,98 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Comparación
+{% endblock %}
+
+{% block title2 %}
+Comparación Agricola-Planeación
+{% endblock %}
+
+
+{% block contenido %}
+
+{% if cultivo %}
+    <h3>Vendido </h3>
+        <table class="table table-striped table-bordered">
+            <thead class="bg-success">
+                <tr>
+                    <th>Cultivo</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                        <td>
+                            {% for i in cultivo %}
+                                {{ i }}<br>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for i in cantidad %}
+                                {{ i }}<br>
+                            {% endfor %}
+                        </td>
+
+                        <td>
+                            {% for i in precio %}
+                                {{ i }}<br>
+                            {% endfor %}
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Ganancias ${{ g }}</h4>
+    {% else %}
+        <h2>No hay registros de la planeación</h2>
+    {% endif %}
+    <br>
+    {% if cultivo %}
+    <h3>Planeado</h3>
+        <table class="table table-striped table-bordered">
+            <thead class="bg-success">
+                <tr>
+                    <th>Cultivo</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                        <td>
+                            {% for i in cultivo_plan %}
+                                {{ i }}<br>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for i in cantidad_plan %}
+                                {{ i }}<br>
+                            {% endfor %}
+                        </td>
+
+                        <td>
+                            {% for i in total %}
+                                {{ i }}<br>
+                            {% endfor %}
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Ganancias esperadas ${{ g2 }}</h4>
+    {% else %}
+        <h2>No hay registros de la planeación</h2>
+    {% endif %}
+
+
+    <div class="container" align="center">
+        <ul class="pager">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </ul>
+    </div>
+
+{% endblock %}

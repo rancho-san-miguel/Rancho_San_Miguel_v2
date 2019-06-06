@@ -3,7 +3,7 @@ from .views import Bovino_Create, Bovino_Search, Bovino_Show, Bovino_List, Bovin
 from .views import Query_Notificaciones, Notificaciones_Create, Notificaciones_Listar, Bovino_update_ventas_create
 from .views import CrearUsuario, ListarUsuarios, AddGrupos, Venta_Bovino_List, Venta_Bovino_Show
 from .views import GaleriaCreate, GaleriaList, GaleriaDelete, GaleriaDetail, GaleriaUpdate
-from .views import GaleriaList2
+from .views import GaleriaList2, Notificaciones_Delete
 from .views import Controlg_Update, Controlg_Show, Controlg_List, Controlg_Delete, Controlg_Create
 from .views import Compra_Cerdos_Create, Compra_Cerdos_List
 from .views import PlanCreate, PlanList, PlanAgroCreate, PlanAgroList, PlanAgroUpdate, PlanAgroShow, PlanAgroDelete
@@ -14,9 +14,9 @@ from .views import En_Proceso_Create,En_Proceso_Delete,En_Proceso_List,En_Proces
 from .views import Venta_Cerdos_Create, Venta_Cerdos_List,Abonos,AbonosList
 from .views import DeudoresAcreedoresCreate,DeudoresAcreedoresDetail,DeudoresAcreedoresList,DeudoresAcreedoresDelete,DeudoresAcreedoresUpdate
 from .views import HistoriaCreate,HistoriaDelete,HistoriaDetail,HistoriaList,HistoriaUpdate
-from .views import Venta_Leche_Create, Venta_Leche_List
+from .views import Venta_Leche_Create, Venta_Leche_List, ComparacionPorcino, Bovino_Galeria_Venta_List,Bovino_Galeria_Venta_Show
 
-from .views import ComparacionBovino
+from .views import ComparacionBovino, ComparacionLeche, ComparacionAgricola
 
 urlpatterns = [
     path('bovinoshow/<int:pk>', Bovino_Show.as_view(), name="bovino_show"),
@@ -29,10 +29,14 @@ urlpatterns = [
     path('ventalist/', Venta_Bovino_List.as_view(), name="venta_list"),
     path('ventashow/<int:pk>', Venta_Bovino_Show.as_view(), name="venta_show"),
 
+    path('bovino/galeria/venta/list/', Bovino_Galeria_Venta_List, name="bovino_galeria_venta_list"),
+    path('bovino/galeria/venta/list/<int:pk>', Bovino_Galeria_Venta_Show, name="bovino_galeria_venta_show"),
+
     #Notificaciones
     path('notificaciones/', Query_Notificaciones, name="notificacion"),
     path('notificaciones/listar/', Notificaciones_Listar.as_view(), name="notificacion_listar"),
     path('notificaciones/create/', Notificaciones_Create.as_view(), name="notificaciones_crear"),
+    path('notificaciones/delete/<int:pk>', Notificaciones_Delete.as_view(), name="notificaciones_delete"),
     #Usuarios
     path('crear/usuario/', CrearUsuario.as_view(), name='crear_usuario'),
     path('listar/usuario/', ListarUsuarios.as_view(), name='listar_usuario'),
@@ -70,14 +74,12 @@ urlpatterns = [
     path('Abonos/<int:pk>', Abonos, name="Abonar"),
     path('Abonoslist/venta', AbonosList.as_view(), name="Abono_list"),
 
-
-
     path('historia/', HistoriaCreate.as_view(), name='Historial_Compras_create'),
     path('historialist/', HistoriaList.as_view(), name='Historial_Compras_list'),
     path('historiadelete/<int:pk>/', HistoriaDelete.as_view(), name='Historial_Compras_delete'),
     path('historiahow/<int:pk>/', HistoriaDetail.as_view(), name='Historial_Compras_show'),
     path('historiaupdate/<int:pk>/', HistoriaUpdate.as_view(), name='Historial_Compras_update'),
-#Agricola en produccion
+    #Agricola en produccion
     path('producciones/enproceso/create', En_Proceso_Create.as_view(), name='cultivo_en_proceso_create'),
     path('producciones/enproceso/list', ordenar_producciones, name='cultivo_en_proceso_list'),
     path('producciones/enproceso/update/<int:pk>', En_Proceso_Update.as_view(), name='cultivo_en_proceso_update'),
@@ -88,6 +90,7 @@ urlpatterns = [
     #Venta de leche
     path('leche/crear/', Venta_Leche_Create, name="leche_crear"),
     path('leche/list/', Venta_Leche_List.as_view(), name="leche_list"),
+
     #Planeacion
     path('plan/crear/', PlanCreate.as_view(), name='crear_plan'),
     path('plan/list/', PlanList.as_view(), name='list_plan'),
@@ -118,4 +121,7 @@ urlpatterns = [
     path('plan/gastos/delete/<int:pk>', PlanProyGasDelete.as_view(), name='plan_proyec_gasto_delete'),
     #Comparacion
     path('comparacion/bovino/', ComparacionBovino, name='comparacion_bovino'),
+    path('comparacion/porcino/', ComparacionPorcino, name='comparacion_porcino'),
+    path('comparacion/leche/', ComparacionLeche, name='comparacion_leche'),
+    path('comparacion/agro/', ComparacionAgricola, name='comparacion_agro'),
 ]

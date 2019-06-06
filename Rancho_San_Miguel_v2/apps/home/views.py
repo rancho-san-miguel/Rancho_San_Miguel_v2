@@ -23,10 +23,13 @@ def index2(request):
 
     var = str(year) + "-" + str(month) + "-" + str(day)
 
-    query = Notificaciones.objects.filter(fecha=var)
+    query = Notificaciones.objects.filter(fecha=var).update(estado=True)
+
+
+    query2 = Notificaciones.objects.filter(estado=True)
 
     dic = {
-        'form': query,
+        'form': query2,
     }
     return render(request, 'home/index2.html', dic)
     # return render(request, 'home/index2.html')

@@ -70,17 +70,24 @@
 
     <div class="container">
         <h3>&nbsp;&nbsp;&nbsp;Nombre: {{ form.nombre }}</h3>
-        <img src="{{ form.img.url }}" class="col-md-6">
+        <img src="{{ form.img.url }}" class="col-md-6"><img src="{{ form.img2.url }}" class="col-md-6">
         <br>
+		<br>
+
+		<br>
         <label>&nbsp;&nbsp;&nbsp;&nbsp;Sexo: {{ form.sexo }}</label>
         <br>
         <label>&nbsp;&nbsp;&nbsp;&nbsp;Ganadera: {{ form.ganadera }}</label>
         <br>
-        <label>&nbsp;&nbsp;&nbsp;&nbsp;Fecha de nacimiento: {{ form.fecha_nacimiento }}</label>
+        <label>&nbsp;&nbsp;&nbsp;&nbsp;Fecha de nacimiento: {{ form.f_nacimiento }}</label>
 		<br>
         <label>&nbsp;&nbsp;&nbsp;&nbsp;Tipo de nacimiento: {{ form.tipo_nacimiento }}</label>
 		<br>
-        <label>&nbsp;&nbsp;&nbsp;&nbsp;Peso al nacer: {{ form.peso }}</label>
+        <label>&nbsp;&nbsp;&nbsp;&nbsp;Tipo de parto: {{ form.tipo_parto }}</label>
+		<br>
+        <label>&nbsp;&nbsp;&nbsp;&nbsp;Siniga: {{ form.siniga }}</label>
+		<br>
+        <label>&nbsp;&nbsp;&nbsp;&nbsp;Peso al nacer: {{ form.peso_nacimiento }}</label>
         <br>
         <a href="{% url 'contact' %}" class="site-btn sb-dark">Contactanos</a>
     </div>

@@ -27,8 +27,10 @@ Ganado
             <tr>
                 <!--<th>#</th>-->
                 <th>Nombre</th>
-                <th>Tatuaje</th>
-                <th>Siniga</th>
+
+                <!--<th>Tatuaje</th>-->
+                <!--<th>Siniga</th>-->
+                <th>Foto</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -38,14 +40,15 @@ Ganado
                     <tr>
                         <!--<td>{{ i.id }}</td>-->
                         <td>{{ i.nombre }}</td>
-                        <td>{{ i.arete }}</td>
-                        <td>{{ i.siniga }}</td>
+
+                        <!--<td>{{ i.arete }}</td>-->
+
+                        <!--<td>{{ i.siniga }}</td>-->
+                        <td><img src="{{ i.img.url }}" class="col-md-3"></td>
                         <!--<td>{{ i.created }}</td>-->
                         <!--<td>{{ i.updated }}</td>-->
                         <td>
                             <a  class="btn btn-primary" href="{% url 'bovino_show' i.pk %}">Ver</a>
-                            <!--Nota quitar de aqui la venta-->
-                            <a class="btn btn-info" href="{% url 'bovino_venta' i.pk %}">Vender</a>
                             {% for field in user.groups.all %} {% if field.name == 'GanadoUpd' %}
                             <a class="btn btn-success" href="{% url 'bovino_update' i.pk %}">Editar</a>
                             {% endif %}{% endfor %}
@@ -53,7 +56,7 @@ Ganado
                             <a class="btn btn-danger" href="{% url 'bovino_delete' i.pk %}">Eliminar</a>
                             {% endif %}{% endfor %}
                             {% for field in user.groups.all %} {% if field.name == 'GanadoVen' %}
-                            <a class="btn btn-info" href="{# url 'bovino_venta' i.pk #}">Vender</a>
+                            <a class="btn btn-info" href="{% url 'bovino_venta' i.pk %}">Vender</a>
                             {% endif %}{% endfor %}
                         </td>
                     </tr>

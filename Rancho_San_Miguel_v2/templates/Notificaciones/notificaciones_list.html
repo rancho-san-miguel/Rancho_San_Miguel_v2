@@ -17,6 +17,7 @@ Notificaciones
                 <!--<th>#</th>-->
                 <th>Descripción</th>
                 <th>Fecha</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,9 @@ Notificaciones
                         <!--<td>{{ i.id }}</td>-->
                         <td>{{ i.descripcion }}</td>
                         <td>{{ i.fecha }}</td>
+                        <td>
+                            <a class="btn btn-danger" href="{% url 'notificaciones_delete' i.pk %}">Eliminar</a>
+                        </td>
                     </tr>
                 {% endfor %}
 

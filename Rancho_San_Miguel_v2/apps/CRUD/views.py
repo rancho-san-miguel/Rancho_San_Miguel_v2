@@ -45,6 +45,21 @@ class Bovino_Delete(DeleteView):
     template_name = 'RegBov/regbov_delete.html'
     success_url = reverse_lazy('bovino_list')
 
+def Bovino_Galeria_Venta_List(request):
+    query = Ganado.objects.filter(galeria_venta=True).exclude(estado='Vendida').order_by('id')
+    dic = {
+        'object_list':query,
+    }
+    # return render(request, 'GaleriaVentas/calis.html', dic)
+    return render(request, 'home/portfolio2.html', dic)
+
+def Bovino_Galeria_Venta_Show(request,pk):
+    query = Ganado.objects.get(pk=pk)
+    dic = {
+        'form':query,
+    }
+    return render(request, 'home/detalles.html', dic)
+
 def Bovino_Search(request):
     query = Ganado.objects.all()
     # query_filter = Ganado_filter(request.GET, queryset=query)
@@ -208,11 +223,13 @@ def Query_Notificaciones(request):
 
     var = str(year)+"-"+str(month)+"-"+str(day)
 
-    query = Notificaciones.objects.filter(fecha=var)
+    query = Notificaciones.objects.filter(fecha=var).update(estado=True)
+
+    query2 = Notificaciones.objects.filter(estado=True)
 
     dic = {
 
-        'form':query,
+        'form':query2,
     }
     return render(request, 'Ventas/calis.html', dic)
     # return render(request, 'base/base.html',dic)
@@ -221,6 +238,11 @@ class Notificaciones_Listar(ListView):
     queryset = Notificaciones.objects.all()
     template_name = 'Notificaciones/notificaciones_list.html'
     paginate_by = 5
+
+class Notificaciones_Delete(DeleteView):
+    model = Notificaciones
+    template_name = 'Notificaciones/notificaciones_delete.html'
+    success_url = reverse_lazy('index2')
 
 
 class Notificaciones_Create(CreateView):
@@ -818,7 +840,7 @@ class PlanProyGasDelete(DeleteView):
     success_url = reverse_lazy('list_plan')
 
 
-#Comparacion bovinos
+#Comparacion bovinos--------------------------------------------------------------------------------
 def ComparacionBovino(request):
     Fecha_Actual = Notificaciones_function()
 
@@ -828,7 +850,7 @@ def ComparacionBovino(request):
 
     fecha1 = str(year)+"-01-01"
     fecha2 = str(year)+"-12-31"
-    fecha_actual = str
+    # fecha_actual = str
     query1 = ControlVentaGanado.objects.filter(fecha__range=[fecha1,fecha2])
 
     vaca1 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
@@ -849,7 +871,6 @@ def ComparacionBovino(request):
     vaca6 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
         tipo='Becerros')
 
-
     v1 = len(vaca1)
     v2 = len(vaca2)
     v3 = len(vaca3)
@@ -857,18 +878,17 @@ def ComparacionBovino(request):
     v5 = len(vaca5)
     v6 = len(vaca6)
 
-
-
     query3 = Planes.objects.filter(fecha__range=[fecha1,fecha2])
-
-    query2 = PlaneacionBovina.objects.filter(no_planeacion=query3[0])
-
-    size = len(query1)
-
     suma = 0
-    for i in range(len(query2)):
-        suma = suma + int(query2[0].venta)
+    size = 0
+    try:
+        query2 = PlaneacionBovina.objects.filter(no_planeacion=query3[0])
 
+        size = len(query1)
+        for i in range(len(query2)):
+            suma = suma + int(query2[i].venta)
+    except:
+        query2 = PlaneacionBovina.objects.all()
     dic = {
         'total':size,
         'query':query1,
@@ -882,3 +902,153 @@ def ComparacionBovino(request):
         'v6': v6,
     }
     return render(request, 'Comparacion/Comp_Bov.html', dic)
+
+
+#Comparaciom Porcino--------------------------------------------------------------------------------------------------
+def ComparacionPorcino(request):
+    Fecha_Actual = Notificaciones_function()
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+    fecha1 = str(year) + "-01-01"
+    fecha2 = str(year) + "-12-31"
+
+    query1 = VentasPorcinos.objects.filter(fecha__range=[fecha1, fecha2])
+    query2 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    suma = 0
+    suma2 = 0
+    suma3 = 0
+    suma4 = 0
+    g1 = 0
+    g2 = 0
+    try:
+        size = len(query1)
+        for i in range(size):
+            suma = suma + int(query1[i].cantidad)
+            g1 = g1 + int(query1[i].total_venta)
+    except:
+        pass
+
+    try:
+        query3 = PlaneacionPorcina.objects.filter(no_planeacion=query2[0])
+        size = len(query3)
+        for i in range(size):
+            suma2 = suma2 + int(query3[i].cerdos)
+            suma3 = suma3 + int(query3[i].lechones)
+            g2 = g2 + int(query3[i].ingresos)
+        suma4 = suma2 + suma3
+    except:
+        query3 = PlaneacionPorcina.objects.all()
+        pass
+
+    dic = {
+        'venta_total':suma,
+        'planeado':suma4,
+        'query2':query3,
+        'query1':query1,
+        'g1':g1,
+        'g2':g2,
+    }
+
+    return render(request, 'Comparacion/Comp_cerdos.html', dic)
+
+def ComparacionLeche(request):
+    Fecha_Actual = Notificaciones_function()
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+    fecha1 = str(year) + "-01-01"
+    fecha2 = str(year) + "-12-31"
+
+    query1 = VentaLeche.objects.filter(fecha__range=[fecha1, fecha2])
+    query2 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+
+    suma = 0
+    suma2 = 0
+    g1 = 0
+    dias = 0
+
+    try:
+        size = len(query1)
+        for i in range(size):
+            suma = suma + int(query1[i].cantidad)
+            g1 = g1 + int(query1[i].total)
+    except:
+        pass
+
+    try:
+        query3 = PlaneacionLeche.objects.filter(no_planeacion=query2[0])
+        size = len(query3)
+        for i in range(size):
+            suma2 = suma2 + int(query3[i].estimado_anual)
+            dias = dias + int(query3[i].dias)
+            # plan_venta =
+    except:
+        query3 = PlaneacionLeche.objects.all()
+
+    dic = {
+        'ventas_leche':suma,
+        'plan_ganancias':suma2,
+        'venta_ganancia':g1,
+        'dias':dias,
+    }
+
+    return render(request, 'Comparacion/Comp_Leche.html', dic)
+
+def ComparacionAgricola(request):
+    Fecha_Actual = Notificaciones_function()
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+    fecha1 = str(year) + "-01-01"
+    fecha2 = str(year) + "-12-31"
+
+    query1 = CompraVentaAgricola.objects.filter(fecha__range=[fecha1, fecha2]).filter(tipo='Venta')
+    query2 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+
+    L1 = []
+    L2 = []
+    L3 = []
+
+
+    L4 = []
+    L5 = []
+    L6 = []
+
+    g1 = 0
+    g2 = 0
+
+    try:
+        size = len(query1)
+        for i in range(size):
+            L1.append(query1[i].cultivo)
+            L2.append(query1[i].cantidad)
+            L3.append(query1[i].precio)
+            g1 = g1 + int(query1[i].precio)
+    except:
+        pass
+
+    try:
+        query3 = PlaneacionAgricola.objects.filter(no_planeacion=query2[0])
+        size = len(query3)
+        for i in range(size):
+            L4.append(query3[i].cultivo)
+            L5.append(query3[i].cantidad)
+            L6.append(query3[i].total)
+            g2 = g2 + int(query3[i].total)
+    except:
+        pass
+
+
+    dic = {
+        'cultivo':L1,
+        'cantidad':L2,
+        'precio':L3,
+        'cultivo_plan':L4,
+        'cantidad_plan':L5,
+        'total':L6,
+        'g':g1,
+        'g2':g2,
+    }
+
+    return render(request, 'Comparacion/Comp_Agro.html', dic)

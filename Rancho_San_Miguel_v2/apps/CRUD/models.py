@@ -42,6 +42,9 @@ class Ganado(models.Model):
         #managed = False
         db_table = 'ganado'
 
+    def __str__(self):
+        return self.nombre
+
 
 class ControlVentaGanado(models.Model):
     op1 = Choices('Vientre en producción limousin', 'Vientre en crecimiento limousin', 'Vientre en producción brangus',
@@ -61,7 +64,7 @@ class ControlVentaGanado(models.Model):
 
 class VentasGanado(models.Model):
     no_venta = models.ForeignKey(ControlVentaGanado, models.DO_NOTHING, db_column='no_venta')
-    arete = models.ForeignKey(Ganado, models.DO_NOTHING, db_column='arete')
+    arete = models.ForeignKey(Ganado, models.CASCADE, db_column='arete')
     precio = models.DecimalField(max_digits=10, decimal_places=0)
 
     class Meta:
@@ -100,8 +103,8 @@ class ControlGanado(models.Model):
     descripcion = models.CharField(max_length=240)
     lugar = models.CharField(max_length=50)
     fecha = models.DateField()
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         #managed = False
@@ -263,7 +266,7 @@ class MovimientosDya(models.Model):
     fecha = models.DateField()
 
     def __str__(self):
-        return self.no._related_fields
+        return int(self.no)
 
     class Meta:
         #managed = False
@@ -273,6 +276,7 @@ class MovimientosDya(models.Model):
 class Notificaciones(models.Model):
     descripcion = models.CharField(max_length=240)
     fecha = models.DateField()
+    estado = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -389,6 +393,25 @@ class VentasPorcinos(models.Model):
     class Meta:
         #managed = False
         db_table = 'ventas_porcinos'
+
+
+class CompraVentaAgricola(models.Model):
+    opciones = Choices('Compra', 'Venta', 'Baja')
+    tipo =  models.CharField(choices=opciones,max_length=15)
+    cultivo = models.ForeignKey(InventarioAgricola, models.DO_NOTHING, db_column='cultivo')
+    cantidad = models.IntegerField()
+    precio = models.DecimalField(max_digits=11, decimal_places=0)
+    comprador = models.CharField(max_length=30)
+    fecha = models.DateField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        #managed = False
+        db_table = 'Compras_ventas_agricolas'
+
+
+
 
 # Borrar la foto vieja si se le da al boton borrar
 @receiver(post_delete, sender=Ganado)

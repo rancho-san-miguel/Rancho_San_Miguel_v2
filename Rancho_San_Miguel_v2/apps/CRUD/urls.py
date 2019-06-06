@@ -3,7 +3,7 @@ from .views import Bovino_Create, Bovino_Search, Bovino_Show, Bovino_List, Bovin
 from .views import Query_Notificaciones, Notificaciones_Create, Notificaciones_Listar, Bovino_update_ventas_create
 from .views import CrearUsuario, ListarUsuarios, AddGrupos, Venta_Bovino_List, Venta_Bovino_Show
 from .views import GaleriaCreate, GaleriaList, GaleriaDelete, GaleriaDetail, GaleriaUpdate
-from .views import GaleriaList2, Notificaciones_Delete
+from .views import GaleriaList2, Notificaciones_Update
 from .views import Controlg_Update, Controlg_Show, Controlg_List, Controlg_Delete, Controlg_Create
 from .views import Compra_Cerdos_Create, Compra_Cerdos_List
 from .views import PlanCreate, PlanList, PlanAgroCreate, PlanAgroList, PlanAgroUpdate, PlanAgroShow, PlanAgroDelete
@@ -36,7 +36,7 @@ urlpatterns = [
     path('notificaciones/', Query_Notificaciones, name="notificacion"),
     path('notificaciones/listar/', Notificaciones_Listar.as_view(), name="notificacion_listar"),
     path('notificaciones/create/', Notificaciones_Create.as_view(), name="notificaciones_crear"),
-    path('notificaciones/delete/<int:pk>', Notificaciones_Delete.as_view(), name="notificaciones_delete"),
+    path('notificaciones/update/<int:pk>', Notificaciones_Update.as_view(), name="notificaciones_update"),
     #Usuarios
     path('crear/usuario/', CrearUsuario.as_view(), name='crear_usuario'),
     path('listar/usuario/', ListarUsuarios.as_view(), name='listar_usuario'),

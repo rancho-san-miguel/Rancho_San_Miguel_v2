@@ -18,6 +18,8 @@ class Ganado(models.Model):
     tc = Choices('Uníparo', 'Gemelar MH', 'Gemelar HH', 'Gemelar MM', 'Múltiple')
     tp = Choices('Normal', 'Distónico', 'Difícil', 'Cesárea')
     tt = Choices("Derecha",'Izquierda')
+    tipo_g = Choices('Vientre en producción limousin', 'Vientre en crecimiento limousin', 'Vientre en producción brangus',
+                  'Vientre en crecimiento brangus', 'Sementales', 'Becerros', 'Sin registro')
     nombre = models.CharField(max_length=15)
     arete = models.CharField(max_length=15, unique=True)
     siniga = models.CharField(max_length=15, blank=True, null=True)
@@ -34,6 +36,7 @@ class Ganado(models.Model):
     localizacion_fierro = models.CharField(max_length=20, blank=True, null=True)
     localizacion_tatuaje = models.CharField(choices=tt,max_length=20, blank=True, null=True)
     estado = models.CharField(choices=opciones2, max_length=10)
+    tipo = models.CharField(choices=tipo_g, max_length=40)
     galeria_venta = models.BooleanField(default=False)
     img = models.ImageField(verbose_name="Imagen", upload_to='Ganado', blank=True, null=True)
     img2 = models.ImageField(verbose_name="Imagen2", upload_to='Ganado', blank=True, null=True)
@@ -48,10 +51,10 @@ class Ganado(models.Model):
 
 class ControlVentaGanado(models.Model):
     op1 = Choices('Vientre en producción limousin', 'Vientre en crecimiento limousin', 'Vientre en producción brangus',
-                  'Vientre en crecimiento brangus', 'Sementales', 'Becerros')
+                  'Vientre en crecimiento brangus', 'Sementales', 'Becerros','Sin registro')
     no_venta = models.AutoField(primary_key=True)
     descripcion_venta = models.CharField(max_length=240)
-    tipo = models.CharField(choices=op1,max_length=20)
+    tipo = models.CharField(max_length=40)
     total_venta = models.DecimalField(max_digits=10, decimal_places=0)
     comprador = models.CharField(max_length=30)
     fecha = models.DateField()
@@ -233,6 +236,7 @@ class Galeria(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-created']
         db_table = 'galeria'
 
 
@@ -276,12 +280,13 @@ class MovimientosDya(models.Model):
 class Notificaciones(models.Model):
     descripcion = models.CharField(max_length=240)
     fecha = models.DateField()
-    estado = models.BooleanField(default=False)
+    estado = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         #managed = False
+        ordering = ['-created']
         db_table = 'notificaciones'
 
 

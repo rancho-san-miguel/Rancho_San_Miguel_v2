@@ -82,7 +82,9 @@ def Bovino_update_ventas_create(request, pk):
     if request.method == 'POST':
         form = ControlVentaGanado_form(request.POST)
         if form.is_valid():
-            form.save()
+            var = form.save()
+            var.tipo = query.tipo
+            var.save()
             query.delete()
         return redirect('venta_list')
     else:
@@ -223,9 +225,9 @@ def Query_Notificaciones(request):
 
     var = str(year)+"-"+str(month)+"-"+str(day)
 
-    query = Notificaciones.objects.filter(fecha=var).update(estado=True)
+    query = Notificaciones.objects.filter(fecha=var).update(estado=False)
 
-    query2 = Notificaciones.objects.filter(estado=True)
+    query2 = Notificaciones.objects.filter(estado=False)
 
     dic = {
 
@@ -239,10 +241,11 @@ class Notificaciones_Listar(ListView):
     template_name = 'Notificaciones/notificaciones_list.html'
     paginate_by = 5
 
-class Notificaciones_Delete(DeleteView):
+class Notificaciones_Update(UpdateView):
     model = Notificaciones
-    template_name = 'Notificaciones/notificaciones_delete.html'
-    success_url = reverse_lazy('index2')
+    form_class = Notificaciones_Update_form
+    template_name = 'Notificaciones/notificaciones_update.html'
+    success_url = reverse_lazy('notificacion_listar')
 
 
 class Notificaciones_Create(CreateView):
@@ -871,12 +874,16 @@ def ComparacionBovino(request):
     vaca6 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
         tipo='Becerros')
 
+    vaca7 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
+        tipo='Sin registro')
+
     v1 = len(vaca1)
     v2 = len(vaca2)
     v3 = len(vaca3)
     v4 = len(vaca4)
     v5 = len(vaca5)
     v6 = len(vaca6)
+    v7 = len(vaca7)
 
     query3 = Planes.objects.filter(fecha__range=[fecha1,fecha2])
     suma = 0
@@ -900,6 +907,7 @@ def ComparacionBovino(request):
         'v4': v4,
         'v5': v5,
         'v6': v6,
+        'v7':v7,
     }
     return render(request, 'Comparacion/Comp_Bov.html', dic)
 

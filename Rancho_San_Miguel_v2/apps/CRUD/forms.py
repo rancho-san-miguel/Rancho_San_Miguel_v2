@@ -31,6 +31,7 @@ class Ganado_Form(forms.ModelForm):
             'localizacion_fierro',
             'localizacion_tatuaje',
             'estado',
+            'tipo',
             'galeria_venta',
             'img',
             'img2',
@@ -53,6 +54,7 @@ class Ganado_Form(forms.ModelForm):
             'localizacion_fierro':'Fierro',
             'localizacion_tatuaje':'Tatuaje en oreja',
             'estado':'Estado',
+            'tipo':'Tipo de bovino',
             'galeria_venta':'Agregar a la ventana de venta',
             'img':'Foto',
             'img2': 'Foto2',
@@ -60,7 +62,6 @@ class Ganado_Form(forms.ModelForm):
 
 
         widgets = {
-
             'nombre':forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el nombre del bovino'}),
             'arete':forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete del bovino'}),
             'siniga': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame la siniga del bovino'}),
@@ -77,6 +78,7 @@ class Ganado_Form(forms.ModelForm):
             'localizacion_fierro':forms.TextInput(attrs={'class': 'form-control','placeholder':'Localización del fierro'}),
             'localizacion_tatuaje':forms.Select(attrs={'class': 'form-control'}),
             'estado':forms.Select(attrs={'class': 'form-control'}),
+            'tipo':forms.Select(attrs={'class': 'form-control'}),
             'galeria_venta': forms.CheckboxInput(),
             'img': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
             'img2': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
@@ -97,6 +99,19 @@ class Notificaciones_form(forms.ModelForm):
             'descripcion':forms.Textarea(attrs={'class': 'form-control','placeholder':'Descripción de las actividades a realizar'}),
             'fecha':forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
         }
+class Notificaciones_Update_form(forms.ModelForm):
+    class Meta:
+        model = Notificaciones
+        fields = {
+            'estado',
+        }
+        labels = {
+            'estado': 'Marcar como leido',
+        }
+        widgets = {
+            'estado': forms.CheckboxInput(),
+        }
+
 
 class SignUpForm(UserCreationForm):
     # password1 = forms.CharField()
@@ -408,21 +423,21 @@ class ControlVentaGanado_form(forms.ModelForm):
         model = ControlVentaGanado
         fields = {
             'descripcion_venta',
-            'tipo',
+            # 'tipo',
             'total_venta',
             'comprador',
             'fecha',
         }
         labels = {
             'descripcion_venta':'Descripción de la venta',
-            'tipo':'Tipo de bovino',
+            # 'tipo':'Tipo de bovino',
             'total_venta':'Total de la venta',
             'comprador':'Comprador',
             'fecha':'Fecha de la venta',
         }
         widgets = {
             'descripcion_venta': forms.Textarea(attrs={'class': 'form-control'}),
-            'tipo':forms.Select(attrs={'class': 'form-control'}),
+            # 'tipo':forms.Select(attrs={'class': 'form-control'}),
             'total_venta': forms.TextInput(attrs={'class': 'form-control','placeholder':'Total del bovino'}),
             'comprador': forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del comprador'}),
             'fecha': forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),

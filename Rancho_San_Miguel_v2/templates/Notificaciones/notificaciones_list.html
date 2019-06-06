@@ -17,6 +17,7 @@ Notificaciones
                 <!--<th>#</th>-->
                 <th>Descripción</th>
                 <th>Fecha</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -28,7 +29,14 @@ Notificaciones
                         <td>{{ i.descripcion }}</td>
                         <td>{{ i.fecha }}</td>
                         <td>
-                            <a class="btn btn-danger" href="{% url 'notificaciones_delete' i.pk %}">Eliminar</a>
+                            {% if i.estado == False %}
+                                Activo
+                            {% else %}
+                                Desactidado
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'notificaciones_update' i.pk %}">Actualizar</a>
                         </td>
                     </tr>
                 {% endfor %}

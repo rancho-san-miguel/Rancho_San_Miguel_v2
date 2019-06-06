@@ -1,0 +1,93 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Historial de compras, ventas y retiros
+{% endblock %}
+
+{% block title2 %}
+Historial de compras, ventas y retiros
+{% endblock %}
+
+{% block contenido %}
+
+<form method="POST">
+        {% csrf_token %}
+        <!--<h1>Año de nacimiento</h1>-->
+    <button class="btn btn-primary" name="ordenar_registros" type="submit" value="ptodos" >Todos</button>
+    <button class="btn btn-success" name="ordenar_registros" type="submit" value="pfinal">Ventas</button>
+    <button class="btn btn-primary" name="ordenar_registros" type="submit" value="pproce">Compras</button>
+    <button class="btn btn-primary" name="ordenar_registros" type="submit" value="retiros">Retiros</button>
+    </form>
+
+    {% if object_list %}
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <!--<th>#</th>-->
+                <th>Tipo de registro</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                {% if con == 'venta' %}
+                <th>Total</th>
+                <th>Cliente</th>
+                {% elif con == 'compra' or con == 'baja'  %}
+                <th>Total</th>
+                <th>Proveedor</th>
+                {% else %}
+                <th>Total</th>
+                <th>Vendedor/ Comprador</th>
+                {% endif %}
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                {% for i in object_list %}
+                    <tr>
+                        <!--<td>{{ i.id }}</td>-->
+                        <td>{{ i.tipo }}</td>
+                        <td>{{ i.cultivo}}</td>
+                        <td>{{ i.cantidad }}</td>
+                        <td>${{ i.precio }}</td>
+                        <td>{{ i.comprador }}</td>
+                        <td>{{ i.fecha }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{# url 'cultivo_en_proceso_show' i.pk #}">Ver</a>
+                            <a class="btn btn-danger" href="{# url 'cultivo_en_proceso_delete' i.pk #}">Eliminar</a>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+
+        </tbody>
+    </table>
+
+    {% else %}
+        <h2>No hay registros</h2>
+    {% endif %}
+
+
+    {% if object_list.has_other_pages %}
+  <ul class="pagination">
+    {% if object_list.has_previous %}
+      <li><a href="?page={{ object_list.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in object_list.paginator.page_range %}
+      {% if object_list.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if object_list.has_next %}
+      <li><a href="?page={{ object_list.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+{% endblock %}

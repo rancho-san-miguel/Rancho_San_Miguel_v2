@@ -81,11 +81,9 @@
                     <li class="nav-item dropdown">
                         <a style="font-size: 18px;" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Agricultura</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a style="font-size: 15px;" class="dropdown-item" href="{# url 'cultivo_list' #}">Inventario agrícola</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'inventario_list' %}">Inventario agrícola</a>
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'cultivo_en_proceso_list' %}">Producción</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{# url 'almacen_list' #}">Almacén</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{# url 'venta_cultivo_list' #}">Historial de ventas</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{# url 'almacen_baja_list' #}">Historial de retiro de productos</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'compraryvenderagricola' %}">Compras y ventas</a>
                         </div>
                     </li>
                     {% endif %}{% endfor %}

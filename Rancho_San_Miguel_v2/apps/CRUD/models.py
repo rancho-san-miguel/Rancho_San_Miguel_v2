@@ -114,8 +114,9 @@ class ControlGanado(models.Model):
         db_table = 'control_ganado'
 
 class InventarioAgricola(models.Model):
+    opc= Choices('Toneladas', 'Pacas')
     cultivo = models.CharField(primary_key=True, max_length=50)
-    unidad_medida = models.CharField(max_length=20)
+    unidad_medida = models.CharField(choices=opc, max_length=20)
     cantidad = models.IntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=0)
 
@@ -124,52 +125,24 @@ class InventarioAgricola(models.Model):
         db_table = 'inventario_agricola'
 
     def __str__(self):
-        return self.cultivo
+        return str(self.cultivo)
 
 
-class ControlVentasAgricolas(models.Model):
-    no_registro = models.AutoField(primary_key=True)
-    total_venta = models.DecimalField(max_digits=10, decimal_places=0)
-    comprador = models.CharField(max_length=30)
-    fecha = models.DateField()
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
-
-    class Meta:
-        #managed = False
-        db_table = 'control_ventas_agricolas'
-
-class VentasAgricola(models.Model):
-    no_venta = models.ForeignKey(ControlVentasAgricolas, models.DO_NOTHING, db_column='no_venta')
+class CompraVentaAgricola(models.Model):
+    opciones = Choices('Compra', 'Venta', 'Baja')
+    tipo =  models.CharField(choices=opciones,max_length=15)
     cultivo = models.ForeignKey(InventarioAgricola, models.DO_NOTHING, db_column='cultivo')
     cantidad = models.IntegerField()
-    total = models.DecimalField(max_digits=11, decimal_places=0)
-
-    class Meta:
-        #managed = False
-        db_table = 'ventas_agricola'
-
-class ControlComprasAgricolas(models.Model):
-    no_compra = models.IntegerField(primary_key=True)
-    total_compra = models.DecimalField(max_digits=10, decimal_places=0)
+    precio = models.DecimalField(max_digits=11, decimal_places=0)
+    comprador = models.CharField(max_length=30)
     fecha = models.DateField()
-    vendedor = models.CharField(max_length=30)
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         #managed = False
-        db_table = 'control_compras_agricolas'
+        db_table = 'Compras_ventas_agricolas'
 
-class ComprasAgricolas(models.Model):
-    no_compra = models.ForeignKey('ControlComprasAgricolas', models.DO_NOTHING, db_column='no_compra')
-    cultivo = models.ForeignKey('InventarioAgricola', models.DO_NOTHING, db_column='cultivo')
-    cantidad = models.IntegerField()
-    total = models.DecimalField(max_digits=11, decimal_places=0)
-
-    class Meta:
-        #managed = False
-        db_table = 'compras_agricolas'
 
 class Produccion(models.Model):
     opciones = Choices(1, 2)

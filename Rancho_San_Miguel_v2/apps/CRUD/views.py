@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from .models import *
 from .forms import *
 
+
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView, DetailView
 
@@ -168,8 +169,8 @@ def En_Proceso_Fin(request, pk):
         n1 = int(request.POST['produccion_obtenida'])
         n3 = request.POST['fecha_final']
         Produccion.objects.filter(pk=pk).update(produccion_obtenida=n1,fecha_final=n3)
-
         query3.cantidad = n1 + query3.cantidad
+        query3.save()
         return redirect('cultivo_en_proceso_list')
 
     dic = {
@@ -197,7 +198,6 @@ def ordenar_producciones(request):
         pros = paginator.page(1)
     except EmptyPage:
         pros = paginator.page(paginator.num_pages)
-    # query_filter = Ganado_filter(request.GET, queryset=query)
     dic = {
         'object_list': pros,
     }
@@ -253,8 +253,135 @@ class Notificaciones_Create(CreateView):
     form_class = Notificaciones_form
     template_name = 'Notificaciones/notifi_form.html'
     success_url = reverse_lazy('index2')
+
 #----------------------------------------------------------------------------------------------------------
-"Galeria"
+"Inventario Agicola"
+
+class InventarioA_List(ListView):
+    queryset = InventarioAgricola.objects.all()
+    template_name = 'Inventario_agricola/inventario_agricola_list.html'
+    paginate_by = 5
+
+class InventarioA_Create(CreateView):
+    model = InventarioAgricola
+    form_class = Registro_Agricola_form
+    template_name = 'Inventario_agricola/inventario_agricola_form.html'
+    success_url = reverse_lazy('inventario_list')
+
+class InventarioA_Update(UpdateView):
+    model = InventarioAgricola
+    form_class = Registro_Agricola_form
+    template_name = 'Inventario_agricola/inventario_agricola_form.html'
+    success_url = reverse_lazy('inventario_list')
+
+class InventarioA_Delete(DeleteView):
+    model = InventarioAgricola
+    template_name = 'Inventario_agricola/inventario_agricola_delete.html'
+    success_url = reverse_lazy('inventario_list')
+
+def Comprar_Vender_list(request):
+    query = CompraVentaAgricola.objects.all()
+    condi = 'holo'
+    if request.method == 'POST':
+        dime = request.POST['ordenar_registros']
+        if dime=="ptodos":
+            pass
+        elif dime=="pfinal":
+            query = CompraVentaAgricola.objects.filter(tipo='Venta')
+            condi='venta'
+        elif dime == "pproce":
+            query = CompraVentaAgricola.objects.filter(tipo='Compra')
+            condi='compra'
+        elif dime == "retiros":
+            query = CompraVentaAgricola.objects.filter(tipo='Baja')
+            condi='baja'
+        #else:
+    page = request.GET.get('page', 1)
+    paginator = Paginator(query, 10)
+    try:
+        pros = paginator.page(page)
+    except PageNotAnInteger:
+        pros = paginator.page(1)
+    except EmptyPage:
+        pros = paginator.page(paginator.num_pages)
+    dic = {
+        'object_list': pros,
+        'con': condi,
+    }
+
+    return render(request, 'Inventario_agricola/compra_venta_list.html', dic)
+
+def AVender_create(request, pk):
+    query1 = InventarioAgricola.objects.get(cultivo=pk)
+    # print ("QUE ES ESTO**********************************************************************************", query3)
+    if request.method == 'POST':
+        nombre = request.POST['nombre_vendedor']
+        canti = int(request.POST['cantidad_comprar'])
+        fecha = request.POST['fecha_final']
+        b = CompraVentaAgricola(tipo='Venta', cultivo=query1, cantidad=canti, precio=(query1.precio * canti),
+                                comprador=nombre, fecha=fecha)
+        b.save()
+        query1.cantidad = query1.cantidad - canti
+        query1.save()
+        return redirect('compraryvenderagricola')
+
+    dic = {
+        'object': query1,
+    }
+    return render(request, 'Inventario_agricola/AV_form.html', dic)
+
+
+def Acomprar_create(request, pk):
+    query1 = InventarioAgricola.objects.get(cultivo=pk)
+    #print ("QUE ES ESTO**********************************************************************************", query3)
+    if request.method == 'POST':
+        nombre = request.POST['nombre_vendedor']
+        canti = int(request.POST['cantidad_comprar'])
+        precio = float(request.POST['precio_compra'])
+        fecha = request.POST['fecha_final']
+        b = CompraVentaAgricola(tipo='Compra', cultivo=query1, cantidad=canti, precio=(precio*canti),comprador=nombre, fecha=fecha)
+        b.save()
+        query1.cantidad = canti + query1.cantidad
+        query1.save()
+        return redirect('compraryvenderagricola')
+
+    dic = {
+        'object': query1,
+    }
+    return render(request, 'Inventario_agricola/AC_form.html', dic)
+
+def Abaja_create(request, pk):
+    query1 = InventarioAgricola.objects.get(cultivo=pk)
+    # print ("QUE ES ESTO**********************************************************************************", query3)
+    if request.method == 'POST':
+        canti = int(request.POST['cantidad_comprar'])
+        fecha = request.POST['fecha_final']
+        b = CompraVentaAgricola(tipo='Baja', cultivo=query1, cantidad=canti, precio=0,
+                                comprador="Rancho San Miguel", fecha=fecha)
+        b.save()
+        query1.cantidad = query1.cantidad - canti
+        query1.save()
+        return redirect('compraryvenderagricola')
+
+    dic = {
+        'object': query1,
+    }
+    return render(request, 'Inventario_agricola/AB_form.html', dic)
+
+
+
+# class InventarioA_Update(UpdateView):
+#     model = InventarioAgricola
+#     form_class = Registro_Agricola_form
+#     template_name = 'Inventario_agricola/inventario_agricola_form.html'
+#     success_url = reverse_lazy('inventario_list')
+#
+# class InventarioA_Delete(DeleteView):
+#     model = InventarioAgricola
+#     template_name = 'Inventario_agricola/inventario_agricola_delete.html'
+#     success_url = reverse_lazy('inventario_list')
+#----------------------------------------------------------------------------------------------------------
+#"Galeria"
 class GaleriaCreate(CreateView):
     model = Galeria
     form_class = GaleriaForm

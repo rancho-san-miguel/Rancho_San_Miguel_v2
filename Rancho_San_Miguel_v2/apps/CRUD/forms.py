@@ -62,6 +62,7 @@ class Ganado_Form(forms.ModelForm):
 
 
         widgets = {
+
             'nombre':forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el nombre del bovino'}),
             'arete':forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete del bovino'}),
             'siniga': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame la siniga del bovino'}),
@@ -111,6 +112,7 @@ class Notificaciones_Update_form(forms.ModelForm):
         widgets = {
             'estado': forms.CheckboxInput(),
         }
+
 
 
 class SignUpForm(UserCreationForm):

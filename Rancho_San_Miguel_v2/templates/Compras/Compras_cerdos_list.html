@@ -9,8 +9,7 @@ Venta Porcina
 {% endblock %}
 
 {% block contenido %}
-<a class="btn btn-success" href="{% url 'cerdos_crearVenta' %}">Vender</a>
-<!--<a class="btn btn-primary" href="#">Compra</a>-->
+
 {% if object_list %}
     <table class="table table-striped table-bordered">
         <thead class="bg-success" >
@@ -38,6 +37,11 @@ Venta Porcina
                 {% endfor %}
         </tbody>
     </table>
+ <div class="container" align="left">
+     <ul class="pager">
+         <a class = " btn btn-primary "  href = " {% url 'cerdos_inventario' %} " > Regresar </a>
+     </ul>
+ </div>
     {% else %}
         <h2>No hay registro de venta porcina</h2>
     {% endif %}

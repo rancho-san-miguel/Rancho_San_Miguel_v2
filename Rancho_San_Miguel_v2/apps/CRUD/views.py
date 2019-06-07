@@ -439,6 +439,11 @@ def Compra_Cerdos_Create(request):
     }
     return render(request, 'Ventas/ventas_cerdos_form.html', dic)
 
+class InventCerdos_List(ListView):
+    queryset = InventarioPorcino.objects.all()
+    template_name = 'Compras/InventarioCerdos.html'
+    paginate_by = 5
+
 #################pppp
 ###############################
 class DeudoresAcreedoresCreate(CreateView):
@@ -473,30 +478,30 @@ class DeudoresAcreedoresUpdate(UpdateView):
 
 def Abonos(request, pk):
     query1 = DeudoresAcreedores.objects.get(pk=pk)
-    # print("Cantidad-----------------------------------------------------------------------------")
-    # print(query1.cantidad)
-    if request.method == 'POST':
+    if request.method=='POST':
         form = MovDeudoresAcredoresForm(request.POST)
         if form.is_valid():
             var = form.save()
-            var.deuda
+            var.nombre=query1.nombre
 
-            if int(query1.deuda) >= int(var.deuda):
+            if int(query1.deuda) >= int(var.deuda) and int(var.deuda>0):
                 query1.deuda = int(query1.deuda) - int(var.deuda)
                 query1.save()
                 var.save()
             else:
-                messages.info(request, 'Error. No cuentas con el suficiente inventario para venderlo')
+                messages.info(request, 'Error. No se pudo abonar verifica el valor')
                 var.delete()
-        return redirect('Abono_list')
+            return redirect('Abono_list')
+
     else:
         form = MovDeudoresAcredoresForm()
 
-    dic = {
-        'form':query1,
-        'form2':form,
-    }
-    return render(request, 'DeudoreAcreedores/AbonosCrear.html', dic)
+
+        dic = {
+            'form':query1,
+            'form2':form,
+        }
+        return render(request, 'DeudoreAcreedores/AbonosCrear.html', dic)
 
 
 class AbonosList(ListView):

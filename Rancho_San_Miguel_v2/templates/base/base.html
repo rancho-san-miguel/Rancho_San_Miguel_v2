@@ -36,6 +36,15 @@
                     <li class="nav-item">
                         <a style="font-size: 18px;" class="nav-link text-white" href="{% url 'index' %}" >Inicio</a>
                     </li>
+                    <li class="nav-item">
+                        <a style="font-size: 18px;" class="nav-link text-white" href="{% url 'Deudore_Acreedores_list' %}" >Deudores/Acreedores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="font-size: 18px;" class="nav-link text-white" href="{% url 'Historial_Compras_list' %}" >Gastos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="font-size: 18px;" class="nav-link text-white" href="{% url 'index' %}" >Inicio</a>
+                    </li>
                     <!--Inicion de la tabla Final con resticciones **************************************************** -->
                     {% for field in user.groups.all %} {% if field.name == 'Galeria' %}
                     <li class="nav-item">
@@ -69,13 +78,10 @@
 
                     {% for field in user.groups.all %} {% if field.name == 'Porcinos' %}
                     <li class="nav-item dropdown">
-                        <a style="font-size: 18px;" class="nav-link dropdown-toggle text-white" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Porcinos</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'cerdos_list' %}">Compra</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'cerdos_listVenta' %}">Venta</a>
-                        </div>
+                        <a style="font-size: 18px;" class="nav-link dropdown-toggle text-white" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{% url 'cerdos_inventario' %}">Porcinos</a>
                     </li>
                     {% endif %}{% endfor %}
+
 
                     {% for field in user.groups.all %} {% if field.name == 'Agricultura' %}
                     <li class="nav-item dropdown">

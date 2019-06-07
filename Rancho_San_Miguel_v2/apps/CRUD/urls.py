@@ -5,7 +5,7 @@ from .views import CrearUsuario, ListarUsuarios, AddGrupos, Venta_Bovino_List, V
 from .views import GaleriaCreate, GaleriaList, GaleriaDelete, GaleriaDetail, GaleriaUpdate
 from .views import GaleriaList2, Notificaciones_Update
 from .views import Controlg_Update, Controlg_Show, Controlg_List, Controlg_Delete, Controlg_Create
-from .views import Compra_Cerdos_Create, Compra_Cerdos_List
+from .views import Compra_Cerdos_Create, Compra_Cerdos_List,InventCerdos_List
 from .views import PlanCreate, PlanList, PlanAgroCreate, PlanAgroList, PlanAgroUpdate, PlanAgroShow, PlanAgroDelete
 from .views import PlanBovCreate, PlanBovList, PlanBovUpdate, PlanBovShow, PlanBovDelete, PlanLecheCreate, PlanLecList
 from .views import PlanLecUpdate, PlanLecheShow, PlanLecDelete, PlanPorCreate, PlanPorList, PlanPorcUpdate, PlanPorcinoShow
@@ -58,6 +58,8 @@ urlpatterns = [
 
     path('porcino_C_crear/',Venta_Cerdos_Create, name="cerdos_crearVenta"),
     path('porcino_C_list/', Venta_Cerdos_List.as_view(), name="cerdos_listVenta"),
+    path('porcinoinvent/', InventCerdos_List.as_view(), name="cerdos_inventario"),
+
 # Control_ganado
     # Control_ganado
     path('controlganado/', Controlg_Create.as_view(), name="control_crear"),

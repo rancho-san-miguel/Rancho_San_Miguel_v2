@@ -1,18 +1,18 @@
 {% extends 'base/base.html' %}
 
 {% block title %}
-Ganado
+Ganado sin registro
 {% endblock %}
 
 {% block title2 %}
-Ganado
+Ganado sin registro
 {% endblock %}
 
 {% block contenido %}
     {% for field in user.groups.all %} {% if field.name == 'GanadoAdd' %}
-        <a class="btn btn-primary" href="{% url 'bovino_crear' %}">Agregar ganado</a>
+        <a class="btn btn-primary" href="{% url 'bovino_sinregistro_crear' %}">Agregar ganado</a>
     {% endif %}{% endfor %}
-
+    {% if object_list %}
 
     <form method="POST">
         {% csrf_token %}
@@ -22,43 +22,30 @@ Ganado
         </p>
     </form>
 
-    {% if object_list %}
     <table class="table table-striped table-bordered">
         <thead class="bg-success" >
             <tr>
-                <!--<th>#</th>-->
                 <th>Nombre</th>
-
-                <!--<th>Tatuaje</th>-->
-                <!--<th>Siniga</th>-->
                 <th>Foto</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-
                 {% for i in object_list %}
                     <tr>
-                        <!--<td>{{ i.id }}</td>-->
                         <td>{{ i.nombre }}</td>
-
-                        <!--<td>{{ i.arete }}</td>-->
-
-                        <!--<td>{{ i.siniga }}</td>-->
                         <td><img src="{{ i.img.url }}" class="col-md-3"></td>
-                        <!--<td>{{ i.created }}</td>-->
-                        <!--<td>{{ i.updated }}</td>-->
                         <td>
-                            <a  class="btn btn-primary" href="{% url 'bovino_show' i.pk %}">Ver</a>
+                            <a  class="btn btn-primary" href="{% url 'bovino_sinregistro_show' i.pk %}">Ver</a>
                             {% for field in user.groups.all %} {% if field.name == 'GanadoUpd' %}
-                            <a class="btn btn-success" href="{% url 'bovino_update' i.pk %}">Editar</a>
+                            <a class="btn btn-success" href="{% url 'bovino_sinregistro_update' i.pk %}">Editar</a>
                             {% endif %}{% endfor %}
                             {% for field in user.groups.all %} {% if field.name == 'GanadoDel' %}
-                            <a class="btn btn-danger" href="{% url 'bovino_delete' i.pk %}">Eliminar</a>
+                            <a class="btn btn-danger" href="{% url 'bovino_sinregistro_delete' i.pk %}">Eliminar</a>
                             {% endif %}{% endfor %}
                             {% for field in user.groups.all %} {% if field.name == 'GanadoVen' %}
-                            <a class="btn btn-warning" href="{% url 'bovino_venta_poner' i.pk %}">Galeria de venta</a>
-                            <a class="btn btn-info" href="{% url 'bovino_venta' i.pk %}">Vender</a>
+                            <a class="btn btn-warning" href="{% url 'bovino_venta_poner2' i.pk %}">Galeria de venta</a>
+                            <a class="btn btn-info" href="{% url 'bovino_sinregistro_venta' i.pk %}">Vender</a>
                             {% endif %}{% endfor %}
                         </td>
                     </tr>

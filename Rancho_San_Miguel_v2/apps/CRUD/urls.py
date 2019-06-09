@@ -1,26 +1,8 @@
 from django.urls import path
-from .views import Bovino_Create, Bovino_Search, Bovino_Show, Bovino_List, Bovino_Update, Bovino_Delete
-from .views import Query_Notificaciones, Notificaciones_Create, Notificaciones_Listar, Bovino_update_ventas_create
-from .views import CrearUsuario, ListarUsuarios, AddGrupos, Venta_Bovino_List, Venta_Bovino_Show
-from .views import GaleriaCreate, GaleriaList, GaleriaDelete, GaleriaDetail, GaleriaUpdate
-from .views import GaleriaList2, Notificaciones_Update
-from .views import Controlg_Update, Controlg_Show, Controlg_List, Controlg_Delete, Controlg_Create
-from .views import Compra_Cerdos_Create, Compra_Cerdos_List
-from .views import PlanCreate, PlanList, PlanAgroCreate, PlanAgroList, PlanAgroUpdate, PlanAgroShow, PlanAgroDelete
-from .views import PlanBovCreate, PlanBovList, PlanBovUpdate, PlanBovShow, PlanBovDelete, PlanLecheCreate, PlanLecList
-from .views import PlanLecUpdate, PlanLecheShow, PlanLecDelete, PlanPorCreate, PlanPorList, PlanPorcUpdate, PlanPorcinoShow
-from .views import PlanPorcDelete, PlanProyGastCreate, PlanProyGastList, PlanProyGasUpdate, PlanProyGasShow, PlanProyGasDelete
-from .views import En_Proceso_Create,En_Proceso_Delete,En_Proceso_List,En_Proceso_Show, En_Proceso_Update, En_Proceso_Fin, ordenar_producciones
-from .views import Venta_Cerdos_Create, Venta_Cerdos_List,Abonos,AbonosList
-from .views import DeudoresAcreedoresCreate,DeudoresAcreedoresDetail,DeudoresAcreedoresList,DeudoresAcreedoresDelete,DeudoresAcreedoresUpdate
-from .views import HistoriaCreate,HistoriaDelete,HistoriaDetail,HistoriaList,HistoriaUpdate
-from .views import Venta_Leche_Create, Venta_Leche_List, ComparacionPorcino, Bovino_Galeria_Venta_List,Bovino_Galeria_Venta_Show
-from .views import Venta_Leche_Create, Venta_Leche_List, Comprar_Vender_list, Acomprar_create, AVender_create, Abaja_create
-
-from .views import ComparacionBovino, ComparacionLeche, ComparacionAgricola
-from .views import InventarioA_Delete, InventarioA_Create, InventarioA_List, InventarioA_Update
+from .views import *
 
 urlpatterns = [
+    #Ganado
     path('bovinoshow/<int:pk>', Bovino_Show.as_view(), name="bovino_show"),
     path('bovino/', Bovino_Create.as_view(), name="bovino_crear"),
     path('bovino/search/', Bovino_Search, name="bovino_search"),
@@ -28,11 +10,22 @@ urlpatterns = [
     path('bovinoupdate/<int:pk>',Bovino_Update.as_view(), name="bovino_update"),
     path('bovinodelete/<int:pk>', Bovino_Delete.as_view(), name="bovino_delete"),
     path('bovinoventa/<int:pk>', Bovino_update_ventas_create, name="bovino_venta"),
+    path('bovino/update/venta/<int:pk>',Bovino_Update_Poner_En_Venta.as_view(), name="bovino_venta_poner"),
     path('ventalist/', Venta_Bovino_List.as_view(), name="venta_list"),
     path('ventashow/<int:pk>', Venta_Bovino_Show.as_view(), name="venta_show"),
-
     path('bovino/galeria/venta/list/', Bovino_Galeria_Venta_List, name="bovino_galeria_venta_list"),
     path('bovino/galeria/venta/list/<int:pk>', Bovino_Galeria_Venta_Show, name="bovino_galeria_venta_show"),
+
+    #Ganado sin registro
+    path('bovino/sinregistro', Bovino_Create2.as_view(), name="bovino_sinregistro_crear"),
+    path('bovino/sinregistro/search/', Bovino_Search2, name="bovino_sinregistro_search"),
+    path('bovinoshow/sinregistro/<int:pk>', Bovino_Show2.as_view(), name="bovino_sinregistro_show"),
+    path('bovinoupdate/sinregistro/<int:pk>',Bovino_Update2.as_view(), name="bovino_sinregistro_update"),
+    path('bovinodelete/sinregistro/<int:pk>', Bovino_Delete2.as_view(), name="bovino_sinregistro_delete"),
+    path('bovinoventa/sinregistro/<int:pk>', Bovino_update_ventas_create2, name="bovino_sinregistro_venta"),
+    path('bovino/galeria/venta/list2/<int:pk>', Bovino_Galeria_Venta_Show2, name="bovino_galeria_venta_show2"),
+    path('bovino/update2/venta/<int:pk>',Bovino_Update_Poner_En_Venta2.as_view(), name="bovino_venta_poner2"),
+
 
     #Notificaciones
     path('notificaciones/', Query_Notificaciones, name="notificacion"),
@@ -43,6 +36,8 @@ urlpatterns = [
     path('crear/usuario/', CrearUsuario.as_view(), name='crear_usuario'),
     path('listar/usuario/', ListarUsuarios.as_view(), name='listar_usuario'),
     path('add/grupos/usuario/<int:pk>', AddGrupos, name='crear_grupos'),
+    path('delete/usuario/<int:pk>', DeleteUsuario.as_view(), name='delete_usuarios'),
+    path('update/usuario/<int:pk>', UpdateUsuario.as_view(), name='update_usuarios'),
     #Galeria
     path('galeria/', GaleriaCreate.as_view(), name='galeria_create'),
     path('galerialist/', GaleriaList.as_view(), name='galeria_list'),
@@ -55,10 +50,9 @@ urlpatterns = [
     path('porcino/list/', Compra_Cerdos_List.as_view(), name="cerdos_list"),
     #path('porcino/delete/<int:pk>', Venta_Cerdos_Delete, name="cerdos_delete"),
 
-
     path('porcino_C_crear/',Venta_Cerdos_Create, name="cerdos_crearVenta"),
     path('porcino_C_list/', Venta_Cerdos_List.as_view(), name="cerdos_listVenta"),
-# Control_ganado
+
     # Control_ganado
     path('controlganado/', Controlg_Create.as_view(), name="control_crear"),
     path('controllist/', Controlg_List.as_view(), name="control_list"),
@@ -76,7 +70,7 @@ urlpatterns = [
     path('Abonos/<int:pk>', Abonos, name="Abonar"),
     path('Abonoslist/venta', AbonosList.as_view(), name="Abono_list"),
 
-#En Invenrario agricola/almacen
+    #En Invenrario agricola/almacen
     path('inventario_agricola/almacen/create', InventarioA_Create.as_view(), name='inventario_crear'),
     path('inventario_agricola/almacen/list', InventarioA_List.as_view(), name='inventario_list'),
     path('inventario_agricola/almacen/modificar/<pk>', InventarioA_Update.as_view(), name='inventario_actualizar'),
@@ -136,4 +130,8 @@ urlpatterns = [
     path('comparacion/porcino/', ComparacionPorcino, name='comparacion_porcino'),
     path('comparacion/leche/', ComparacionLeche, name='comparacion_leche'),
     path('comparacion/agro/', ComparacionAgricola, name='comparacion_agro'),
+    path('comparacion/gastos/', Comparacion_Gastos, name='comparacion_gastos'),
+    #Ganancias
+    path('ganancias/', Ganancias, name='ganancias_list'),
+    path('comparacion/ganancias/', Comparacion_Ganancias, name='comparacion_ganancias_list'),
 ]

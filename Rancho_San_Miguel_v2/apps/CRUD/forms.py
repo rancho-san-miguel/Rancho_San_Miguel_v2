@@ -32,7 +32,7 @@ class Ganado_Form(forms.ModelForm):
             'localizacion_tatuaje',
             'estado',
             'tipo',
-            'galeria_venta',
+            # 'galeria_venta',
             'img',
             'img2',
 
@@ -55,7 +55,7 @@ class Ganado_Form(forms.ModelForm):
             'localizacion_tatuaje':'Tatuaje en oreja',
             'estado':'Estado',
             'tipo':'Tipo de bovino',
-            'galeria_venta':'Agregar a la ventana de venta',
+            # 'galeria_venta':'Agregar a la ventana de venta',
             'img':'Foto',
             'img2': 'Foto2',
         }
@@ -80,10 +80,96 @@ class Ganado_Form(forms.ModelForm):
             'localizacion_tatuaje':forms.Select(attrs={'class': 'form-control'}),
             'estado':forms.Select(attrs={'class': 'form-control'}),
             'tipo':forms.Select(attrs={'class': 'form-control'}),
+            # 'galeria_venta': forms.CheckboxInput(),
+            'img': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
+            'img2': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
+        }
+
+class Ganado_Venta_form(forms.ModelForm):
+    class Meta:
+        model = Ganado
+        fields = {
+            'galeria_venta',
+            'costo',
+        }
+        labels = {
+            'galeria_venta': 'Marcar para poner en venta',
+            'costo':'Costo total de la venta',
+        }
+        widgets = {
+            'galeria_venta': forms.CheckboxInput(),
+            'costo':forms.TextInput(attrs={'class': 'form-control','placeholder':''}),
+        }
+
+class Ganado_Venta_form2(forms.ModelForm):
+    class Meta:
+        model = Ganado
+        fields = {
+            'galeria_venta',
+            'costo',
+        }
+        labels = {
+            'galeria_venta': 'Marcar para poner en venta',
+            'costo':'Costo total de la venta',
+        }
+        widgets = {
+            'galeria_venta': forms.CheckboxInput(),
+            'costo':forms.TextInput(attrs={'class': 'form-control','placeholder':''}),
+        }
+
+
+class Ganado2_Form(forms.ModelForm):
+    class Meta:
+        model = Ganado_sin_registro
+        fields = {
+            'nombre',
+            'arete',
+            'sexo',
+            'propietario',
+            'arete_padre',
+            'arete_madre',
+            'f_nacimiento',
+            'peso_nacimiento',
+            'localizacion_fierro',
+            'galeria_venta',
+            'img',
+            'img2',
+
+        }
+        labels = {
+            'nombre':'Nombre',
+            'arete':'Arete',
+            'sexo':'Sexo',
+            'propietario':'Propietario',
+            'arete_padre':'Arete del padre',
+            'arete_madre':'Arete de la madre',
+            'f_nacimiento':'Fecha de nacimiento',
+            'peso_nacimiento':'Peso al nacer',
+            'localizacion_fierro':'Fierro',
+            'galeria_venta':'Agregar a la ventana de venta',
+            'img':'Foto',
+            'img2': 'Foto2',
+        }
+
+
+        widgets = {
+
+            'nombre':forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el nombre del bovino'}),
+            'arete':forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete del bovino'}),
+            'sexo': forms.Select(attrs={'class': 'form-control'}),
+            'propietario': forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del propietario'}),
+            'arete_padre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete del padre'}),
+            'arete_madre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete de la madre'}),
+            'f_nacimiento':forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),
+            'peso_nacimiento':forms.TextInput(attrs={'class': 'form-control','placeholder':'Peso de nacimiento'}),
+            'localizacion_fierro':forms.TextInput(attrs={'class': 'form-control','placeholder':'Localización del fierro'}),
             'galeria_venta': forms.CheckboxInput(),
             'img': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
             'img2': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
         }
+
+
+
 
 class Notificaciones_form(forms.ModelForm):
     class Meta:
@@ -100,6 +186,7 @@ class Notificaciones_form(forms.ModelForm):
             'descripcion':forms.Textarea(attrs={'class': 'form-control','placeholder':'Descripción de las actividades a realizar'}),
             'fecha':forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
         }
+
 class Notificaciones_Update_form(forms.ModelForm):
     class Meta:
         model = Notificaciones

@@ -1,0 +1,109 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Comparación
+{% endblock %}
+
+{% block title2 %}
+Comparación Ganancias-Planeado
+{% endblock %}
+
+
+{% block contenido %}
+
+    <h3>Planeado: ${{ plan_total }}</h3>
+        <table class="table table-striped table-bordered">
+            <thead class="bg-success">
+                <tr>
+                    <th>Plan bovino</th>
+                    <th>Plan porcino</th>
+                    <th>Plan de leche</th>
+                    <th>Plan agricultura</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        {% if bovino %}
+                        <td>${{ bovino }}</td>
+                        {% else %}
+                            <td>${{ bovino }}</td>
+                        {% endif %}
+
+
+                        {% if porcina %}
+                        <td>${{ porcina }}</td>
+                        {% else %}
+                            <td>${{ porcina }}</td>
+                        {% endif %}
+
+
+                        {% if leche %}
+                        <td>${{ leche }}</td>
+                        {% else %}
+                            <td>${{ leche }}</td>
+                        {% endif %}
+
+                        {% if agricultura %}
+                        <td>${{ agricultura }}</td>
+                        {% else %}
+                            <td>${{ agricultura }}</td>
+                        {% endif %}
+                    </tr>
+            </tbody>
+        </table>
+        <br>
+    <h3>Ganancias: ${{ ganancia_total }}</h3>
+        <table class="table table-striped table-bordered">
+            <thead class="bg-success">
+                <tr>
+                    <th>Ganancia bovino</th>
+                    <th>Ganancia porcino</th>
+                    <th>Ganancia leche</th>
+                    <th>Ganancia de agricultura</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        {% if suma_ganado %}
+                        <td>${{ suma_ganado }}</td>
+                        {% else %}
+                            <td>${{ suma_ganado }}</td>
+                        {% endif %}
+
+
+                        {% if suma_cerdos %}
+                        <td>${{ suma_cerdos }}</td>
+                        {% else %}
+                            <td>${{ suma_cerdos }}</td>
+                        {% endif %}
+
+
+                        {% if suma_leche %}
+                        <td>${{ suma_leche }}</td>
+                        {% else %}
+                            <td>${{ suma_leche }}</td>
+                        {% endif %}
+
+
+                        {% if suma_agricola %}
+                        <td>${{ suma_agricola }}</td>
+                        {% else %}
+                            <td>${{ suma_agricola }}</td>
+                        {% endif %}
+                    </tr>
+            </tbody>
+        </table>
+
+
+    <div class="container" align="center">
+        <ul class="pager">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </ul>
+    </div>
+
+{% endblock %}

@@ -15,7 +15,7 @@ Proyección de gastos
         <thead class="bg-success">
             <tr>
                 <th>Tipo de gasto</th>
-                <th>Cantidad</th>
+                <th>Descripcin</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -23,7 +23,7 @@ Proyección de gastos
             {% for i in object_list %}
                     <tr>
                         <td>{{ i.tipo_gasto }}</td>
-                        <td>{{ i.cantidad }}</td>
+                        <td>{{ i.descripcion }}</td>
                         <td>
                             <a class="btn btn-primary" href="{% url 'plan_proyec_gasto_show' i.pk %}">&nbsp;&nbsp;&nbsp;&nbsp;Ver&nbsp;&nbsp;&nbsp;&nbsp;</a>
                             <a class="btn btn-success" href="{% url 'plan_proyec_gasto_update' i.pk %}">&nbsp;&nbsp;Editar&nbsp;&nbsp;</a>

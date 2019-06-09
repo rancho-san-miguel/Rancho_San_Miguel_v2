@@ -29,7 +29,6 @@
                 <img src="{% static 'inicio/LOGO Rancho png.png' %}" alt="" width="190" height="90">
             </a>
 
-
             <!--<div class="container-fluid">-->
                 <div class="collapse navbar-collapse" id="opciones">
                 <ul class="navbar-nav">
@@ -50,6 +49,7 @@
                             <!--<a style="font-size: 15px;" class="dropdown-item" href="{% url 'bovino_crear' %}">Registrar</a>-->
                             {% for field in user.groups.all %} {% if field.name == 'Ganado' %}
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'bovino_search' %}">Ganado</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'bovino_sinregistro_search' %}">Ganado sin registro</a>
                             {% endif %}{% endfor %}
                             {% for field in user.groups.all %} {% if field.name == 'HisVenBov' %}
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'venta_list' %}">Historial de ventas</a>
@@ -99,10 +99,13 @@
                         <a style="font-size: 18px;" class="nav-link dropdown-toggle text-white" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{% url 'list_plan' %}">Planeación</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'list_plan' %}">Planes</a>
+                            <!--<a style="font-size: 15px;" class="dropdown-item" href="{% url 'ganancias_list' %}">Ganancias</a>-->
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_bovino' %}">Comparación bovino</a>
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_porcino' %}">Comparación porcino</a>
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_leche' %}">Comparación leche</a>
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_agro' %}">Comparación agricultura</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_gastos' %}">Comparación gastos</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_ganancias_list' %}">Comparación ganancias</a>
                         </div>
                     </li>
                     {% endif %}
@@ -113,7 +116,7 @@
                     </li>
                     {% endif %}{% endfor %}
                 </ul>
-
+                </div>
                 <ul class="nav navbar-nav navbar-right">
                     {% for field in user.groups.all %} {% if field.name == 'Notificaciones' %}
                     <li class="nav-item dropdown">
@@ -135,7 +138,7 @@
                         {% endif %}
                     </li>
                 </ul>
-                </div>
+
             <!--</div>-->
         </nav>
     </nav>

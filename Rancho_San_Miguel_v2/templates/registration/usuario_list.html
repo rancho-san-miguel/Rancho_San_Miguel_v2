@@ -28,13 +28,11 @@ Usuarios registrados
                         <!--<td>{{ i.id }}</td>-->
                         <td>{{ i.username }}</td>
                         <td>{{ i.first_name }} {{ i.last_name }}</td>
-                        <!--<td>{{ i.last_name }}</td>-->
-                        <!--<td>{{ i.created }}</td>-->
-                        <!--<td>{{ i.updated }}</td>-->
                         <td>
                             <!--<a class="btn btn-primary" href="{# url 'cultivo_en_proceso_show' i.pk #}">Ver</a>-->
                             <a class="btn btn-success" href="{% url 'crear_grupos' i.pk %}">privilegios</a>
-                            <a class="btn btn-danger" href="#">Eliminar</a>
+                            <a class="btn btn-primary" href="{% url 'update_usuarios' i.pk %}">Editar</a>
+                            <a class="btn btn-danger" href="{% url 'delete_usuarios' i.pk %}">Eliminar</a>
 
                         </td>
                     </tr>

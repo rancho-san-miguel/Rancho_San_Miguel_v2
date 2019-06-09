@@ -60,55 +60,43 @@
 
 
 	<!-- Page header section start -->
-	<section class="page-header-section set-bg" data-setbg="{% static 'inicio/v17.jpg' %}">
+	<section class="page-header-section set-bg" data-setbg="{% static 'inicio/fondo1.jpg' %}">
 		<div class="container">
-			<h1 style="text-align: center; -webkit-text-stroke: 1px black; color:white;" class="header-title">En venta<span></span></h1>
+			<h1 class="header-title">En venta<span>.</span></h1>
 		</div>
 	</section>
 
-<br>
-	<div class="container">
-		<div class="row" style="text-align:center;" >
-{% if object_list %}
-		{% for i in object_list %}
-			<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12">
-				<!--<img  class="img-fluid z-depth-1" src="{{ i.img.url }}" alt="video" data-toggle="modal">-->
-				<img  class="img-fluid z-depth-1 border border-dark rounded" src="{{ i.img.url }}"
-					  alt="video" data-toggle="modal" style="max-width: 300px; max-height: 300px; min-height: 300px; min-width: 300px">
-				<br>
-                <h3><a href="{% url 'bovino_galeria_venta_show' i.pk %}">{{ i.nombre }}</a></h3>
+    <br>
 
-				<br>
-				<!--<img class="img-fluid z-depth-1" src="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg" alt="video" data-toggle="modal" data-target="#modal1">-->
-			</div>
-		{% endfor %}
-{% endif %}
-{% if query2 %}
-	<!--<div class="container">-->
-		<!--<div class="row" style="text-align:center;" >-->
-		{% for i in query2 %}
-			<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12">
-				<!--<img  class="img-fluid z-depth-1" src="{{ i.img.url }}" alt="video" data-toggle="modal">-->
-				<img  class="img-fluid z-depth-1 border border-dark rounded" src="{{ i.img.url }}"
-					  alt="video" data-toggle="modal" style="max-width: 300px; max-height: 300px; min-height: 300px; min-width: 300px">
-				<br>
-				<h3><a href="{% url 'bovino_galeria_venta_show2' i.pk %}">{{ i.nombre }}</a></h3>
+    <div class="container">
+        <h3>&nbsp;&nbsp;&nbsp;Nombre: {{ form.nombre }}</h3>
+        <img src="{{ form.img.url }}" class="col-md-6"><img src="{{ form.img2.url }}" class="col-md-6">
+        <br>
+		<br>
 
-				<br>
-				<!--<img class="img-fluid z-depth-1" src="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg" alt="video" data-toggle="modal" data-target="#modal1">-->
-			</div>
-		{% endfor %}
-		<!--</div>-->
-	<!--</div>-->
-{% endif %}
-			</div>
-	</div>
+		<br>
+        <label>&nbsp;&nbsp;&nbsp;&nbsp;Sexo: {{ form.sexo }}</label>
+        <br>
 
+        <label>&nbsp;&nbsp;&nbsp;&nbsp;Fecha de nacimiento: {{ form.f_nacimiento }}</label>
+		<br>
+        <label>&nbsp;&nbsp;&nbsp;&nbsp;Peso al nacer: {{ form.peso_nacimiento }}</label>
+        <br>
+		<label>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Costo: {{ form.costo }}</strong></label>
+        <br>
+        <a href="{% url 'contact' %}" class="site-btn sb-dark">Contactanos</a>
+    </div>
+
+
+    <br>
+
+
+	<!-- Footer section start -->
 	<footer class="footer-section">
 		<div class="footer-social">
 			<div class="social-links">
 				<a href="#"><i class="fa fa-instagram"></i></a>
-				<a href="https://www.facebook.com/SanMiguelTemoloasco/about?lst=100001713947278%3A100008981527615%3A1553197655&section=education"><i class="fa fa-facebook"></i></a>
+				<a href="#"><i class="fa fa-facebook"></i></a>
 				<a href="#"><i class="fa fa-twitter"></i></a>
 			</div>
 		</div>
@@ -121,13 +109,15 @@
 								<ul>
 									<li><a href="#">Inicio</a></li>
 									<li><a href="#">Informacion</a></li>
-									<li><a href="#">Contacto</a></li>
+									<li><a href="#">Services</a></li>
 								</ul>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="footer-item">
 								<ul>
+									<li><a href="#">Portfolio</a></li>
+									<li><a href="#">Blog</a></li>
 									<li><a href="#">Desarrolladores</a></li>
 								</ul>
 							</div>
@@ -137,7 +127,11 @@
 				</div>
 			</div>
 		</div>
+		<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+     <!--<div class="copyright">Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved.  <br>This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></div>-->
+    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 	</footer>
+	<!-- Footer section end -->
 
 
 

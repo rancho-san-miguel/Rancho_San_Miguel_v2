@@ -19,7 +19,7 @@ class Ganado(models.Model):
     tp = Choices('Normal', 'Distónico', 'Difícil', 'Cesárea')
     tt = Choices("Derecha",'Izquierda')
     tipo_g = Choices('Vientre en producción limousin', 'Vientre en crecimiento limousin', 'Vientre en producción brangus',
-                  'Vientre en crecimiento brangus', 'Sementales', 'Becerros', 'Sin registro')
+                  'Vientre en crecimiento brangus', 'Sementales', 'Becerros')
     nombre = models.CharField(max_length=15)
     arete = models.CharField(max_length=15, unique=True)
     siniga = models.CharField(max_length=15, blank=True, null=True)
@@ -38,6 +38,7 @@ class Ganado(models.Model):
     estado = models.CharField(choices=opciones2, max_length=10)
     tipo = models.CharField(choices=tipo_g, max_length=40)
     galeria_venta = models.BooleanField(default=False)
+    costo = models.FloatField(default='0')
     img = models.ImageField(verbose_name="Imagen", upload_to='Ganado', blank=True, null=True)
     img2 = models.ImageField(verbose_name="Imagen2", upload_to='Ganado', blank=True, null=True)
 
@@ -47,6 +48,26 @@ class Ganado(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class Ganado_sin_registro(models.Model):
+    opciones = Choices('Macho', 'Hembra')
+    nombre = models.CharField(max_length=15)
+    arete = models.CharField(max_length=15, unique=True)
+    sexo = models.CharField(choices=opciones, max_length=10)
+    propietario = models.CharField(max_length=20)
+    arete_padre = models.CharField(max_length=15)
+    arete_madre = models.CharField(max_length=15)
+    f_nacimiento = models.DateField()
+    peso_nacimiento = models.DecimalField(max_digits=11, decimal_places=0)
+    localizacion_fierro = models.CharField(max_length=20, blank=True, null=True)
+    tipo = models.CharField(max_length=40, default='Sin registro')
+    galeria_venta = models.BooleanField(default=False)
+    costo = models.FloatField(default='0')
+    img = models.ImageField(verbose_name="Imagen", upload_to='Ganado', blank=True, null=True)
+    img2 = models.ImageField(verbose_name="Imagen2", upload_to='Ganado', blank=True, null=True)
+
+    class Meta:
+        db_table = 'ganado2'
 
 
 class ControlVentaGanado(models.Model):

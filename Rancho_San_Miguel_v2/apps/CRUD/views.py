@@ -41,6 +41,12 @@ class Bovino_Update(UpdateView):
     template_name = 'RegBov/regbov_form.html'
     success_url = reverse_lazy('bovino_list')
 
+class Bovino_Update_Poner_En_Venta(UpdateView):
+    model = Ganado
+    form_class = Ganado_Venta_form
+    template_name = 'RegBov/regbov_venta_form.html'
+    success_url = reverse_lazy('bovino_list')
+
 class Bovino_Delete(DeleteView):
     model = Ganado
     template_name = 'RegBov/regbov_delete.html'
@@ -48,8 +54,10 @@ class Bovino_Delete(DeleteView):
 
 def Bovino_Galeria_Venta_List(request):
     query = Ganado.objects.filter(galeria_venta=True).exclude(estado='Vendida').order_by('id')
+    query2 = Ganado_sin_registro.objects.filter(galeria_venta=True).order_by('id')
     dic = {
         'object_list':query,
+        'query2': query2,
     }
     # return render(request, 'GaleriaVentas/calis.html', dic)
     return render(request, 'home/portfolio2.html', dic)
@@ -60,6 +68,19 @@ def Bovino_Galeria_Venta_Show(request,pk):
         'form':query,
     }
     return render(request, 'home/detalles.html', dic)
+
+def Bovino_Galeria_Venta_Show2(request,pk):
+    query = Ganado_sin_registro.objects.get(pk=pk)
+    dic = {
+        'form':query,
+    }
+    return render(request, 'home/detalles2.html', dic)
+
+class Bovino_Update_Poner_En_Venta2(UpdateView):
+    model = Ganado_sin_registro
+    form_class = Ganado_Venta_form2
+    template_name = 'RegBov/regbov_venta_form.html'
+    success_url = reverse_lazy('bovino_sinregistro_search')
 
 def Bovino_Search(request):
     query = Ganado.objects.all()
@@ -105,6 +126,61 @@ class Venta_Bovino_List(ListView):
 class Venta_Bovino_Show(DetailView):
     model = ControlVentaGanado
     template_name = 'Ventas/ventas_bovino_show.html'
+
+#------------------------------------------------------------------------------------------------------------------
+"Ganado sin registro"
+class Bovino_Create2(CreateView):
+    model = Ganado_sin_registro
+    form_class = Ganado2_Form
+    template_name = 'RegBov/regbov2_form.html'
+    success_url = reverse_lazy('bovino_sinregistro_search')
+
+class Bovino_Show2(DetailView):
+    model = Ganado_sin_registro
+    template_name = 'RegBov/regbov2_show.html'
+
+class Bovino_Update2(UpdateView):
+    model = Ganado_sin_registro
+    form_class = Ganado2_Form
+    template_name = 'RegBov/regbov2_form.html'
+    success_url = reverse_lazy('bovino_sinregistro_search')
+
+class Bovino_Delete2(DeleteView):
+    model = Ganado_sin_registro
+    template_name = 'RegBov/regbov2_delete.html'
+    success_url = reverse_lazy('bovino_sinregistro_search')
+
+def Bovino_Search2(request):
+    query = Ganado_sin_registro.objects.all()
+    if request.method == 'POST':
+        fecha = request.POST['caja']
+        fecha1 = fecha
+        fecha = str(fecha+"-01-01")
+        fecha2 = str(fecha1+"-12-31")
+
+        query = Ganado_sin_registro.objects.filter(f_nacimiento__range=[fecha,fecha2])
+    dic = {
+        'object_list':query,
+    }
+    return render(request, 'RegBov/regbov2_list.html', dic)
+
+def Bovino_update_ventas_create2(request, pk):
+    query = Ganado_sin_registro.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ControlVentaGanado_form(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.tipo = query.tipo
+            var.save()
+            query.delete()
+        return redirect('bovino_sinregistro_search')
+    else:
+        form = ControlVentaGanado_form()
+    dic = {
+        'datos':query,
+        'form':form,
+    }
+    return render(request, 'RegBov/regbov_ventas_form2.html', dic)
 
 
 #----------------------------------------------------------------------
@@ -579,6 +655,17 @@ class ListarUsuarios(ListView):
     queryset = User.objects.all()
     template_name = 'registration/usuario_list.html'
     paginate_by = 5
+
+class UpdateUsuario(UpdateView):
+    model = User
+    form_class = SignUpForm
+    template_name = 'registration/usuario_create.html'
+    success_url = reverse_lazy('login')
+
+class DeleteUsuario(DeleteView):
+    model = User
+    template_name = 'registration/usuario_delete.html'
+    success_url = reverse_lazy('listar_usuario')
 
 def AddGrupos(request, pk):
     usuario = User.objects.get(pk=pk)
@@ -1163,6 +1250,7 @@ def ComparacionAgricola(request):
     except:
         pass
 
+
     try:
         query3 = PlaneacionAgricola.objects.filter(no_planeacion=query2[0])
         size = len(query3)
@@ -1187,3 +1275,217 @@ def ComparacionAgricola(request):
     }
 
     return render(request, 'Comparacion/Comp_Agro.html', dic)
+
+
+def Comparacion_Gastos(request):
+    Fecha_Actual = Notificaciones_function()
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+    fecha1 = str(year) + "-01-01"
+    fecha2 = str(year) + "-12-31"
+
+    query2 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+
+    sueldo_planeado = 0
+    Conbustible = 0
+    Insumo = 0
+    Rentas = 0
+    Agua = 0
+    Otros = 0
+
+    try:
+        query3 = ProyeccionGastos.objects.filter(no_planeacion=query2[0])
+        size = len(query3)
+        for i in range(size):
+            if query3[i].tipo_gasto == "Sueldos":
+                sueldo_planeado = sueldo_planeado + int(query3[i].total_anual)
+            if query3[i].tipo_gasto == "Conbustible":
+                Conbustible = Conbustible + int(query3[i].total_anual)
+            if query3[i].tipo_gasto == "Insumo de alimentos":
+                Insumo = Insumo +  int(query3[i].total_anual)
+            if query3[i].tipo_gasto == "Rentas":
+                Rentas = Rentas + int(query3[i].total_anual)
+            if query3[i].tipo_gasto == "Derecho de agua":
+                Agua = Agua + int(query3[i].total_anual)
+            if query3[i].tipo_gasto == "Otros":
+                Otros = Otros + int(query3[i].total_anual)
+    except:
+        query3 = ProyeccionGastos.objects.all()
+
+    dic = {
+        'query3':query3,
+        'sueldo_planeado':sueldo_planeado,
+        'Conbustible':Conbustible,
+        'Insumo':Insumo,
+        'Rentas':Rentas,
+        'Agua':Agua,
+        'Otros':Otros,
+    }
+
+    return render(request, 'Comparacion/Comp_gastos.html', dic)
+
+def Comparacion_Ganancias(request):
+    Fecha_Actual = Notificaciones_function()
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+    fecha1 = str(year) + "-01-01"
+    fecha2 = str(year) + "-12-31"
+
+
+    """Ganancias reales"""
+    query1 = ControlVentaGanado.objects.all()
+    query2 = VentasPorcinos.objects.all()
+    query3 = CompraVentaAgricola.objects.filter(tipo='Venta')
+    query4 = VentaLeche.objects.all()
+
+    suma_ganado = 0
+    suma_cerdos = 0
+    suma_agricola = 0
+    suma_leche = 0
+    try:
+        size = len(query1)
+        for i in range(size):
+            suma_ganado = suma_ganado + int(query1[i].total_venta)
+    except:
+        pass
+
+    try:
+        size = len(query2)
+        for i in range(size):
+            suma_cerdos = suma_cerdos + int(query2[i].total_venta)
+    except:
+        pass
+
+    try:
+        size = len(query3)
+        for i in range(size):
+            suma_agricola = suma_agricola + int(query3[i].precio)
+    except:
+        pass
+
+    try:
+        size = len(query4)
+        for i in range(size):
+            suma_leche = suma_leche + int(query4[i].total)
+    except:
+        pass
+
+    """Ganancias planeadas"""
+    query5 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    ganancia_agro_plan = 0
+    try:
+        query6 = PlaneacionAgricola.objects.filter(no_planeacion=query5[0])
+        size = len(query6)
+        for i in range(size):
+            ganancia_agro_plan = ganancia_agro_plan + int(query6[i].total)
+    except:
+        pass
+
+    query7 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    ganancias_leche_plan = 0
+    try:
+        query8 = PlaneacionLeche.objects.filter(no_planeacion=query7[0])
+        size = len(query7)
+        for i in range(size):
+            ganancias_leche_plan = ganancias_leche_plan + int(query8[i].estimado_anual)
+    except:
+        pass
+
+    query9 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    ganancias_porcina_plan = 0
+    try:
+        query10 = PlaneacionPorcina.objects.filter(no_planeacion=query9[0])
+        size = len(query9)
+        for i in range(size):
+            ganancias_porcina_plan = ganancias_porcina_plan + int(query10[i].ingresos)
+    except:
+        pass
+
+    query11 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    ganancia_bovino_plan = 0
+    try:
+        query12 = PlaneacionBovina.objects.filter(no_planeacion=query11[0])
+        size = len(query12)
+        for i in range(size):
+            ganancia_bovino_plan = ganancia_bovino_plan + int(query12[i].ingreso_anual)
+    except:
+        pass
+
+    plan_total = 0
+    ganancia_total = 0
+
+    plan_total = ganancia_bovino_plan + ganancias_porcina_plan + ganancias_leche_plan + ganancia_agro_plan
+    ganancia_total = suma_ganado + suma_cerdos + suma_agricola + suma_leche
+
+    dic = {
+        'bovino':ganancia_bovino_plan,
+        'porcina':ganancias_porcina_plan,
+        'leche':ganancias_leche_plan,
+        'agricultura':ganancia_agro_plan,
+        'plan_total':plan_total,
+
+        'suma_ganado':suma_ganado,
+        'suma_cerdos':suma_cerdos,
+        'suma_agricola':suma_agricola,
+        'suma_leche':suma_leche,
+        'ganancia_total':ganancia_total,
+    }
+    return render(request, 'Comparacion/Comp_ganancias.html', dic)
+
+
+#Mostrar ganancias-------------------------------------------------------------------------
+def Ganancias(request):
+    query1 = ControlVentaGanado.objects.all()
+    query2 = VentasPorcinos.objects.all()
+    query3 = CompraVentaAgricola.objects.filter(tipo='Venta')
+    query4 = VentaLeche.objects.all()
+
+    suma_ganado = 0
+    suma_cerdos = 0
+    suma_agricola = 0
+    suma_leche = 0
+    try:
+        size = len(query1)
+        for i in range(size):
+            suma_ganado = suma_ganado + int(query1[i].total_venta)
+    except:
+        pass
+
+    try:
+        size = len(query2)
+        for i in range(size):
+            suma_cerdos = suma_cerdos + int(query2[i].total_venta)
+    except:
+        pass
+
+    try:
+        size = len(query3)
+        for i in range(size):
+            suma_agricola = suma_agricola + int(query3[i].precio)
+    except:
+        pass
+
+    try:
+        size = len(query4)
+        for i in range(size):
+            suma_leche = suma_leche + int(query4[i].total)
+    except:
+        pass
+
+
+
+    dic = {
+        'ganado':query1,
+        'suma_ganado':suma_ganado,
+        'porcinos':query2,
+        'suma_cerdos':suma_cerdos,
+        'agricola':query3,
+        'suma_agricola':suma_agricola,
+        'leche':query4,
+        'suma_leche':suma_leche,
+    }
+
+    return render(request, 'Ganancias/ganancias_list.html', dic)
+

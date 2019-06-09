@@ -53,6 +53,9 @@ urlpatterns = [
     path('porcino_C_crear/',Venta_Cerdos_Create, name="cerdos_crearVenta"),
     path('porcino_C_list/', Venta_Cerdos_List.as_view(), name="cerdos_listVenta"),
 
+    path('porcinoinvent/', InventCerdos_List.as_view(), name="cerdos_inventario"),
+
+# Control_ganado
     # Control_ganado
     path('controlganado/', Controlg_Create.as_view(), name="control_crear"),
     path('controllist/', Controlg_List.as_view(), name="control_list"),

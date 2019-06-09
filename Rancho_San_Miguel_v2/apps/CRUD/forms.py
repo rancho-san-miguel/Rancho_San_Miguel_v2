@@ -250,17 +250,17 @@ class CompraPorcino_form(forms.ModelForm):
 
         labels = {
             'cantidad': 'Cantidad',
-            'precio_unidad': 'Precio unidad',
-            'total_compra': 'Total compra',
+            'precio_unidad': 'Precio unidad $',
+            'total_compra': 'Total compra $',
             'fecha':'Fehca',
             'vendedor':'Vendedor',
         }
 
         widgets = {
             'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad de cerdos'}),
-            'precio_unidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Precio'}),
-            'total_compra': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total'}),
-            'fecha': forms.SelectDateWidget(years=range(y.year - 20, y.year + 2),attrs={'class': 'form-control snps-inline-select'}),
+            'precio_unidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Precio $'}),
+            'total_compra': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total $'}),
+            'fecha': forms.SelectDateWidget(years=range(y.year - 20, y.year + 20),attrs={'class': 'form-control snps-inline-select'}),
             'vendedor': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Vendedor'}),
         }
 
@@ -297,7 +297,7 @@ class DeudoresAcredoresForm(forms.ModelForm):
     class Meta:
         model = DeudoresAcreedores
         fields = {
-
+            'nombre',
             'tipo',
             'motivo',
             'deuda',
@@ -305,18 +305,19 @@ class DeudoresAcredoresForm(forms.ModelForm):
         }
 
         labels = {
-
+            'nombre': 'Nombre',
             'tipo': 'Tipo',
             'motivo': 'Motivo',
-            'deuda': 'Deuda',
+            'deuda': 'Deuda $',
             'fecha': 'Fecha',
          }
 
         widgets = {
 
-            'tipo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tipo de persona deudor o acredor'}),
-            'motivo': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Motivo '}),
-            'deuda': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Deuda'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'nombre'}),
+            'tipo': forms.Select(attrs={'class': 'form-control'}),
+            'motivo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Motivo'}),
+            'deuda': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Deuda $'}),
             'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
         }
 
@@ -363,14 +364,14 @@ class MovDeudoresAcredoresForm(forms.ModelForm):
         labels = {
             'no': 'No',
             'descripcion': 'Descripcion',
-            'deuda': 'Deuda',
+            'deuda': 'Deuda $',
             'fecha': 'Fecha',
          }
 
         widgets = {
-             'no': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'numero'}),
+            'no': forms.Select(attrs={'class': 'form-control'}),
             'descripcion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Movimiento'}),
-            'deuda': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Deuda'}),
+            'deuda': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Deuda $'}),
             'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
         }
 
@@ -388,16 +389,16 @@ class GastosForm(forms.ModelForm):
 
         labels = {
             'tipo': 'Tipo',
-            'motivo': 'Motivo',
-            'monto': 'Monto',
+            'motivo': 'Descripcion',
+            'monto': 'Monto $',
             'img': 'Imagen',
             'fecha': 'Fecha',
             }
 
         widgets = {
             'tipo': forms.Select(attrs={'class': 'form-control'}),
-            'motivo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Motivo de la compra'}),
-            'monto': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total de la compra'}),
+            'motivo': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion de la compra'}),
+            'monto': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total de la compra $'}),
             'img': forms.ClearableFileInput(attrs={'class': 'form-control-file mt-3'}),
             'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
             }
@@ -693,16 +694,16 @@ class VentaPorcino_form(forms.ModelForm):
 
         labels = {
             'cantidad': 'Cantidad',
-            'precio_unidad': 'Precio unidad',
-            'total_venta': 'Total venta',
+            'precio_unidad': 'Precio unidad $',
+            'total_venta': 'Total venta $',
             'fecha':'Fehca',
             'comprador':'Comprador',
         }
 
         widgets = {
             'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad de cerdos'}),
-            'precio_unidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Precio'}),
-            'total_venta': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total'}),
+            'precio_unidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Precio $'}),
+            'total_venta': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total $'}),
             'fecha': forms.SelectDateWidget(years=range(y.year - 20, y.year + 2),attrs={'class': 'form-control snps-inline-select'}),
             'comprador': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Comprador'}),
         }

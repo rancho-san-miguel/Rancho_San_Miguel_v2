@@ -35,15 +35,7 @@
                     <li class="nav-item">
                         <a style="font-size: 18px;" class="nav-link text-white" href="{% url 'index' %}" >Inicio</a>
                     </li>
-                    <li class="nav-item">
-                        <a style="font-size: 18px;" class="nav-link text-white" href="{% url 'Deudore_Acreedores_list' %}" >Deudores/Acreedores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a style="font-size: 18px;" class="nav-link text-white" href="{% url 'Historial_Compras_list' %}" >Gastos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a style="font-size: 18px;" class="nav-link text-white" href="{% url 'index' %}" >Inicio</a>
-                    </li>
+
                     <!--Inicion de la tabla Final con resticciones **************************************************** -->
                     {% for field in user.groups.all %} {% if field.name == 'Galeria' %}
                     <li class="nav-item">
@@ -79,6 +71,11 @@
                     {% for field in user.groups.all %} {% if field.name == 'Porcinos' %}
                     <li class="nav-item dropdown">
                         <a style="font-size: 18px;" class="nav-link dropdown-toggle text-white" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{% url 'cerdos_inventario' %}">Porcinos</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a sstyle="font-size: 15px;" class="dropdown-item" href="{% url 'cerdos_inventario' %}">Inventario</a>
+                            <a sstyle="font-size: 15px;" class="dropdown-item" href="{% url 'cerdos_listVenta' %}">Historial de ventas</a>
+                            <a sstyle="font-size: 15px;" class="dropdown-item" href="{% url 'cerdos_list' %}">Historial de compras</a>
+                        </div>
                     </li>
                     {% endif %}{% endfor %}
 
@@ -101,10 +98,18 @@
                         <a style="font-size: 18px;" class="nav-link  text-white" href="{% url 'listar_usuario' %}">Usuarios</a>
                     </li>
 
+                    <li class="nav-item">
+                    </li>
+                    <li class="nav-item">
+                    </li>
+
                     <li class="nav-item dropdown">
-                        <a style="font-size: 18px;" class="nav-link dropdown-toggle text-white" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{% url 'list_plan' %}">Planeación</a>
+                        <a style="font-size: 18px;" class="nav-link dropdown-toggle text-white" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{% url 'list_plan' %}">Financiero</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'list_plan' %}">Planes</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'Deudore_Acreedores_list' %}" >Deudores/Acreedores</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'Abono_list' %}" >Historial Deudores/Acreedores</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'Historial_Compras_list' %}" >Gastos</a>
                             <!--<a style="font-size: 15px;" class="dropdown-item" href="{% url 'ganancias_list' %}">Ganancias</a>-->
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_bovino' %}">Comparación bovino</a>
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_porcino' %}">Comparación porcino</a>

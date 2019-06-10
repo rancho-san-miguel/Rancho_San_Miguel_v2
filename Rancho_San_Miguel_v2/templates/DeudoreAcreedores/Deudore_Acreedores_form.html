@@ -17,6 +17,8 @@ Alta
 {% block contenido %}
 <form  method = "post" enctype ="multipart/form-data"> {% csrf_token %}
     <div>
+        <label> {{form.nombre.label}}: </label>
+        {{form.nombre}}
         <label> {{form.tipo.label}}: </label>
         {{form.tipo}}
         <label> {{form.motivo.label}}: </label>

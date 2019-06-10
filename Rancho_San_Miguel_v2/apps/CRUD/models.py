@@ -211,7 +211,7 @@ class ComprasPorcinos(models.Model):
 
 class DeudoresAcreedores(models.Model):
     opciones = Choices('Acreedor','Deudor')
-    nombre = models.CharField(max_length=40)
+    nombre = models.CharField(max_length=40, default='')
     tipo = models.CharField(max_length=10,choices=opciones)
     motivo = models.CharField(max_length=240)
     deuda = models.DecimalField(max_digits=10, decimal_places=0)
@@ -224,7 +224,7 @@ class DeudoresAcreedores(models.Model):
         db_table = 'deudores_acreedores'
 
     def __str__(self):
-        return str(self.id)
+        return str(self.nombre)
 
 
 class Galeria(models.Model):

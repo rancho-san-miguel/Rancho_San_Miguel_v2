@@ -69,13 +69,14 @@ class Ganado_sin_registro(models.Model):
     class Meta:
         db_table = 'ganado2'
 
+    def __str__(self):
+        return self.nombre
+
+
 
 class ControlVentaGanado(models.Model):
-    op1 = Choices('Vientre en producción limousin', 'Vientre en crecimiento limousin', 'Vientre en producción brangus',
-                  'Vientre en crecimiento brangus', 'Sementales', 'Becerros','Sin registro')
     no_venta = models.AutoField(primary_key=True)
     descripcion_venta = models.CharField(max_length=240)
-    tipo = models.CharField(max_length=40)
     total_venta = models.DecimalField(max_digits=10, decimal_places=0)
     comprador = models.CharField(max_length=30)
     fecha = models.DateField()
@@ -97,19 +98,24 @@ class VentasGanado(models.Model):
 
 
 class ControlBitacoraGanado(models.Model):
-    no_registrob = models.IntegerField(primary_key=True)
+    no_registrob = models.AutoField(primary_key=True)
     bovino = models.ManyToManyField(Ganado)
     descripcion = models.CharField(max_length=240)
     lugar = models.CharField(max_length=15)
     fecha = models.DateField()
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
+    created = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField(auto_now=True)
+
+
 
     class Meta:
         #managed = False
         db_table = 'control_bitacora_ganado'
 
-#
+
+
+
+
 
 # class BitacoraGanado(models.Model):
 #     no_registrob = models.ForeignKey('ControlBitacoraGanado', models.DO_NOTHING, db_column='no_registrob')
@@ -166,13 +172,13 @@ class CompraVentaAgricola(models.Model):
 
 
 class Produccion(models.Model):
-    opciones = Choices(1, 2)
+    opciones = Choices('Primavera','Otoño','Verano','Invierno')
     hectareas = models.IntegerField()  # Hectareas sembradas
     cultivo = models.ForeignKey(InventarioAgricola, models.DO_NOTHING, db_column='cultivo')
     cantidad = models.IntegerField()  # cantidad de semilla utilizada
     produccion_obtenida = models.IntegerField(blank=True, null=True)  # Lo que se produjo
     unidad_medida = models.CharField(max_length=20, blank=True, null=True)
-    ciclo = models.IntegerField(choices=opciones)
+    ciclo = models.TextField(choices=opciones)
     fecha_inicio = models.DateField()
     fecha_final = models.DateField(blank=True, null=True)
 
@@ -252,6 +258,9 @@ class Gastos(models.Model):
     class Meta:
         #managed = False
         db_table = 'gastos'
+
+
+
 
 
 class InventarioPorcino(models.Model):
@@ -437,3 +446,34 @@ def update_img(sender, instance, **kwargs):
             new_img = instance.img
             if old_img and old_img.url != new_img.url:
                 old_img.delete(save=False)
+
+#Inventario no agricola
+class InventarioNoAgricola(models.Model):
+    opc= Choices('Bultos',)
+    articulo = models.CharField(primary_key=True, max_length=50)
+    unidad_medida = models.CharField(choices=opc, max_length=20)
+    cantidad = models.IntegerField()
+    precio = models.DecimalField(max_digits=10, decimal_places=0)
+
+    class Meta:
+        #managed = False
+        db_table = 'inventario_noagricola'
+
+    def __str__(self):
+        return str(self.articulo)
+
+
+class CompraVentaNoAgricola(models.Model):
+    opciones = Choices('Compra',  'Baja')
+    tipo =  models.CharField(choices=opciones,max_length=15)
+    articulo = models.ForeignKey(InventarioNoAgricola, models.DO_NOTHING, db_column='articulo')
+    cantidad = models.IntegerField()
+    precio = models.DecimalField(max_digits=11, decimal_places=0)
+    # comprador = models.CharField(max_length=30)
+    fecha = models.DateField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        #managed = False
+        db_table = 'Compras_retiro_noagricolas'

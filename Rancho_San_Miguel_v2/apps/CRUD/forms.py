@@ -707,3 +707,50 @@ class VentaPorcino_form(forms.ModelForm):
             'fecha': forms.SelectDateWidget(years=range(y.year - 20, y.year + 2),attrs={'class': 'form-control snps-inline-select'}),
             'comprador': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Comprador'}),
         }
+
+#bitacora
+class Bitacora_Ganado_form(forms.ModelForm):
+    class Meta:
+        model = ControlBitacoraGanado
+        fields = {
+            'bovino',
+            'descripcion',
+            'lugar',
+            'fecha',
+        }
+        labels = {
+            'bovino':'Bovino',
+            'descripcion':'Descripcion',
+            'lugar':'Lugar',
+            'fecha':'Fecha',
+        }
+        widgets = {
+            # 'bovino': forms.TextInput(attrs={'class': 'form-control'}),
+            'bovino': forms.CheckboxSelectMultiple(),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control'}),
+            'lugar': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+#Inventario General
+class Registro_NoAgricola_form(forms.ModelForm):
+    class Meta:
+        model = InventarioNoAgricola
+        fields = {
+            'articulo',
+            'unidad_medida',
+            'cantidad',
+            'precio',
+        }
+        labels = {
+            'articulo':'Ingresa el nombre del producto',
+            'unidad_medida':'Unidad de medida',
+            'cantidad':'Ingresa la cantidad',
+            'precio':'Ingresa el precio',
+        }
+        widgets = {
+            'articulo':forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del producto Ej. Maíz, Frijol'}),
+            'unidad_medida': forms.Select(attrs={'class': 'form-control'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Ejemplo: 100'}),
+            'precio': forms.TextInput(attrs={'class': 'form-control'}),
+        }

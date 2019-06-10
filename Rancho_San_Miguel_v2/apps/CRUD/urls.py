@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import *
 
+
 urlpatterns = [
     #Ganado
     path('bovinoshow/<int:pk>', Bovino_Show.as_view(), name="bovino_show"),
@@ -137,4 +138,24 @@ urlpatterns = [
     #Ganancias
     path('ganancias/', Ganancias, name='ganancias_list'),
     path('comparacion/ganancias/', Comparacion_Ganancias, name='comparacion_ganancias_list'),
+
+    #Bitacora
+    path('bitacora/', Bitacora_Create.as_view(), name="bit_crear"),
+    path('bitacoralist/', Bitacora_List.as_view(), name="bit_list"),
+    path('bitacorashow/<int:pk>', Bitacora_Show.as_view(), name="bit_show"),
+    path('bitacoraupdate/<int:pk>', Bitacora_Update.as_view(), name="bit_update"),
+    path('bitacoradelete/<int:pk>', Bitacora_Delete.as_view(), name="bit_delete"),
+
+    #Inventario No agricola
+    #En Invenrario agricola/almacen
+    path('inventario_noagricola/almacen2/create', InventarioNA_Create.as_view(), name='inventario2_crear'),
+    path('inventario_noagricola/almacen2/list', InventarioNA_List.as_view(), name='inventario2_list'),
+    path('inventario_noagricola/almacen2/modificar/<pk>', InventarioNA_Update.as_view(), name='inventario2_actualizar'),
+    path('inventario_noagricola/almacen2/eliminar/<pk>', InventarioNA_Delete.as_view(), name='inventario2_eliminar'),
+    path('compraventa_noagricola/ver', Comprar_Baja_list, name='compraryvendernoagricola'),
+    path('compra_noagricola/registrar_compra2/<pk>', NAcomprar_create, name='comprarnoagricola_crear'),
+    path('compra_noagricola/registrar_retiro2/<pk>', NAbaja_create, name='retirarnoagricola_crear'),
+
+
+
 ]

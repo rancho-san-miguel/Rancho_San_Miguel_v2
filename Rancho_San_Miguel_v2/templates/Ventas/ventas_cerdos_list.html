@@ -16,7 +16,7 @@ Compra Porcina
             <tr>
                 <th>#</th>
                 <th>Cantidad</th>
-               <th> Presio Unidad</th>
+               <th> Precio Unidad</th>
                 <th>Total</th>
                 <th>Fecha</th>
                  <th>Vendedor</th>
@@ -27,8 +27,8 @@ Compra Porcina
                     <tr>
                         <td>{{ i.no_compra }}</td>
                         <td>{{ i.cantidad }}</td>
-                        <td>{{ i.precio_unidad }}</td>
-                        <td>{{ i.total_compra }}</td>
+                        <td>${{ i.precio_unidad }}</td>
+                        <td>${{ i.total_compra }}</td>
                         <td>{{ i.fecha }}</td>
                         <td>{{ i.vendedor }}</td>
 

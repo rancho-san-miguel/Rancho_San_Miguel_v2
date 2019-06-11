@@ -18,7 +18,7 @@ Comparación Agricola-Planeación
                 <tr>
                     <th>Cultivo</th>
                     <th>Cantidad</th>
-                    <th>Total</th>
+                    <th>Total_$</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,12 +30,12 @@ Comparación Agricola-Planeación
                         </td>
                         <td>
                             {% for i in cantidad %}
-                                {{ i }}<br>
+                               $ {{ i }}<br>
                             {% endfor %}
                         </td>
 
                         <td>
-                            {% for i in precio %}
+                            ${% for i in precio %}
                                 {{ i }}<br>
                             {% endfor %}
                         </td>

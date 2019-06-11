@@ -25,7 +25,7 @@ Deudores Y Acreedores
                         <td>{{ i.id }}</td>
                         <td>{{ i.tipo }}</td>
                         <td>{{ i.motivo }}</td>
-                        <td>{{ i.deuda }}</td>
+                        <td>${{ i.deuda }}</td>
                         <td>
                             <a class="btn btn-primary" href="{% url 'Deudore_Acreedores_show' i.pk %}">Ver</a>
                             <a class="btn btn-success" href="{% url 'Abonar' i.pk %}">Abonar</a>

@@ -240,7 +240,7 @@ class En_Proceso_Show(DetailView):
 def En_Proceso_Fin(request, pk):
     query1 = Produccion.objects.get(pk=pk)
     query3 = InventarioAgricola.objects.get(cultivo=query1.cultivo)
-    print ("QUE ES ESTO**********************************************************************************", query3)
+    # print ("QUE ES ESTO**********************************************************************************", query3)
     if request.method == 'POST':
         n1 = int(request.POST['produccion_obtenida'])
         n3 = request.POST['fecha_final']
@@ -573,11 +573,11 @@ def Abonos(request, pk):
         form = MovDeudoresAcredoresForm()
 
 
-        dic = {
-            'form':query1,
-            'form2':form,
-        }
-        return render(request, 'DeudoreAcreedores/AbonosCrear.html', dic)
+    dic = {
+        'form':query1,
+        'form2':form,
+    }
+    return render(request, 'DeudoreAcreedores/AbonosCrear.html', dic)
 
 
 class AbonosList(ListView):
@@ -676,7 +676,7 @@ def AddGrupos(request, pk):
     usuario = User.objects.get(pk=pk)
     if request.method == 'POST':
         usuario.groups.clear()
-        usuario.groups.clear()
+        #usuario.groups.clear()
         try:
             op1 = request.POST['caja1']
             grupos = Group.objects.get(name="Galeria")
@@ -840,11 +840,30 @@ class Venta_Leche_List(ListView):
 #----------------------------------------------------------------------------------------------------------------------
 "Planes"
 
-class PlanCreate(CreateView):
-    model = Planes
-    form_class = Planes_form
-    template_name = 'Plan/planeacion.html'
-    success_url = reverse_lazy('list_plan')
+# class PlanCreate(CreateView):
+#     model = Planes
+#     form_class = Planes_form
+#     template_name = 'Plan/planeacion.html'
+#     success_url = reverse_lazy('list_plan')
+
+def PlanCreate(request):
+    if request.method == 'POST':
+        op1 = request.POST['caja1']
+        fecha1 = str(op1) + "-01-01"
+        query = Planes.objects.filter(fecha__year=op1)
+        size = len(query)
+        if size == 0:
+            Planes.objects.create(fecha=fecha1)
+        else:
+            messages.info(request, 'Error. No se puede repetir la fecha')
+        return redirect('list_plan')
+    dic = {
+    }
+
+    return render(request, 'Plan/planeacion.html', dic)
+
+
+
 
 class PlanList(ListView):
     queryset = Planes.objects.all()
@@ -877,11 +896,30 @@ def PlanAgroList(request, pk):
     }
     return render(request, 'Plan/PlanAgroList.html', dic)
 
-class PlanAgroUpdate(UpdateView):
-    model = PlaneacionAgricola
-    form_class = Plan_Agro_form
-    template_name = 'Plan/PlanAgroCreate.html'
-    success_url = reverse_lazy('list_plan')
+# class PlanAgroUpdate(UpdateView):
+#     model = PlaneacionAgricola
+#     form_class = Plan_Agro_form
+#     template_name = 'Plan/PlanAgroCreate.html'
+#     success_url = reverse_lazy('list_plan')
+
+def PlanAgroUpdate(request, pk):
+    query = PlaneacionAgricola.objects.get(pk=pk)
+    if request.method == 'GET':
+        form = Plan_Agro_form(instance=query)
+    else:
+        form = Plan_Agro_form(request.POST, instance=query)
+        if form.is_valid():
+            var = form.save()
+            var.no_planeacion = query.no_planeacion
+            var.produccion_estimada = var.hectareas * var.costo
+            var.total = var.produccion_estimada * var.cantidad
+            var.save()
+        return redirect('list_plan')
+    dic = {
+        'form':form,
+    }
+    return render(request,'Plan/PlanAgroCreate.html', dic )
+
 
 class PlanAgroShow(DetailView):
     model = PlaneacionAgricola
@@ -901,7 +939,7 @@ def PlanBovCreate(request,pk):
             var = form.save()
             var.no_planeacion = query.no_planeacion
             var.ingreso_anual = var.precio * var.venta
-            print("----------------/////////////////-------------------",var.ingreso_anual)
+            # print("----------------/////////////////-------------------",var.ingreso_anual)
             var.save()
         return redirect('list_plan')
     else:
@@ -918,11 +956,29 @@ def PlanBovList(request, pk):
     }
     return render(request, 'Plan/PlanBovList.html', dic)
 
-class PlanBovUpdate(UpdateView):
-    model = PlaneacionBovina
-    form_class = Plan_Bovino_form
-    template_name = 'Plan/PlanBovCreate.html'
-    success_url = reverse_lazy('list_plan')
+# class PlanBovUpdate(UpdateView):
+#     model = PlaneacionBovina
+#     form_class = Plan_Bovino_form
+#     template_name = 'Plan/PlanBovCreate.html'
+#     success_url = reverse_lazy('list_plan')
+
+def PlanBovUpdate(request, pk):
+    query = PlaneacionBovina.objects.get(pk=pk)
+    if request.method == 'GET':
+        form = Plan_Bovino_form(instance=query)
+    else:
+        form = Plan_Bovino_form(request.POST, instance=query)
+        if form.is_valid():
+            var = form.save()
+            var.no_planeacion = query.no_planeacion
+            var.ingreso_anual = var.precio * var.venta
+            var.save()
+        return redirect('list_plan')
+    dic = {
+        'form': form,
+    }
+    return render(request, 'Plan/PlanBovCreate.html', dic)
+
 
 class PlanBovShow(DetailView):
     model = PlaneacionBovina
@@ -960,11 +1016,30 @@ def PlanLecList(request, pk):
     return render(request, 'Plan/PlanLecList.html', dic)
 
 
-class PlanLecUpdate(UpdateView):
-    model = PlaneacionLeche
-    form_class = Plan_Leche_form
-    template_name = 'Plan/PlanLecheCreate.html'
-    success_url = reverse_lazy('list_plan')
+# class PlanLecUpdate(UpdateView):
+#     model = PlaneacionLeche
+#     form_class = Plan_Leche_form
+#     template_name = 'Plan/PlanLecheCreate.html'
+#     success_url = reverse_lazy('list_plan')
+
+def PlanLecUpdate(request,pk):
+    query = PlaneacionLeche.objects.get(pk=pk)
+    if request.method == 'GET':
+        form = Plan_Leche_form(instance=query)
+    else:
+        form = Plan_Leche_form(request.POST, instance=query)
+        if form.is_valid():
+            var = form.save()
+            var.no_planeacion = query.no_planeacion
+            var.ingreso_diario = var.produccion_promedio * var.precio_litro
+            var.estimado_anual = var.ingreso_diario * var.dias
+            var.save()
+        return redirect('list_plan')
+    dic = {
+        'form': form,
+    }
+    return render(request, 'Plan/PlanLecheCreate.html', dic)
+
 
 
 class PlanLecheShow(DetailView):
@@ -1004,11 +1079,30 @@ def PlanPorList(request, pk):
     return render(request, 'Plan/PlanPorcList.html', dic)
 
 
-class PlanPorcUpdate(UpdateView):
-    model = PlaneacionPorcina
-    form_class = Plan_Porcina_form
-    template_name = 'Plan/PlanPorCreate.html'
-    success_url = reverse_lazy('list_plan')
+# class PlanPorcUpdate(UpdateView):
+#     model = PlaneacionPorcina
+#     form_class = Plan_Porcina_form
+#     template_name = 'Plan/PlanPorCreate.html'
+#     success_url = reverse_lazy('list_plan')
+
+def PlanPorcUpdate(request, pk):
+    query = PlaneacionPorcina.objects.get(pk=pk)
+    if request.method == 'GET':
+        form = Plan_Porcina_form(instance=query)
+    else:
+        form = Plan_Porcina_form(request.POST, instance=query)
+        if form.is_valid():
+            var = form.save()
+            var.no_planeacion = query.no_planeacion
+            var.ingresos = (var.cerdos + var.lechones) * var.precio_venta
+            var.inversion = (var.cerdos + var.lechones) * var.precio_compra
+            var.save()
+
+        return redirect('list_plan')
+    dic = {
+        'form': form,
+    }
+    return render(request, 'Plan/PlanPorCreate.html', dic)
 
 
 class PlanPorcinoShow(DetailView):
@@ -1046,11 +1140,29 @@ def PlanProyGastList(request, pk):
     }
     return render(request, 'Plan/PlanProyGastList.html', dic)
 
-class PlanProyGasUpdate(UpdateView):
-    model = ProyeccionGastos
-    form_class = Proyeccion_Gastos_form
-    template_name = 'Plan/PlanProyGastCreate.html'
-    success_url = reverse_lazy('list_plan')
+# class PlanProyGasUpdate(UpdateView):
+#     model = ProyeccionGastos
+#     form_class = Proyeccion_Gastos_form
+#     template_name = 'Plan/PlanProyGastCreate.html'
+#     success_url = reverse_lazy('list_plan')
+
+def PlanProyGasUpdate(request, pk):
+    query = ProyeccionGastos.objects.get(pk=pk)
+    if request.method == 'GET':
+        form = Proyeccion_Gastos_form(instance=query)
+    else:
+        form = Proyeccion_Gastos_form(request.POST, instance=query)
+        if form.is_valid():
+            var = form.save()
+            var.no_planeacion = query.no_planeacion
+            var.semanal = var.cantidad * 7
+            var.total_anual = var.semanal * 52
+            var.save()
+        return redirect('list_plan')
+    dic = {
+        'form': form,
+    }
+    return render(request, 'Plan/PlanProyGastCreate.html', dic)
 
 class PlanProyGasShow(DetailView):
     model = ProyeccionGastos

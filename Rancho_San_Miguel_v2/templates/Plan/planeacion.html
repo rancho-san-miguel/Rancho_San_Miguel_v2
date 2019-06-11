@@ -18,9 +18,11 @@ Planeacion
 <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <label>{{ form.fecha.label }}:</label>
-        <br>
-        {{ form.fecha }}
+        <!--<label>{{ form.fecha.label }}:</label>-->
+        <!--<br>-->
+        <!--{{ form.fecha }}-->
+        <label>Año de la planeación</label>
+        <input type="number" placeholder="Dame el año Ej. 2019" class="form-control" name="caja1">
         <br>
         <br>
 

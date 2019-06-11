@@ -835,6 +835,154 @@ class Venta_Leche_List(ListView):
     paginate_by = 5
 
 
+#------------------------------------------------------------- by miku
+
+class Bitacora_Create(CreateView):
+    model = ControlBitacoraGanado
+    form_class = Bitacora_Ganado_form
+    template_name = 'Bitacora/bitacora_form.html'
+    success_url = reverse_lazy('bit_list')
+
+# def Bitacora_Create(request):
+#     query = BITACORA_GANADO
+
+class Bitacora_List(ListView):
+    queryset = ControlBitacoraGanado.objects.all()
+    template_name = 'Bitacora/bitacora_list.html'
+    paginate_by = 5
+
+class Bitacora_Show(DetailView):
+    model = ControlBitacoraGanado
+    template_name = 'Bitacora/bitacora_show.html'
+
+class Bitacora_Update(UpdateView):
+    model = ControlBitacoraGanado
+    form_class = Bitacora_Ganado_form
+    template_name = 'Bitacora/bitacora_form.html'
+    success_url = reverse_lazy('bit_list')
+
+
+class Bitacora_Delete(DeleteView):
+    model = ControlBitacoraGanado
+    template_name = 'Bitacora/bitacora_delete.html'
+    success_url = reverse_lazy('bit_list')
+
+#====================================================
+# def RecordatorioEscasez(requesy):
+#     L=[]
+#     queryset=Agro.objects.all()
+#     size=len(queryset)
+#     for i in range(size):
+#         if queryset[i].cantidad<=10:
+#             L.append(queryset[i].nombre)
+
+
+#----------------------------------------------------------------------------------------------------------
+"Inventario NO Agicola"
+
+class InventarioNA_List(ListView):
+    queryset = InventarioNoAgricola.objects.all()
+    template_name = 'Inventario_agricola/inventario_noagricola_list.html'
+    paginate_by = 5
+
+class InventarioNA_Create(CreateView):
+    model = InventarioNoAgricola
+    form_class = Registro_NoAgricola_form
+    template_name = 'Inventario_agricola/inventario_noagricola_form.html'
+    success_url = reverse_lazy('inventario2_list')
+
+class InventarioNA_Update(UpdateView):
+    model = InventarioNoAgricola
+    form_class = Registro_NoAgricola_form
+    template_name = 'Inventario_agricola/inventario_noagricola_form.html'
+    success_url = reverse_lazy('inventario2_list')
+
+class InventarioNA_Delete(DeleteView):
+    model = InventarioNoAgricola
+    template_name = 'Inventario_agricola/inventario_noagricola_delete.html'
+    success_url = reverse_lazy('inventario2_list')
+
+def Comprar_Baja_list(request):
+    query = CompraVentaNoAgricola.objects.all()
+    condi = 'holo'
+    if request.method == 'POST':
+        dime = request.POST['ordenar_registros']
+        if dime=="ptodos":
+            pass
+        elif dime == "pproce":
+            query = CompraVentaNoAgricola.objects.filter(tipo='Compra')
+            condi='compra'
+        elif dime == "retiros":
+            query = CompraVentaNoAgricola.objects.filter(tipo='Baja')
+            condi='baja'
+            #else:
+    page = request.GET.get('page', 1)
+    paginator = Paginator(query, 10)
+    try:
+        pros = paginator.page(page)
+    except PageNotAnInteger:
+        pros = paginator.page(1)
+    except EmptyPage:
+        pros = paginator.page(paginator.num_pages)
+    dic = {
+        'object_list': pros,
+        'con': condi,
+    }
+
+    return render(request, 'Inventario_agricola/compra_venta2_list.html', dic)
+
+
+
+def NAcomprar_create(request, pk):
+    query1 = InventarioNoAgricola.objects.get(articulo=pk)
+    #print ("QUE ES ESTO**********************************************************************************", query3)
+    if request.method == 'POST':
+
+        canti = int(request.POST['cantidad_comprar'])
+        precio = float(request.POST['precio_compra'])
+        fecha = request.POST['fecha_final']
+        b = CompraVentaNoAgricola(tipo='Compra', articulo=query1, cantidad=canti, precio=(precio*canti), fecha=fecha)
+        b.save()
+        query1.cantidad = canti + query1.cantidad
+        query1.save()
+        return redirect('compraryvendernoagricola')
+
+    dic = {
+        'object': query1,
+    }
+    return render(request, 'Inventario_agricola/AC2_form.html', dic)
+
+def NAbaja_create(request, pk):
+    query1 = InventarioNoAgricola.objects.get(articulo=pk)
+    # print ("QUE ES ESTO**********************************************************************************", query3)
+    if request.method == 'POST':
+        canti = int(request.POST['cantidad_comprar'])
+        fecha = request.POST['fecha_final']
+        b = CompraVentaNoAgricola(tipo='Baja', articulo=query1, cantidad=canti, precio=0,
+                                 fecha=fecha)
+        b.save()
+        query1.cantidad = query1.cantidad - canti
+        query1.save()
+        return redirect('compraryvendernoagricola')
+
+    dic = {
+        'object': query1,
+    }
+    return render(request, 'Inventario_agricola/AB2_form.html', dic)
+
+
+
+# class InventarioA_Update(UpdateView):
+#     model = InventarioAgricola
+#     form_class = Registro_Agricola_form
+#     template_name = 'Inventario_agricola/inventario_agricola_form.html'
+#     success_url = reverse_lazy('inventario_list')
+#
+# class InventarioA_Delete(DeleteView):
+#     model = InventarioAgricola
+#     template_name = 'Inventario_agricola/inventario_agricola_delete.html'
+#     success_url = reverse_lazy('inventario_list')
+#----------------------------------------------------------------------------------------------------------
 
 
 #----------------------------------------------------------------------------------------------------------------------

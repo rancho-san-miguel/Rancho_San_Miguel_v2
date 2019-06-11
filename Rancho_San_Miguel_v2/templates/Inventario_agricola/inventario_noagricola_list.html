@@ -1,0 +1,69 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Inventario No Agricola
+{% endblock %}
+
+{% block title2 %}
+Inventario No Agricola
+{% endblock %}
+
+{% block contenido %}
+
+
+    <a class="btn btn-primary" href="{% url 'inventario2_crear' %}">Agregar producto</a>
+    <a class="btn btn-primary" href="{% url 'compraryvendernoagricola' %}">Historial compra/baja</a>
+<br>
+<br>
+
+    {% if object_list %}
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <!--<th>#</th>-->
+                <th>Articulo</th>
+                <th>Unidad de medida</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                {% for i in object_list %}
+                    <tr>
+                        <!--<td>{{ i.id }}</td>-->
+                        <td>{{ i.articulo }}</td>
+                        <td>{{ i.unidad_medida }}</td>
+                        <td>{{ i.cantidad }}</td>
+                        <td>{{ i.precio }}</td>
+
+                        <td>
+
+                            <a class="btn btn-info" href="{% url 'comprarnoagricola_crear' i.articulo %}">Comprar</a>
+                            <a class="btn btn-info" href="{% url 'retirarnoagricola_crear' i.articulo %}">Retirar</a>
+                            <a class="btn btn-warning" href="{% url 'inventario2_actualizar' i.articulo %}">Editar</a>
+                            <a class="btn btn-danger" href="{% url 'inventario2_eliminar' i.articulo %}">Eliminar</a>
+                        </td>
+
+
+                    </tr>
+                {% endfor %}
+
+        </tbody>
+    </table>
+    {% else %}
+        <h2>No hay registros</h2>
+    {% endif %}
+    <div class="container" align="center">
+        <ul class="pager">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+    </ul>
+    </div>
+
+{% endblock %}

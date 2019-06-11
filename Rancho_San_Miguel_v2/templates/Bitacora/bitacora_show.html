@@ -16,13 +16,23 @@ Detalles de bitacoras
         <tbody>
             <tr>
                 <th>
-                    <p><strong>#:</strong> {{ object.id }}</p>
-                    <p><strong>Bovino:</strong> {{ object.bovino }}</p>
+                    <p>
+                        <strong>Bovino:</strong>
+                            {% if object.bovino.all %}
+                                {% for j in object.bovino.all %}
+                                    {% if forloop.last %}
+                                        {{ j }}
+                                    {% else %}
+                                        {{ j }},
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                    </p>
                     <p><strong>Descripcion:</strong> {{ object.descripcion }}</p>
                     <p><strong>Lugar:</strong> {{ object.lugar }}</p>
                     <p><strong>Fecha:</strong> {{ object.fecha }}</p>
-                    <p><strong>Created:</strong> {{ object.created }}</p>
-                    <p><strong>Updated:</strong> {{ object.updated }}</p>
+                    <!--<p><strong>Created:</strong> {{ object.created }}</p>-->
+                    <!--<p><strong>Updated:</strong> {{ object.updated }}</p>-->
                 </th>
             </tr>
         </tbody>

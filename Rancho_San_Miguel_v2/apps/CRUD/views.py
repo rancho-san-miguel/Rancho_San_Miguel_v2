@@ -1333,6 +1333,7 @@ def ComparacionBovino(request):
     fecha1 = str(year)+"-01-01"
     fecha2 = str(year)+"-12-31"
     # fecha_actual = str
+
     query1 = ControlVentaGanado.objects.filter(fecha__range=[fecha1,fecha2])
 
     vaca1 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
@@ -1355,6 +1356,14 @@ def ComparacionBovino(request):
 
     vaca7 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
         tipo='Sin registro')
+
+    v1 = 0
+    v2 = 0
+    v3 = 0
+    v4 = 0
+    v5 = 0
+    v6 = 0
+    v7 = 0
 
     v1 = len(vaca1)
     v2 = len(vaca2)

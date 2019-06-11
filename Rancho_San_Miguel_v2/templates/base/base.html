@@ -59,7 +59,7 @@
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'leche_list' %}">Venta leche</a>
                             {% endif %}{% endfor %}
                             {% for field in user.groups.all %} {% if field.name == 'Bitacora' %}
-                            <a style="font-size: 15px;" class="dropdown-item" href="#">Bitácora</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'bit_list' %}">Bitácora</a>
                             {% endif %}{% endfor %}
                             {% for field in user.groups.all %} {% if field.name == 'Control' %}
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'control_list' %}">Control</a>
@@ -87,6 +87,7 @@
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'inventario_list' %}">Inventario agrícola</a>
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'cultivo_en_proceso_list' %}">Producción</a>
                             <a style="font-size: 15px;" class="dropdown-item" href="{% url 'compraryvenderagricola' %}">Compras y ventas</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'inventario2_list' %}">Inventario no agrícola</a>
                         </div>
                     </li>
                     {% endif %}{% endfor %}

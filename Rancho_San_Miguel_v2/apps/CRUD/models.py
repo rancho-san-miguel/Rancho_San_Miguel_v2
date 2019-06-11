@@ -300,10 +300,10 @@ class Notificaciones(models.Model):
 
 
 class PlaneacionAgricola(models.Model):
-    op1 = Choices(1,2)
+    op1 = Choices('Primavera','Otoño','Verano','Invierno')
     # no_planeacion = models.ForeignKey('Planes', models.DO_NOTHING, db_column='no_planeacion')
     no_planeacion = models.CharField(max_length=50, default="0")
-    ciclo = models.IntegerField(choices=op1)
+    ciclo = models.TextField(choices=op1)
     cultivo =  models.CharField(max_length=50)
     hectareas = models.IntegerField()
     costo = models.IntegerField()

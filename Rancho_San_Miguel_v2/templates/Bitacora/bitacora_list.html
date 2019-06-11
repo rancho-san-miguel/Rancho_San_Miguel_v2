@@ -24,12 +24,20 @@ Bitácora
         <tbody>
                 {% for i in object_list %}
                     <tr>
-                        <!--<td>{{ i.id }}</td>-->
-                        <td>{{ i.bovino }}</td>
+                        <td>
+                            {% if i.bovino.all %}
+                                {% for j in i.bovino.all %}
+                                    {% if forloop.last %}
+                                        {{ j }}
+                                    {% else %}
+                                        {{ j }},
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </td>
                         <td>{{ i.lugar }}</td>
                         <td>{{ i.fecha }}</td>
-                        <!--<td>{{ i.created }}</td>-->
-                        <!--<td>{{ i.updated }}</td>-->
+
                         <td>
                             <a class="btn btn-primary" href="{% url 'bit_show' i.pk %}">Ver</a>
                             <a class="btn btn-success" href="{% url 'bit_update' i.pk %}">Editar</a>

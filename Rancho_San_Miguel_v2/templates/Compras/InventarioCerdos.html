@@ -21,16 +21,18 @@ Inventario Porcino
         </thead>
         <tbody>
                 {% for i in object_list %}
-                    {% if i.cantidad != 0 %}
+
                         <tr>
                             <td>{{ i.id }}</td>
                             <td>{{ i.cantidad }}</td>
                             <td>
+                                {% if i.cantidad != 0 %}
                                 <a class="btn btn-primary" href="{% url 'cerdos_crearVenta' %}">Vender</a>
+                                {% endif %}
                                 <a class="btn btn-success" href="{% url 'cerdos_crear' %}">Comprar</a>
                             </td>
                         </tr>
-                    {% endif %}
+
                 {% endfor %}
         </tbody>
     </table>

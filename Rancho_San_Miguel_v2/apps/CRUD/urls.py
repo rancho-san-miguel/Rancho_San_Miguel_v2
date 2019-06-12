@@ -4,7 +4,7 @@ from .views import *
 
 urlpatterns = [
     #Ganado
-    path('bovinoshow/<int:pk>', Bovino_Show.as_view(), name="bovino_show"),
+    path('bovinoshow/<int:pk>', Bovino_Show, name="bovino_show"),
     path('bovino/', Bovino_Create.as_view(), name="bovino_crear"),
     path('bovino/search/', Bovino_Search, name="bovino_search"),
     path('bovino/list/', Bovino_Search, name="bovino_list"),
@@ -54,7 +54,7 @@ urlpatterns = [
     path('porcino_C_crear/',Venta_Cerdos_Create, name="cerdos_crearVenta"),
     path('porcino_C_list/', Venta_Cerdos_List.as_view(), name="cerdos_listVenta"),
 
-    path('porcinoinvent/', InventCerdos_List.as_view(), name="cerdos_inventario"),
+    path('porcinoinvent/', InventCerdos_List, name="cerdos_inventario"),
 
 # Control_ganado
     # Control_ganado
@@ -63,7 +63,7 @@ urlpatterns = [
     path('controlshow/<int:pk>', Controlg_Show.as_view(), name="control_show"),
     path('controlupdate/<int:pk>', Controlg_Update.as_view(), name="control_update"),
     path('controldelete/<int:pk>', Controlg_Delete.as_view(), name="control_delete"),
-    ###########################################################
+    ###########################################################c
     ###########################################################
     path('DeudoresAcreedores/', DeudoresAcreedoresCreate.as_view(), name='Deudore_Acreedores_create'),
     path('DeudoresAcreedoreslist/', DeudoresAcreedoresList.as_view(), name='Deudore_Acreedores_list'),
@@ -99,7 +99,7 @@ urlpatterns = [
 
     #Venta de leche
     path('leche/crear/', Venta_Leche_Create, name="leche_crear"),
-    path('leche/list/', Venta_Leche_List.as_view(), name="leche_list"),
+    path('leche/list/', Venta_Leche_List, name="leche_list"),
 
     #Planeacion
     path('plan/crear/', PlanCreate, name='crear_plan'),

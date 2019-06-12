@@ -31,9 +31,37 @@ class Bovino_List(ListView):
     template_name = 'RegBov/regbov_list.html'
     paginate_by = 5
 
-class Bovino_Show(DetailView):
-    model = Ganado
-    template_name = 'RegBov/regbov_show.html'
+# class Bovino_Show(DetailView):
+#     model = Ganado
+#     template_name = 'RegBov/regbov_show.html'
+
+def Bovino_Show(request, pk):
+    query = Ganado.objects.get(pk=pk)
+
+    try:
+        query1 = Ganado.objects.get(arete=query.arete_padre)
+    except:
+        query1 = 0
+
+    try:
+        query2 = Ganado.objects.get(arete=query.arete_madre)
+    except:
+        query2 = 0
+
+    try:
+        query3 = ControlGanado.objects.filter(arete=pk)
+    except:
+        query3 = 0
+
+
+    dic = {
+        'object':query,
+        'query1':query1,
+        'query2':query2,
+        'query3': query3,
+    }
+    return render(request, 'RegBov/regbov_show.html', dic)
+
 
 class Bovino_Update(UpdateView):
     model = Ganado
@@ -101,12 +129,14 @@ def Bovino_Search(request):
 
 def Bovino_update_ventas_create(request, pk):
     query = Ganado.objects.get(pk=pk)
+    query2 = ControlGanado.objects.filter(arete=pk)
     if request.method == 'POST':
         form = ControlVentaGanado_form(request.POST)
         if form.is_valid():
             var = form.save()
             var.tipo = query.tipo
             var.save()
+            query2.delete()
             query.delete()
         return redirect('venta_list')
     else:
@@ -495,7 +525,6 @@ class Compra_Cerdos_List(ListView):
     paginate_by = 5
 
 def Compra_Cerdos_Create(request):
-    query = InventarioPorcino.objects.get_or_create(cantidad='0')
     var2 = InventarioPorcino.objects.all()
     if request.method == 'POST':
         form = CompraPorcino_form(request.POST)
@@ -515,10 +544,23 @@ def Compra_Cerdos_Create(request):
     }
     return render(request, 'Ventas/ventas_cerdos_form.html', dic)
 
-class InventCerdos_List(ListView):
-    queryset = InventarioPorcino.objects.all()
-    template_name = 'Compras/InventarioCerdos.html'
-    paginate_by = 5
+# class InventCerdos_List(ListView):
+#     queryset = InventarioPorcino.objects.all()
+#     template_name = 'Compras/InventarioCerdos.html'
+#     paginate_by = 5
+
+def InventCerdos_List(request):
+    query = InventarioPorcino.objects.all()
+    size = len(query)
+    if size < 1:
+        InventarioPorcino.objects.create(cantidad=0)
+    else:
+        pass
+    dic = {
+        'object_list':query,
+    }
+    return render(request, 'Compras/InventarioCerdos.html', dic)
+
 
 #################pppp
 ###############################
@@ -594,7 +636,7 @@ class Venta_Cerdos_List(ListView):
     paginate_by = 5
 
 def Venta_Cerdos_Create(request):
-    query = InventarioPorcino.objects.get_or_create(cantidad='0')
+    # query = InventarioPorcino.objects.get_or_create(cantidad='0')
     var2 = InventarioPorcino.objects.all()
     if request.method == 'POST':
         form = VentaPorcino_form(request.POST)
@@ -792,6 +834,76 @@ def AddGrupos(request, pk):
         except:
             pass
 
+        try:
+            op9 = request.POST['caja20']
+            grupos = Group.objects.get(name="Financiero")
+            usuario.groups.add(grupos)
+        except:
+            pass
+
+        try:
+            op9 = request.POST['caja21']
+            grupos = Group.objects.get(name="Planes")
+            usuario.groups.add(grupos)
+        except:
+            pass
+
+        try:
+            op9 = request.POST['caja22']
+            grupos = Group.objects.get(name="Deudores")
+            usuario.groups.add(grupos)
+        except:
+            pass
+
+        try:
+            op9 = request.POST['caja23']
+            grupos = Group.objects.get(name="Gastos")
+            usuario.groups.add(grupos)
+        except:
+            pass
+
+        try:
+            op9 = request.POST['caja24']
+            grupos = Group.objects.get(name="ComparacionBovino")
+            usuario.groups.add(grupos)
+        except:
+            pass
+
+        try:
+            op9 = request.POST['caja25']
+            grupos = Group.objects.get(name="ComparacionPorcino")
+            usuario.groups.add(grupos)
+        except:
+            pass
+
+        try:
+            op9 = request.POST['caja26']
+            grupos = Group.objects.get(name="ComparacionLeche")
+            usuario.groups.add(grupos)
+        except:
+            pass
+
+        try:
+            op9 = request.POST['caja27']
+            grupos = Group.objects.get(name="ComparacionAgro")
+            usuario.groups.add(grupos)
+        except:
+            pass
+
+        try:
+            op9 = request.POST['caja28']
+            grupos = Group.objects.get(name="ComparacionGasto")
+            usuario.groups.add(grupos)
+        except:
+            pass
+
+        try:
+            op9 = request.POST['caja29']
+            grupos = Group.objects.get(name="ComparacionGanancia")
+            usuario.groups.add(grupos)
+        except:
+            pass
+
         return redirect('listar_usuario')
 
     dic = {
@@ -828,11 +940,42 @@ def Venta_Leche_Create(request):
     return render(request, 'Ventas/ventas_leche_form.html',dic )
 
 
-class Venta_Leche_List(ListView):
-    queryset = VentaLeche.objects.all()
-    #queryset = HISTORIAL_VENTAS_LECHE.objects.exclude(estado=True).order_by('id')
-    template_name = 'Ventas/ventas_leche_list.html'
-    paginate_by = 5
+# class Venta_Leche_List(ListView):
+#     queryset = VentaLeche.objects.all()
+#     #queryset = HISTORIAL_VENTAS_LECHE.objects.exclude(estado=True).order_by('id')
+#     template_name = 'Ventas/ventas_leche_list.html'
+#     paginate_by = 5
+
+def Venta_Leche_List(request):
+    Fecha_Actual = Notificaciones_function()
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+
+    fecha1 = str(year) + "-01-01"
+    fecha2 = str(year) + "-12-31"
+
+    m1 = '01'
+    m2 = '12'
+
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
+
+        year = ano
+
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
+
+    query = VentaLeche.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2])
+
+    dic = {
+        'object_list':query,
+    }
+
+    return render(request, 'Ventas/ventas_leche_list.html', dic)
+
 
 
 #------------------------------------------------------------- by miku
@@ -1010,9 +1153,6 @@ def PlanCreate(request):
 
     return render(request, 'Plan/planeacion.html', dic)
 
-
-
-
 class PlanList(ListView):
     queryset = Planes.objects.all()
     template_name = 'Plan/planeacion_list.html'
@@ -1145,7 +1285,7 @@ def PlanLecheCreate(request,pk):
         if form.is_valid():
             var = form.save()
             var.no_planeacion = query.no_planeacion
-            var.ingreso_diario = var.produccion_promedio * var.precio_litro
+            var.ingreso_diario = var.produccion_promedio * var.precio_litro * var.vacas_produccion
             var.estimado_anual = var.ingreso_diario * var.dias
             var.save()
         return redirect('list_plan')
@@ -1179,7 +1319,7 @@ def PlanLecUpdate(request,pk):
         if form.is_valid():
             var = form.save()
             var.no_planeacion = query.no_planeacion
-            var.ingreso_diario = var.produccion_promedio * var.precio_litro
+            var.ingreso_diario = var.produccion_promedio * var.precio_litro * var.vacas_produccion
             var.estimado_anual = var.ingreso_diario * var.dias
             var.save()
         return redirect('list_plan')
@@ -1332,70 +1472,105 @@ def ComparacionBovino(request):
 
     fecha1 = str(year)+"-01-01"
     fecha2 = str(year)+"-12-31"
+
+    fecha10 = str(year) + "-01-01"
+    fecha20 = str(year) + "-12-31"
     # fecha_actual = str
 
-    query1 = ControlVentaGanado.objects.filter(fecha__range=[fecha1,fecha2])
+    m1 = '01'
+    m2 = '12'
 
-    vaca1 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
-        tipo='Vientre en producción limousin')
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
 
-    vaca2 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
-        tipo='Vientre en crecimiento limousin')
+        year = ano
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
 
-    vaca3 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
-        tipo='Vientre en producción brangus')
+        fecha10 = str(ano) + "-01-01"
+        fecha20 = str(ano) + "-12-31"
 
-    vaca4 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
-        tipo='Vientre en crecimiento brangus')
 
-    vaca5 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
-        tipo='Sementales')
 
-    vaca6 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
-        tipo='Becerros')
+    query1 = ControlVentaGanado.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2])
 
-    vaca7 = ControlVentaGanado.objects.filter(fecha__range=[fecha1, fecha2]).filter(
-        tipo='Sin registro')
+    try:
+        vaca1 = ControlVentaGanado.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2]).filter(
+            tipo='Vientre en producción limousin')
+        v1 = len(vaca1)
+    except:
+        v1 = 0
 
-    v1 = 0
-    v2 = 0
-    v3 = 0
-    v4 = 0
-    v5 = 0
-    v6 = 0
-    v7 = 0
+    try:
+        vaca2 = ControlVentaGanado.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2]).filter(
+            tipo='Vientre en crecimiento limousin')
+        v2 = len(vaca2)
+    except:
+        v2 = 0
 
-    v1 = len(vaca1)
-    v2 = len(vaca2)
-    v3 = len(vaca3)
-    v4 = len(vaca4)
-    v5 = len(vaca5)
-    v6 = len(vaca6)
-    v7 = len(vaca7)
+    try:
+        vaca3 = ControlVentaGanado.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2]).filter(
+            tipo='Vientre en producción brangus')
+        v3 = len(vaca3)
+    except:
+        v3 = 0
 
-    query3 = Planes.objects.filter(fecha__range=[fecha1,fecha2])
+    try:
+        vaca4 = ControlVentaGanado.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2]).filter(
+            tipo='Vientre en crecimiento brangus')
+        v4 = len(vaca4)
+    except:
+        v4 = 0
+
+    try:
+        vaca5 = ControlVentaGanado.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2]).filter(
+            tipo='Sementales')
+        v5 = len(vaca5)
+    except:
+        v5 = 0
+
+    try:
+        vaca6 = ControlVentaGanado.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2]).filter(
+            tipo='Becerros')
+        v6 = len(vaca6)
+    except:
+        v6 = 0
+
+    try:
+        vaca7 = ControlVentaGanado.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2]).filter(
+            tipo='Sin registro')
+        v7 = len(vaca7)
+    except:
+        v7 = 0
+
+    venta_suma = v1+v2+v3+v4+v5+v6+v7
+    # print("-------------************-------------",v7)
+
+    query3 = Planes.objects.filter(fecha__range=[fecha10,fecha20])
     suma = 0
     size = 0
     try:
         query2 = PlaneacionBovina.objects.filter(no_planeacion=query3[0])
-
-        size = len(query1)
         for i in range(len(query2)):
             suma = suma + int(query2[i].venta)
     except:
-        query2 = PlaneacionBovina.objects.all()
+        query2 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
+
+
     dic = {
-        'total':size,
-        'query':query1,
+        'query1':query1,
         'query2':query2,
         'suma':suma,
+        'total':venta_suma,
         'v1': v1,
         'v2': v2,
         'v3': v3,
         'v4': v4,
         'v5': v5,
         'v6': v6,
-        'v7':v7,
+        'v7': v7,
     }
     return render(request, 'Comparacion/Comp_Bov.html', dic)
 
@@ -1409,14 +1584,35 @@ def ComparacionPorcino(request):
     fecha1 = str(year) + "-01-01"
     fecha2 = str(year) + "-12-31"
 
-    query1 = VentasPorcinos.objects.filter(fecha__range=[fecha1, fecha2])
-    query2 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    fecha10 = str(year) + "-01-01"
+    fecha20 = str(year) + "-12-31"
+    # fecha_actual = str
+
+    m1 = '01'
+    m2 = '12'
+
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
+
+        year = ano
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
+
+        fecha10 = str(ano) + "-01-01"
+        fecha20 = str(ano) + "-12-31"
+
+    query1 = VentasPorcinos.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2])
+    query2 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
     suma = 0
     suma2 = 0
     suma3 = 0
     suma4 = 0
     g1 = 0
     g2 = 0
+
+
     try:
         size = len(query1)
         for i in range(size):
@@ -1434,7 +1630,7 @@ def ComparacionPorcino(request):
             g2 = g2 + int(query3[i].ingresos)
         suma4 = suma2 + suma3
     except:
-        query3 = PlaneacionPorcina.objects.all()
+        query3 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
         pass
 
     dic = {
@@ -1456,8 +1652,28 @@ def ComparacionLeche(request):
     fecha1 = str(year) + "-01-01"
     fecha2 = str(year) + "-12-31"
 
-    query1 = VentaLeche.objects.filter(fecha__range=[fecha1, fecha2])
-    query2 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    fecha10 = str(year) + "-01-01"
+    fecha20 = str(year) + "-12-31"
+    # fecha_actual = str
+
+    m1 = '01'
+    m2 = '12'
+
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
+
+        year = ano
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
+
+        fecha10 = str(ano) + "-01-01"
+        fecha20 = str(ano) + "-12-31"
+
+
+    query1 = VentaLeche.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2])
+    query2 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
 
     suma = 0
     suma2 = 0
@@ -1480,7 +1696,7 @@ def ComparacionLeche(request):
             dias = dias + int(query3[i].dias)
             # plan_venta =
     except:
-        query3 = PlaneacionLeche.objects.all()
+        query3 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
 
     dic = {
         'ventas_leche':suma,
@@ -1499,8 +1715,27 @@ def ComparacionAgricola(request):
     fecha1 = str(year) + "-01-01"
     fecha2 = str(year) + "-12-31"
 
-    query1 = CompraVentaAgricola.objects.filter(fecha__range=[fecha1, fecha2]).filter(tipo='Venta')
-    query2 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    fecha10 = str(year) + "-01-01"
+    fecha20 = str(year) + "-12-31"
+    # fecha_actual = str
+
+    m1 = '01'
+    m2 = '12'
+
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
+
+        year = ano
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
+
+        fecha10 = str(ano) + "-01-01"
+        fecha20 = str(ano) + "-12-31"
+
+    query1 = CompraVentaAgricola.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2]).filter(tipo='Venta')
+    query2 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
 
     L1 = []
     L2 = []
@@ -1559,7 +1794,53 @@ def Comparacion_Gastos(request):
     fecha1 = str(year) + "-01-01"
     fecha2 = str(year) + "-12-31"
 
-    query2 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    fecha10 = str(year) + "-01-01"
+    fecha20 = str(year) + "-12-31"
+    # fecha_actual = str
+
+    m1 = '01'
+    m2 = '12'
+
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
+
+        year = ano
+
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
+
+        fecha10 = str(ano) + "-01-01"
+        fecha20 = str(ano) + "-12-31"
+
+    query1 = Gastos.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2])
+    query2 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
+
+    sueldo_gastos = 0
+    Conbustible_gastos = 0
+    Insumo_gastos = 0
+    Rentas_gastos = 0
+    Agua_gastos = 0
+    Otros_gastos = 0
+
+    try:
+        size = len(query1)
+        for i in range(size):
+            if query1[i].tipo == "Sueldos":
+                sueldo_gastos = sueldo_gastos + int(query1[i].monto)
+            if query1[i].tipo == "Conbustible":
+                Conbustible_gastos = Conbustible_gastos + int(query1[i].monto)
+            if query1[i].tipo == "Insumo de alimentos":
+                Insumo_gastos = Insumo_gastos + int(query1[i].monto)
+            if query1[i].tipo == "Rentas":
+                Rentas_gastos = Rentas_gastos + int(query1[i].monto)
+            if query1[i].tipo == "Derecho de agua":
+                Agua_gastos = Agua_gastos + int(query1[i].monto)
+            if query1[i].tipo == "Otros":
+                Otros_gastos = Otros_gastos + int(query1[i].monto)
+    except:
+        pass
 
     sueldo_planeado = 0
     Conbustible = 0
@@ -1585,7 +1866,7 @@ def Comparacion_Gastos(request):
             if query3[i].tipo_gasto == "Otros":
                 Otros = Otros + int(query3[i].total_anual)
     except:
-        query3 = ProyeccionGastos.objects.all()
+        query3 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
 
     dic = {
         'query3':query3,
@@ -1595,6 +1876,15 @@ def Comparacion_Gastos(request):
         'Rentas':Rentas,
         'Agua':Agua,
         'Otros':Otros,
+
+        'query1':query1,
+        'sueldo_gastos':sueldo_gastos,
+        'Conbustible_gastos':Conbustible_gastos,
+        'Insumo_gastos':Insumo_gastos,
+        'Rentas_gastos':Rentas_gastos,
+        'Agua_gastos ':Agua_gastos,
+        'Otros_gastos':Otros_gastos,
+
     }
 
     return render(request, 'Comparacion/Comp_gastos.html', dic)
@@ -1607,12 +1897,32 @@ def Comparacion_Ganancias(request):
     fecha1 = str(year) + "-01-01"
     fecha2 = str(year) + "-12-31"
 
+    fecha10 = str(year) + "-01-01"
+    fecha20 = str(year) + "-12-31"
+    # fecha_actual = str
+
+    m1 = '01'
+    m2 = '12'
+
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
+
+        year = ano
+
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
+
+        fecha10 = str(ano) + "-01-01"
+        fecha20 = str(ano) + "-12-31"
+
 
     """Ganancias reales"""
-    query1 = ControlVentaGanado.objects.all()
-    query2 = VentasPorcinos.objects.all()
-    query3 = CompraVentaAgricola.objects.filter(tipo='Venta')
-    query4 = VentaLeche.objects.all()
+    query1 = ControlVentaGanado.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2])
+    query2 = VentasPorcinos.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2])
+    query3 = CompraVentaAgricola.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2]).filter(tipo='Venta')
+    query4 = VentaLeche.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2])
 
     suma_ganado = 0
     suma_cerdos = 0
@@ -1647,7 +1957,7 @@ def Comparacion_Ganancias(request):
         pass
 
     """Ganancias planeadas"""
-    query5 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    query5 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
     ganancia_agro_plan = 0
     try:
         query6 = PlaneacionAgricola.objects.filter(no_planeacion=query5[0])
@@ -1657,7 +1967,7 @@ def Comparacion_Ganancias(request):
     except:
         pass
 
-    query7 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    query7 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
     ganancias_leche_plan = 0
     try:
         query8 = PlaneacionLeche.objects.filter(no_planeacion=query7[0])
@@ -1667,7 +1977,7 @@ def Comparacion_Ganancias(request):
     except:
         pass
 
-    query9 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    query9 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
     ganancias_porcina_plan = 0
     try:
         query10 = PlaneacionPorcina.objects.filter(no_planeacion=query9[0])
@@ -1677,7 +1987,7 @@ def Comparacion_Ganancias(request):
     except:
         pass
 
-    query11 = Planes.objects.filter(fecha__range=[fecha1, fecha2])
+    query11 = Planes.objects.filter(fecha__range=[fecha10, fecha20])
     ganancia_bovino_plan = 0
     try:
         query12 = PlaneacionBovina.objects.filter(no_planeacion=query11[0])
@@ -1748,8 +2058,6 @@ def Ganancias(request):
     except:
         pass
 
-
-
     dic = {
         'ganado':query1,
         'suma_ganado':suma_ganado,
@@ -1762,4 +2070,3 @@ def Ganancias(request):
     }
 
     return render(request, 'Ganancias/ganancias_list.html', dic)
-

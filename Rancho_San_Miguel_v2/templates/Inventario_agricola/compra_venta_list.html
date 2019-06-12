@@ -42,7 +42,6 @@ Historial de compras, ventas y retiros
             </tr>
         </thead>
         <tbody>
-
                 {% for i in object_list %}
                     <tr>
                         <!--<td>{{ i.id }}</td>-->
@@ -53,13 +52,11 @@ Historial de compras, ventas y retiros
                         <td>{{ i.comprador }}</td>
                         <td>{{ i.fecha }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{# url 'cultivo_en_proceso_show' i.pk #}">Ver</a>
-                            <a class="btn btn-danger" href="{# url 'cultivo_en_proceso_delete' i.pk #}">Eliminar</a>
+                            <a class="btn btn-primary" href="{% url 'cultivo_en_proceso_show' i.pk %}">Ver</a>
+                            <a class="btn btn-danger" href="{% url 'cultivo_en_proceso_delete' i.pk %}">Eliminar</a>
                         </td>
-
                     </tr>
                 {% endfor %}
-
         </tbody>
     </table>
 

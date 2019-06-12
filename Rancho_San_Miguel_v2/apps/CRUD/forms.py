@@ -126,12 +126,12 @@ class Ganado2_Form(forms.ModelForm):
             'arete',
             'sexo',
             'propietario',
-            'arete_padre',
+            # 'arete_padre',
             'arete_madre',
             'f_nacimiento',
             'peso_nacimiento',
             'localizacion_fierro',
-            'galeria_venta',
+            # 'galeria_venta',
             'img',
             'img2',
 
@@ -141,12 +141,12 @@ class Ganado2_Form(forms.ModelForm):
             'arete':'Arete',
             'sexo':'Sexo',
             'propietario':'Propietario',
-            'arete_padre':'Arete del padre',
+            # 'arete_padre':'Arete del padre',
             'arete_madre':'Arete de la madre',
             'f_nacimiento':'Fecha de nacimiento',
             'peso_nacimiento':'Peso al nacer',
             'localizacion_fierro':'Fierro',
-            'galeria_venta':'Agregar a la ventana de venta',
+            # 'galeria_venta':'Agregar a la ventana de venta',
             'img':'Foto',
             'img2': 'Foto2',
         }
@@ -158,12 +158,12 @@ class Ganado2_Form(forms.ModelForm):
             'arete':forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete del bovino'}),
             'sexo': forms.Select(attrs={'class': 'form-control'}),
             'propietario': forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del propietario'}),
-            'arete_padre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete del padre'}),
+            # 'arete_padre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete del padre'}),
             'arete_madre': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el arete de la madre'}),
             'f_nacimiento':forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),
             'peso_nacimiento':forms.TextInput(attrs={'class': 'form-control','placeholder':'Peso de nacimiento'}),
             'localizacion_fierro':forms.TextInput(attrs={'class': 'form-control','placeholder':'Localización del fierro'}),
-            'galeria_venta': forms.CheckboxInput(),
+            # 'galeria_venta': forms.CheckboxInput(),
             'img': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
             'img2': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
         }
@@ -371,7 +371,7 @@ class MovDeudoresAcredoresForm(forms.ModelForm):
         widgets = {
             'no': forms.Select(attrs={'class': 'form-control'}),
             'descripcion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Movimiento'}),
-            'deuda': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Deuda $'}),
+            'deuda': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad $'}),
             'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
         }
 
@@ -390,7 +390,7 @@ class GastosForm(forms.ModelForm):
         labels = {
             'tipo': 'Tipo',
             'motivo': 'Descripcion',
-            'monto': 'Monto $',
+            'monto': 'Monto',
             'img': 'Imagen',
             'fecha': 'Fecha',
             }
@@ -398,7 +398,7 @@ class GastosForm(forms.ModelForm):
         widgets = {
             'tipo': forms.Select(attrs={'class': 'form-control'}),
             'motivo': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion de la compra'}),
-            'monto': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total de la compra $'}),
+            'monto': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total $'}),
             'img': forms.ClearableFileInput(attrs={'class': 'form-control-file mt-3'}),
             'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
             }
@@ -423,17 +423,17 @@ class En_Proceso_form(forms.ModelForm):
         }
         labels = {
             'cultivo': 'Cultivo a sembrar',
-            'hectareas': 'Hectareas a sembrar',
+            'hectareas': 'Hectáreas a sembrar',
             'cantidad':'Cantidad de semilla a sembrar',
             'ciclo':'Selecciona el ciclo de siembra',
             'fecha_inicio':'Fecha de inicio'
         }
         widgets = {
             'Cultivo':forms.Select(attrs={'class': 'form-control'}),
-            'Hectareas':forms.TextInput(attrs={'class': 'form-control'}),
+            'hectareas':forms.TextInput(attrs={'class': 'form-control'}),
             'cantidad':forms.TextInput(attrs={'class': 'form-control'}),
             'ciclo':forms.Select(attrs={'class': 'form-control'}),
-            'fecha_inicio': forms.SelectDateWidget(attrs={'class': 'form-control','style': 'display :inline-block'}),
+            'fecha_inicio': forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),
         }
 
 class ControlVentaGanado_form(forms.ModelForm):
@@ -562,7 +562,7 @@ class Plan_Agro_form(forms.ModelForm):
             'ciclo': 'Ciclo',
             'cultivo': 'Cultivo',
             'hectareas': 'Hectáreas',
-            'costo': 'Costo',
+            'costo': 'Costo $',
             # 'produccion_estimada': 'Producción estimada',
             'cantidad': 'Cantidad',
             # 'total': 'Total',
@@ -573,7 +573,7 @@ class Plan_Agro_form(forms.ModelForm):
             'hectareas': forms.TextInput(attrs={'class': 'form-control','placeholder':'Numero de hectáreas'}),
             'costo': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el costo de las hectáreas'}),
             # 'produccion_estimada': forms.TextInput(attrs={'class': 'form-control','placeholder':'Estimación de la producción'}),
-            'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad a producir'}),
             # 'total': forms.TextInput(attrs={'class': 'form-control','placeholder':'Total'}),
         }
 
@@ -592,14 +592,14 @@ class Plan_Bovino_form(forms.ModelForm):
             'tipo_ganado': 'Tipo de ganado',
             'hato':'Hato',
             'venta':'Venta',
-            'precio':'Precio',
+            'precio':'Precio $',
             # 'ingreso_anual': 'Ingreso anual',
         }
         widgets = {
             'tipo_ganado': forms.Select(attrs={'class': 'form-control'}),
             'hato': forms.TextInput(attrs={'class': 'form-control','placeholder':'Hato'}),
-            'venta': forms.TextInput(attrs={'class': 'form-control','placeholder':'Venta'}),
-            'precio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Precio'}),
+            'venta': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad a vender'}),
+            'precio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el precio'}),
             # 'ingreso_anual': forms.TextInput(attrs={'class': 'form-control','placeholder':'0.0'}),
         }
 
@@ -615,16 +615,16 @@ class Plan_Leche_form(forms.ModelForm):
             # 'estimado_anual',
         }
         labels = {
-            'vacas_produccion': 'Vacas producción',
-            'produccion_promedio':'Producción promedio',
-            'precio_litro':'Precio por litro',
+            'vacas_produccion': 'Vacas en producción',
+            'produccion_promedio':'Producción',
+            'precio_litro':'Precio por litro $',
             'dias':'Dias a estimar',
             # 'ingreso_diario':'Ingreso diario',
             # 'estimado_anual':'Estimado anual',
         }
         widgets = {
             'vacas_produccion': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad de vacas en producción'}),
-            'produccion_promedio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad promedio'}),
+            'produccion_promedio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Producción promedio en litros por vaca'}),
             'precio_litro': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio de la leche'}),
             'dias': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad de dias'}),
             # 'ingreso_diario':forms.TextInput(attrs={'class': 'form-control','placeholder':'Ingreso diario'}),
@@ -646,16 +646,16 @@ class Plan_Porcina_form(forms.ModelForm):
         labels = {
             'cerdos': 'Cerdos',
             'lechones': 'Lechones',
-            'precio_venta': 'Precio de venta',
-            'precio_compra':'Precio de compra',
+            'precio_venta': 'Precio de venta $',
+            'precio_compra':'Precio de compra $',
             # 'inversion': 'Inversión',
             # 'ingresos':'Ingresos',
         }
         widgets = {
-            'cerdos': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad de cerdos'}),
-            'lechones': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad de lechones'}),
-            'precio_venta': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio a la venta'}),
-            'precio_compra': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio de compra'}),
+            'cerdos': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad de cerdos a vender'}),
+            'lechones': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad de lechones a comprar'}),
+            'precio_venta': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio a la venta $'}),
+            'precio_compra': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio de compra $'}),
             # 'inversion':forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad a invertir'}),
             # 'ingresos':forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantida de ingresos'}),
         }
@@ -676,7 +676,7 @@ class Proyeccion_Gastos_form(forms.ModelForm):
         widgets = {
             'tipo_gasto': forms.Select(attrs={'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripción'}),
-            'cantidad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Gastos por dia'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total por dia $'}),
         }
 
 

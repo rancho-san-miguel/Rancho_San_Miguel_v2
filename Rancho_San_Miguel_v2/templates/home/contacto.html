@@ -79,9 +79,9 @@
 					<p>Direccion: 1481 Creektlalalh, CA 93424 </p>
 					<p>Telefono: +52 345 795 3324</p>
 					<p>Correo Electronico: sanmiguel@gmail.com</p>
-					<div class="cf-social">
-						<a href="https://www.facebook.com/SanMiguelTemoloasco/about?lst=100001713947278%3A100008981527615%3A1553197655&section=education"><i class="fa fa-facebook"></i></a>
-					</div>
+					<!--<div class="cf-social">-->
+						<!--<a href="https://www.facebook.com/SanMiguelTemoloasco/about?lst=100001713947278%3A100008981527615%3A1553197655&section=education"><i class="fa fa-facebook"></i></a>-->
+					<!--</div>-->
 				</div>
 				<div class="col-lg-5 pt-4">
 					<img src="{% static 'inicio/rancho4.jpg' %}" alt="">
@@ -92,14 +92,7 @@
 	<!-- Page section end -->
 
 
-
-	<!-- Footer section start -->
 	<footer class="footer-section">
-		<div class="footer-social">
-			<div class="social-links">
-				<a href="https://www.facebook.com/SanMiguelTemoloasco/about?lst=100001713947278%3A100008981527615%3A1553197655&section=education"><i class="fa fa-facebook"></i></a>
-			</div>
-		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-9 offset-lg-3">
@@ -107,15 +100,17 @@
 						<div class="col-md-4">
 							<div class="footer-item">
 								<ul>
-									<li><a href="#">Inicio</a></li>
-									<li><a href="#">Informacion</a></li>
-									<li><a href="#">Contacto</a></li>
+									<li><a  href="{% url 'index' %}">Inicio</a></li>
+									<li><a href="{% url 'about' %}">Información</a></li>
+									<li><a href="{% url 'bovino_galeria_venta_list' %}">Venta</a></li>
 								</ul>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="footer-item">
 								<ul>
+									<li><a href="{% url 'galeria_list2' %}">Galería</a></li>
+									<li><a href="{% url 'contact' %}">Contacto</a></li>
 									<li><a href="#">Desarrolladores</a></li>
 								</ul>
 							</div>
@@ -126,7 +121,6 @@
 			</div>
 		</div>
 	</footer>
-	<!-- Footer section end -->
 
 
 

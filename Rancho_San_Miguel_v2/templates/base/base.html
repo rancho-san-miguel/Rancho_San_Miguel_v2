@@ -103,24 +103,43 @@
                     </li>
                     <li class="nav-item">
                     </li>
+                    {% endif %}
 
+                    {% for field in user.groups.all %} {% if field.name == 'Financiero' %}
                     <li class="nav-item dropdown">
                         <a style="font-size: 18px;" class="nav-link dropdown-toggle text-white" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{% url 'list_plan' %}">Financiero</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'list_plan' %}">Planes</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'Deudore_Acreedores_list' %}" >Deudores/Acreedores</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'Abono_list' %}" >Historial Deudores/Acreedores</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'Historial_Compras_list' %}" >Gastos</a>
-                            <!--<a style="font-size: 15px;" class="dropdown-item" href="{% url 'ganancias_list' %}">Ganancias</a>-->
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_bovino' %}">Comparación bovino</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_porcino' %}">Comparación porcino</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_leche' %}">Comparación leche</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_agro' %}">Comparación agricultura</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_gastos' %}">Comparación gastos</a>
-                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_ganancias_list' %}">Comparación ganancias</a>
+                            {% for field in user.groups.all %} {% if field.name == 'Planes' %}
+                                <a style="font-size: 15px;" class="dropdown-item" href="{% url 'list_plan' %}">Planes</a>
+                            {% endif %}{% endfor %}
+                            {% for field in user.groups.all %} {% if field.name == 'Gastos' %}
+                                <a style="font-size: 15px;" class="dropdown-item" href="{% url 'Historial_Compras_list' %}" >Gastos</a>
+                            {% endif %}{% endfor %}
+                            {% for field in user.groups.all %} {% if field.name == 'ComparacionBovino' %}
+                                <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_bovino' %}">Comparación bovino</a>
+                            {% endif %}{% endfor %}
+                            {% for field in user.groups.all %} {% if field.name == 'ComparacionPorcino' %}
+                                <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_porcino' %}">Comparación porcino</a>
+                            {% endif %}{% endfor %}
+                            {% for field in user.groups.all %} {% if field.name == 'ComparacionLeche' %}
+                                <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_leche' %}">Comparación leche</a>
+                            {% endif %}{% endfor %}
+                            {% for field in user.groups.all %} {% if field.name == 'ComparacionAgro' %}
+                                <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_agro' %}">Comparación agrícola</a>
+                            {% endif %}{% endfor %}
+                            {% for field in user.groups.all %} {% if field.name == 'ComparacionGasto' %}
+                                <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_gastos' %}">Comparación gastos</a>
+                            {% endif %}{% endfor %}
+                            {% for field in user.groups.all %} {% if field.name == 'ComparacionGanancia' %}
+                                <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_ganancias_list' %}">Comparación ganancias</a>
+                            {% endif %}{% endfor %}
+                            {% for field in user.groups.all %} {% if field.name == 'Deudores' %}
+                                <a style="font-size: 15px;" class="dropdown-item" href="{% url 'Deudore_Acreedores_list' %}" >Deudores/Acreedores</a>
+                                <!--<a style="font-size: 15px;" class="dropdown-item" href="{% url 'Abono_list' %}" >Historial Deudores/Acreedores</a>-->
+                            {% endif %}{% endfor %}
                         </div>
                     </li>
-                    {% endif %}
+                    {% endif %}{% endfor %}
 
                     {% for field in user.groups.all %} {% if field.name == 'Notificaciones' %}
                     <li class="nav-item ">

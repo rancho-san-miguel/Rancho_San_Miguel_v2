@@ -10,6 +10,51 @@ Comparación Gastos-Planeación
 
 
 {% block contenido %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Mes inicial</label>
+        <!--<br>-->
+        <select name="c1">
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+        </select>
+        <br>
+        <label>Mes final</label>
+        <!--<br>-->
+        <select name="c2">
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+        </select>
+        <br>
+        <label>Año</label>
+        <input type="number" name="ano" placeholder="Dame el año Ej. 2019" required>
+
+        <div class="trans">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    </form>
+
+
     {% if query3 %}
     <h3>Planeación</h3>
         <table class="table table-striped table-bordered">
@@ -36,6 +81,34 @@ Comparación Gastos-Planeación
         </table>
     {% else %}
         <h2>No hay registros de la planeación</h2>
+    {% endif %}
+
+    {% if query1 %}
+    <h3>Gastos</h3>
+        <table class="table table-striped table-bordered">
+            <thead class="bg-success">
+                <tr>
+                    <th>Sueldos totales</th>
+                    <th>Conbustible</th>
+                    <th>Insumo</th>
+                    <th>Rentas</th>
+                    <th>Agua</th>
+                    <th>Otros</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ sueldo_gastos }}</td>
+                    <td>{{ Conbustible_gastos }}</td>
+                    <td>{{ Insumo_gastos }}</td>
+                    <td>{{ Rentas_gastos }}</td>
+                    <td>{{ Agua_gastos }}</td>
+                    <td>{{ Otros_gastos }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay registros de gastos</h2>
     {% endif %}
 
     <div class="container" align="center">

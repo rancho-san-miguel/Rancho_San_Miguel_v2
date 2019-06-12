@@ -76,6 +76,7 @@ Usuario
 
     <input type="checkbox" name="caja5" value="agro"{% for field in form.groups.all %} {% if field.name == 'Agricultura' %} checked {% endif %} {% endfor %}>
     <label> Agricultura</label>
+    <br>
     <!--<br>-->
     <!--<input type="checkbox" name="caja11" value="agro"{% for field in form.groups.all %} {% if field.name == 'AgriculturaAdd' %} checked {% endif %} {% endfor %}>-->
     <!--<label> Registrar agricutura</label>-->
@@ -91,6 +92,45 @@ Usuario
     <!--<br>-->
     <!--<input type="checkbox" name="caja19" value="agro"{% for field in form.groups.all %} {% if field.name == 'HisRet' %} checked {% endif %} {% endfor %}>-->
     <!--<label> Historial de retiro</label>-->
+
+    <input type="checkbox" name="caja20" value="Financiero"{% for field in form.groups.all %} {% if field.name == 'Financiero' %} checked {% endif %} {% endfor %}>
+    <label> Financiero</label>
+    <br>
+
+    <input type="checkbox" name="caja21" value="Planes"{% for field in form.groups.all %} {% if field.name == 'Planes' %} checked {% endif %} {% endfor %}>
+    <label> Planes</label>
+    <br>
+
+    <input type="checkbox" name="caja22" value="Deudores"{% for field in form.groups.all %} {% if field.name == 'Deudores' %} checked {% endif %} {% endfor %}>
+    <label> Deudores/Acredores</label>
+    <br>
+
+    <input type="checkbox" name="caja23" value="Gastos"{% for field in form.groups.all %} {% if field.name == 'Gastos' %} checked {% endif %} {% endfor %}>
+    <label> Gastos</label>
+    <br>
+
+    <input type="checkbox" name="caja24" value="ComparacionBovino"{% for field in form.groups.all %} {% if field.name == 'ComparacionBovino' %} checked {% endif %} {% endfor %}>
+    <label> Comparación Bovino</label>
+    <br>
+
+    <input type="checkbox" name="caja25" value="ComparacionPorcino"{% for field in form.groups.all %} {% if field.name == 'ComparacionPorcino' %} checked {% endif %} {% endfor %}>
+    <label> Comparación Porcino</label>
+    <br>
+
+    <input type="checkbox" name="caja26" value="ComparacionLeche"{% for field in form.groups.all %} {% if field.name == 'ComparacionLeche' %} checked {% endif %} {% endfor %}>
+    <label> Comparación Leche</label>
+    <br>
+
+    <input type="checkbox" name="caja27" value="ComparacionAgro"{% for field in form.groups.all %} {% if field.name == 'ComparacionAgro' %} checked {% endif %} {% endfor %}>
+    <label> Comparación Agricultura</label>
+    <br>
+
+    <input type="checkbox" name="caja28" value="ComparacionGasto"{% for field in form.groups.all %} {% if field.name == 'ComparacionGasto' %} checked {% endif %} {% endfor %}>
+    <label> Comparación Gastos</label>
+    <br>
+
+    <input type="checkbox" name="caja29" value="ComparacionGanancia"{% for field in form.groups.all %} {% if field.name == 'ComparacionGanancia' %} checked {% endif %} {% endfor %}>
+    <label> Comparación Ganancias</label>
     <br>
 
     <input type="checkbox" name="caja2" value="notifi"{% for field in form.groups.all %} {% if field.name == 'Notificaciones' %} checked {% endif %} {% endfor %}>

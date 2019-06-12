@@ -5,11 +5,55 @@ Comparación
 {% endblock %}
 
 {% block title2 %}
-Comparación Agricola-Planeación
+Comparación Agrícola-Planeación
 {% endblock %}
 
 
 {% block contenido %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Mes inicial</label>
+        <!--<br>-->
+        <select name="c1">
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+        </select>
+        <br>
+        <label>Mes final</label>
+        <!--<br>-->
+        <select name="c2">
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+        </select>
+        <br>
+        <label>Año</label>
+        <input type="number" name="ano" placeholder="Dame el año Ej. 2019" required>
+
+        <div class="trans">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    </form>
 
 {% if cultivo %}
     <h3>Vendido </h3>
@@ -36,7 +80,7 @@ Comparación Agricola-Planeación
 
                         <td>
                             {% for i in precio %}
-                                {{ i }}<br>
+                                ${{ i }}<br>
                             {% endfor %}
                         </td>
                 </tr>
@@ -44,7 +88,7 @@ Comparación Agricola-Planeación
         </table>
         <h4>Ganancias ${{ g }}</h4>
     {% else %}
-        <h2>No hay registros de la planeación</h2>
+        <h2>No hay registros de ventas</h2>
     {% endif %}
     <br>
     {% if cultivo_plan %}
@@ -72,7 +116,7 @@ Comparación Agricola-Planeación
 
                         <td>
                             {% for i in total %}
-                                {{ i }}<br>
+                                ${{ i }}<br>
                             {% endfor %}
                         </td>
                 </tr>

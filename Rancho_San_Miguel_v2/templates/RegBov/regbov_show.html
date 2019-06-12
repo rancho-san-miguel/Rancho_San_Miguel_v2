@@ -16,7 +16,7 @@ Detalles de bovino
         <tbody>
             <tr>
                 <th>
-                   <p><strong>#:</strong> {{ object.id }}</p>
+                    <p><strong>#:</strong> {{ object.id }}</p>
                     <p><strong>Nombre:</strong> {{ object.nombre }}</p>
                     <p><strong>Arete:</strong> {{ object.arete }}</p>
                     <p><strong>Siniga:</strong> {{ object.siniga }}</p>
@@ -41,6 +41,107 @@ Detalles de bovino
             </tr>
         </tbody>
     </table>
+
+    <br>
+    {% if query1 != 0 %}
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <th>Datos del padre</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    <p><strong>#:</strong> {{ query1.id }}</p>
+                    <p><strong>Nombre:</strong> {{ query1.nombre }}</p>
+                    <p><strong>Arete:</strong> {{ query1.arete }}</p>
+                    <p><strong>Siniga:</strong> {{ query1.siniga }}</p>
+                    <p><strong>Sexo:</strong> {{ query1.sexo }}</p>
+                    <p><strong>Propietario:</strong> {{ query1.propietario }}</p>
+                    <p><strong>Ganadera:</strong> {{ query1.ganadera }}</p>
+                    <p><strong>Arete del padre:</strong> {{ query1.arete_padre }}</p>
+                    <p><strong>Arete de madre:</strong> {{ query1.arete_madre }}</p>
+                    <p><strong>Fecha de nacimiento:</strong> {{ query1.f_nacimiento }}</p>
+                    <p><strong>Tipo nacimiento:</strong> {{ query1.tipo_nacimiento }}</p>
+                    <p><strong>Tipo parto:</strong> {{ query1.tipo_parto }}</p>
+                    <p><strong>Potrero:</strong> {{ query1.potrero }}</p>
+                    <p><strong>Peso nacimiento:</strong> {{ query1.peso_nacimiento }}</p>
+                    <p><strong>Localización del fierro:</strong> {{ query1.localizacion_fierro }}</p>
+                    <p><strong>Localización del tatuaje:</strong> {{ query1.localizacion_tatuaje }}</p>
+                    <p><strong>Estado:</strong> {{ oquery1.estado }}</p>
+                    <p><strong>Tipo:</strong> {{ query1.tipo }}</p>
+                    <p><img src="{{ query1.img.url }}" class="col-md-3"></p>
+                    <br>
+                    <p><img src="{{ query1.img2.url }}" class="col-md-3"></p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+
+    <br>
+    {% if query2 != 0 %}
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <th>Datos del la madre</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    <p><strong>#:</strong> {{ query2.id }}</p>
+                    <p><strong>Nombre:</strong> {{ query2.nombre }}</p>
+                    <p><strong>Arete:</strong> {{ query2.arete }}</p>
+                    <p><strong>Siniga:</strong> {{ query2.siniga }}</p>
+                    <p><strong>Sexo:</strong> {{ query2.sexo }}</p>
+                    <p><strong>Propietario:</strong> {{ query2.propietario }}</p>
+                    <p><strong>Ganadera:</strong> {{ query2.ganadera }}</p>
+                    <p><strong>Arete del padre:</strong> {{ query2.arete_padre }}</p>
+                    <p><strong>Arete de madre:</strong> {{ query2.arete_madre }}</p>
+                    <p><strong>Fecha de nacimiento:</strong> {{ query2.f_nacimiento }}</p>
+                    <p><strong>Tipo nacimiento:</strong> {{ query2.tipo_nacimiento }}</p>
+                    <p><strong>Tipo parto:</strong> {{ query2.tipo_parto }}</p>
+                    <p><strong>Potrero:</strong> {{ query2.potrero }}</p>
+                    <p><strong>Peso nacimiento:</strong> {{ query2.peso_nacimiento }}</p>
+                    <p><strong>Localización del fierro:</strong> {{ query2.localizacion_fierro }}</p>
+                    <p><strong>Localización del tatuaje:</strong> {{ query2.localizacion_tatuaje }}</p>
+                    <p><strong>Estado:</strong> {{ oquery2.estado }}</p>
+                    <p><strong>Tipo:</strong> {{ query2.tipo }}</p>
+                    <p><img src="{{ query2.img.url }}" class="col-md-3"></p>
+                    <br>
+                    <p><img src="{{ query2.img2.url }}" class="col-md-3"></p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+
+    <br>
+    {% if query3 != 0 %}
+    {% for i in query3 %}
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <th>Control del del ganado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    <p><strong>Motivo:</strong> {{ i.motivo }}</p>
+                    <p><strong>Descripción:</strong> {{ i.descripcion }}</p>
+                    <p><strong>Lugar:</strong> {{ i.lugar }}</p>
+                    <p><strong>Fecha:</strong> {{ i.fecha }}</p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+    {% endfor %}
+    {% endif %}
+
+
 
     <a class="btn btn-primary" href="{% url 'bovino_list' %}">Regresar</a>
     <br>

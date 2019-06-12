@@ -14,8 +14,8 @@ Cultivos en producción
 <div class="col-md-3">
     <a class="btn btn-primary" href="{% url 'cultivo_en_proceso_create' %}">Agregar producción</a>
 </div>
-<div class="col-md-9">
-<form method="POST">
+<!--<div class="col-md-9">-->
+    <form method="POST">
         {% csrf_token %}
         <!--<h1>Año de nacimiento</h1>-->
     <button class="btn btn-primary" name="ordenar_produccion" value="ptodos" type="submit">Todos</button>
@@ -23,7 +23,7 @@ Cultivos en producción
     <button class="btn btn-primary" name="ordenar_produccion" type="submit" value="pproce">En proceso</button>
     </form>
 </div>
-</div>
+<!--</div>-->
     {% if object_list %}
     <table class="table table-striped table-bordered">
         <thead class="bg-success" >

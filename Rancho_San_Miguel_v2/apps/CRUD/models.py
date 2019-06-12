@@ -55,7 +55,7 @@ class Ganado_sin_registro(models.Model):
     arete = models.CharField(max_length=15, unique=True)
     sexo = models.CharField(choices=opciones, max_length=10)
     propietario = models.CharField(max_length=20)
-    arete_padre = models.CharField(max_length=15)
+    arete_padre = models.CharField(max_length=15, default='')
     arete_madre = models.CharField(max_length=15)
     f_nacimiento = models.DateField()
     peso_nacimiento = models.DecimalField(max_digits=11, decimal_places=0)
@@ -79,6 +79,7 @@ class ControlVentaGanado(models.Model):
     descripcion_venta = models.CharField(max_length=240)
     total_venta = models.DecimalField(max_digits=10, decimal_places=0)
     comprador = models.CharField(max_length=30)
+    tipo = models.CharField(max_length=40, default='')
     fecha = models.DateField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -111,10 +112,6 @@ class ControlBitacoraGanado(models.Model):
     class Meta:
         #managed = False
         db_table = 'control_bitacora_ganado'
-
-
-
-
 
 
 # class BitacoraGanado(models.Model):
@@ -172,7 +169,7 @@ class CompraVentaAgricola(models.Model):
 
 
 class Produccion(models.Model):
-    opciones = Choices('Primavera','Otoño','Verano','Invierno')
+    opciones = Choices('Primavera-Verano','Otoño-Invierno')
     hectareas = models.IntegerField()  # Hectareas sembradas
     cultivo = models.ForeignKey(InventarioAgricola, models.DO_NOTHING, db_column='cultivo')
     cantidad = models.IntegerField()  # cantidad de semilla utilizada
@@ -300,8 +297,7 @@ class Notificaciones(models.Model):
 
 
 class PlaneacionAgricola(models.Model):
-    op1 = Choices('Primavera','Otoño','Verano','Invierno')
-    # no_planeacion = models.ForeignKey('Planes', models.DO_NOTHING, db_column='no_planeacion')
+    op1 = Choices('Primavera-Verano','Otoño-Invierno')
     no_planeacion = models.CharField(max_length=50, default="0")
     ciclo = models.TextField(choices=op1)
     cultivo =  models.CharField(max_length=50)

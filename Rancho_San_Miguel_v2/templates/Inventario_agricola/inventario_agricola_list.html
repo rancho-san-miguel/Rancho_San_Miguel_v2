@@ -35,7 +35,7 @@ Inventario Agricola
                         <td>{{ i.cultivo }}</td>
                         <td>{{ i.unidad_medida }}</td>
                         <td>{{ i.cantidad }}</td>
-                        <td>{{ i.precio }}</td>
+                        <td>${{ i.precio }}</td>
                         <td>
                             <a class="btn btn-primary" href="{% url 'venderagricola_crear' i.cultivo %}">Vender</a>
                             <a class="btn btn-info" href="{% url 'compraragricola_crear' i.cultivo %}">Comprar</a>

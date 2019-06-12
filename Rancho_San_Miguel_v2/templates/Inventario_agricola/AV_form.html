@@ -16,7 +16,7 @@ Vender productos
 
 <p><strong>Producto a vender:</strong> {{ object.cultivo }}</p>
 <p><strong>Cantidad actual:</strong> {{ object.cantidad }} {{ object.unidad_medida }}</p>
-<p><strong>Precio de venta por unidad:</strong> {{ object.precio }}</p>
+<p><strong>Precio de venta por unidad $:</strong> {{ object.precio }}</p>
 
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
     <!--<div class="col-md-6">-->

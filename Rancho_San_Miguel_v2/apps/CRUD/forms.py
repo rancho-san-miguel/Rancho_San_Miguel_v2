@@ -94,7 +94,7 @@ class Ganado_Venta_form(forms.ModelForm):
         }
         labels = {
             'galeria_venta': 'Marcar para poner en venta',
-            'costo':'Costo total de la venta',
+            'costo':'Costo total de la venta $',
         }
         widgets = {
             'galeria_venta': forms.CheckboxInput(),
@@ -110,7 +110,7 @@ class Ganado_Venta_form2(forms.ModelForm):
         }
         labels = {
             'galeria_venta': 'Marcar para poner en venta',
-            'costo':'Costo total de la venta',
+            'costo':'Costo total de la venta $',
         }
         widgets = {
             'galeria_venta': forms.CheckboxInput(),
@@ -338,7 +338,7 @@ class Registro_Agricola_form(forms.ModelForm):
             'cultivo':'Ingresa el nombre del producto',
             'unidad_medida':'Unidad de medida',
             'cantidad':'Ingresa la cantidad',
-            'precio':'Ingresa el precio',
+            'precio':'Ingresa el precio $',
         }
         widgets = {
             'cultivo':forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del producto Ej. Maíz, Frijol'}),
@@ -447,13 +447,13 @@ class ControlVentaGanado_form(forms.ModelForm):
         }
         labels = {
             'descripcion_venta':'Descripción de la venta',
-            'total_venta':'Total de la venta',
+            'total_venta':'Total de la venta $',
             'comprador':'Comprador',
             'fecha':'Fecha de la venta',
         }
         widgets = {
             'descripcion_venta': forms.Textarea(attrs={'class': 'form-control'}),
-            'total_venta': forms.TextInput(attrs={'class': 'form-control','placeholder':'Total del bovino'}),
+            'total_venta': forms.TextInput(attrs={'class': 'form-control','placeholder':'Total del bovino $'}),
             'comprador': forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del comprador'}),
             'fecha': forms.SelectDateWidget(years=range(y.year-20,y.year+2),attrs={'class': 'form-control snps-inline-select'}),
         }
@@ -495,13 +495,13 @@ class Ventas_Leche_form(forms.ModelForm):
         }
         labels = {
             'cantidad':'Cantidad',
-            'precio':'Precio',
+            'precio':'Precio $',
             # 'total':'Total',
             'fecha':'Fecha',
         }
         widgets = {
             'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad Litros de Leche'}),
-            'precio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Costo ejemplo: 15.20'}),
+            'precio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Costo $'}),
             # 'total': forms.TextInput(attrs={'class': 'form-control','placeholder':'Costo ejemplo: 15.20'}),
             'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
         }
@@ -521,7 +521,7 @@ class ControlVentaGanado_form(forms.ModelForm):
         labels = {
             'descripcion_venta':'Descripción de la venta',
             # 'tipo':'Tipo de bovino',
-            'total_venta':'Total de la venta',
+            'total_venta':'Total de la venta $',
             'comprador':'Comprador',
             'fecha':'Fecha de la venta',
         }
@@ -571,7 +571,7 @@ class Plan_Agro_form(forms.ModelForm):
             'ciclo': forms.Select(attrs={'class': 'form-control'}),
             'cultivo': forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del cultivo'}),
             'hectareas': forms.TextInput(attrs={'class': 'form-control','placeholder':'Numero de hectáreas'}),
-            'costo': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el costo de las hectáreas'}),
+            'costo': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el costo de las hectáreas $'}),
             # 'produccion_estimada': forms.TextInput(attrs={'class': 'form-control','placeholder':'Estimación de la producción'}),
             'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad a producir'}),
             # 'total': forms.TextInput(attrs={'class': 'form-control','placeholder':'Total'}),
@@ -599,7 +599,7 @@ class Plan_Bovino_form(forms.ModelForm):
             'tipo_ganado': forms.Select(attrs={'class': 'form-control'}),
             'hato': forms.TextInput(attrs={'class': 'form-control','placeholder':'Hato'}),
             'venta': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad a vender'}),
-            'precio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el precio'}),
+            'precio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Dame el precio $'}),
             # 'ingreso_anual': forms.TextInput(attrs={'class': 'form-control','placeholder':'0.0'}),
         }
 
@@ -671,7 +671,7 @@ class Proyeccion_Gastos_form(forms.ModelForm):
         labels = {
             'tipo_gasto': 'Tipo de gasto',
             'descripcion': 'Descripción',
-            'cantidad': 'Costo',
+            'cantidad': 'Costo $',
         }
         widgets = {
             'tipo_gasto': forms.Select(attrs={'class': 'form-control'}),
@@ -696,7 +696,7 @@ class VentaPorcino_form(forms.ModelForm):
             'cantidad': 'Cantidad',
             'precio_unidad': 'Precio unidad $',
             'total_venta': 'Total venta $',
-            'fecha':'Fehca',
+            'fecha':'Fecha',
             'comprador':'Comprador',
         }
 
@@ -746,11 +746,11 @@ class Registro_NoAgricola_form(forms.ModelForm):
             'articulo':'Ingresa el nombre del producto',
             'unidad_medida':'Unidad de medida',
             'cantidad':'Ingresa la cantidad',
-            'precio':'Ingresa el precio',
+            'precio':'Ingresa el precio $',
         }
         widgets = {
             'articulo':forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del producto Ej. Maíz, Frijol'}),
             'unidad_medida': forms.Select(attrs={'class': 'form-control'}),
-            'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Ejemplo: 100'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Ejemplo: $ 100'}),
             'precio': forms.TextInput(attrs={'class': 'form-control'}),
         }

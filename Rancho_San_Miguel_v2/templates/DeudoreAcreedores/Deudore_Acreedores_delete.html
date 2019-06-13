@@ -1,14 +1,16 @@
+
+
 {% extends 'base/base.html' %}
 
-{% block title%}
-Borrar
-{% endblock%}
+{% block title %}
+Eliminar Acreedor/deudor
+{% endblock %}
 
-{% bloque contenido%}
-<form  method = " post " >
-    {% csrf_token%}
-    <h2> Quieres eliminar el registro con el id: {{object.id}} y la descripción {{object.descripcion}} </h2 >
-    <button  class = " btn btn-danger "  type = " submit " > Si, Eliminar </button >
-    <a  clase = " btn btn-primaria "  href = " {% url 'Deudore_Acreedores_list' %} " > No, Cancelar </a >
-</form >
-{% endblock%}
+{% block contenido %}
+<form method="post">
+    {% csrf_token %}
+   <h2> Quieres eliminar el registro con el id: {{object.id}} y la descripción {{object.tipo}} </h2 >
+    <button class="btn btn-danger" type="submit">Si, Eliminar</button>
+    <a class="btn btn-primary" href="{% url 'Deudore_Acreedores_list' %}">No, Cancelar</a>
+</form>
+{% endblock %}

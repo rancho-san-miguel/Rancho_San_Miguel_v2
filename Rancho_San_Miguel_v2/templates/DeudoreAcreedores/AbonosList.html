@@ -9,6 +9,13 @@ Historial de abonos
 {% endblock %}
 
 {% block contenido %}
+{% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <h3 {% if message.tags %} class="{{ message.tags }} btn btn-danger"{% endif %}>{{ message }}</h3>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
     {% if object_list %}
     <table class="table table-striped table-bordered">
@@ -43,15 +50,6 @@ Historial de abonos
      </ul>
  </div>
 <br>
-    <div class="container" align="left">
-        <ul class="pager">
-        {% if page_obj.has_previous %}
-            <a class="btn btn-primary " href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-        {% endif %}
-        {% if page_obj.has_next %}
-            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
-        {% endif %}
-    </ul>
-    </div>
+
 
 {% endblock %}

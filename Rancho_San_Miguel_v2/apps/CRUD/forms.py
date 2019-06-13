@@ -243,7 +243,7 @@ class CompraPorcino_form(forms.ModelForm):
         fields = {
             'cantidad',
             'precio_unidad',
-            'total_compra',
+            #'total_compra',
             'fecha',
             'vendedor',
         }
@@ -251,7 +251,7 @@ class CompraPorcino_form(forms.ModelForm):
         labels = {
             'cantidad': 'Cantidad',
             'precio_unidad': 'Precio unidad $',
-            'total_compra': 'Total compra $',
+            #'total_compra': 'Total compra $',
             'fecha':'Fehca',
             'vendedor':'Vendedor',
         }
@@ -259,8 +259,8 @@ class CompraPorcino_form(forms.ModelForm):
         widgets = {
             'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad de cerdos'}),
             'precio_unidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Precio $'}),
-            'total_compra': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total $'}),
-            'fecha': forms.SelectDateWidget(years=range(y.year - 20, y.year + 20),attrs={'class': 'form-control snps-inline-select'}),
+            #'total_compra': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total $'}),
+            'fecha': forms.SelectDateWidget(years=range(y.year - 20, y.year + 2),attrs={'class': 'form-control snps-inline-select'}),
             'vendedor': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Vendedor'}),
         }
 
@@ -362,7 +362,7 @@ class MovDeudoresAcredoresForm(forms.ModelForm):
         }
 
         labels = {
-            'no': 'No',
+            'no': 'Confirma el nombre',
             'descripcion': 'Descripcion',
             'deuda': 'Deuda $',
             'fecha': 'Fecha',
@@ -687,7 +687,7 @@ class VentaPorcino_form(forms.ModelForm):
         fields = {
             'cantidad',
             'precio_unidad',
-            'total_venta',
+           # 'total_venta',
             'fecha',
             'comprador',
         }
@@ -695,7 +695,7 @@ class VentaPorcino_form(forms.ModelForm):
         labels = {
             'cantidad': 'Cantidad',
             'precio_unidad': 'Precio unidad $',
-            'total_venta': 'Total venta $',
+           # 'total_venta': 'Total venta $',
             'fecha':'Fecha',
             'comprador':'Comprador',
         }
@@ -703,7 +703,7 @@ class VentaPorcino_form(forms.ModelForm):
         widgets = {
             'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad de cerdos'}),
             'precio_unidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Precio $'}),
-            'total_venta': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total $'}),
+          #  'total_venta': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total $'}),
             'fecha': forms.SelectDateWidget(years=range(y.year - 20, y.year + 2),attrs={'class': 'form-control snps-inline-select'}),
             'comprador': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Comprador'}),
         }

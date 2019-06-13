@@ -730,10 +730,35 @@ class HistoriaCreate(CreateView):
     template_name = 'Compras/Historial_Compras_form.html'
     success_url = reverse_lazy('Historial_Compras_list')
 
-class HistoriaList(ListView):
-    queryset = Gastos.objects.all()
-    template_name = 'Compras/Historial_Compras_list.html'
-    paginate_by = 5
+def HistoriaList(request):
+    Fecha_Actual = Notificaciones_function()
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+
+    fecha1 = str(year) + "-01-01"
+    fecha2 = str(year) + "-12-31"
+
+    m1 = '01'
+    m2 = '12'
+
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
+
+        year = ano
+
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
+
+    query = Gastos.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2])
+
+    dic = {
+        'object_list':query,
+    }
+
+    return render(request, 'Compras/Historial_Compras_list.html', dic)
 
 class HistoriaDetail(DetailView):
     model = Gastos

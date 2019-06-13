@@ -156,6 +156,18 @@ urlpatterns = [
     path('compra_noagricola/registrar_compra2/<pk>', NAcomprar_create, name='comprarnoagricola_crear'),
     path('compra_noagricola/registrar_retiro2/<pk>', NAbaja_create, name='retirarnoagricola_crear'),
 
-
-
+    #Contador---------------
+    path('plan/list/contador', PlanList2.as_view(), name='list_plan2'),
+    path('plan/agro/list/contador/<int:pk>', PlanAgroList2, name='plan_agro_list2'),
+    path('plan/agro/show/contador/<int:pk>', PlanAgroShow2.as_view(), name='plan_agro_show2'),
+    path('plan/bovino/list/contador/<int:pk>', PlanBovList2, name='plan_bov_list2'),
+    path('plan/bovino/show/contador/<int:pk>', PlanBovShow2.as_view(), name='plan_bov_show2'),
+    path('plan/leche/list/contador/<int:pk>', PlanLecList2, name='plan_leche_list2'),
+    path('plan/leche/show/contador/<int:pk>', PlanLecheShow2.as_view(), name='plan_leche_show2'),
+    path('plan/porcino/list/contador/<int:pk>', PlanPorList2, name='plan_porcino_list2'),
+    path('plan/porcino/show/contador/<int:pk>', PlanPorcinoShow2.as_view(), name='plan_porcino_show2'),
+    path('plan/gastos/list/contador/<int:pk>', PlanProyGastList2, name='plan_proyec_gasto_list2'),
+    path('plan/gastos/show/contador/<int:pk>', PlanProyGasShow2.as_view(), name='plan_proyec_gasto_show2'),
+    path('historialist/contador/', HistoriaList2, name='Historial_Compras_list2'),
+    path('historiahow/contador/<int:pk>/', HistoriaDetail2.as_view(), name='Historial_Compras_show2'),
 ]

@@ -1,0 +1,31 @@
+
+{% extends 'base/base.html' %}
+
+{% block title %}
+Detalles
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success">
+            <tr>
+                <th>Datos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <p><strong>Tipo ganado:</strong> {{ object.tipo_ganado }}</p>
+                    <p><strong>Hato:</strong> {{ object.hato }}</p>
+                    <p><strong>Cantidad a vender:</strong> {{ object.venta }}</p>
+                    <p><strong>Precio:</strong> $ {{ object.precio }}</p>
+                    <p><strong>Ingreso anual:</strong> $ {{ object.ingreso_anual }}</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{% url 'list_plan2' %}">Regresar</a>
+
+
+{% endblock %}

@@ -141,6 +141,23 @@
                     </li>
                     {% endif %}{% endfor %}
 
+                    {% for field in user.groups.all %} {% if field.name == 'Contador' %}
+                    <li class="nav-item dropdown">
+                        <a style="font-size: 18px;" class="nav-link dropdown-toggle text-white" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{% url 'list_plan' %}">Contador</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'list_plan2' %}">Planes</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'Historial_Compras_list2' %}" >Gastos</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_bovino' %}">Comparación bovino</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_porcino' %}">Comparación porcino</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_leche' %}">Comparación leche</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_agro' %}">Comparación agrícola</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_gastos' %}">Comparación gastos</a>
+                            <a style="font-size: 15px;" class="dropdown-item" href="{% url 'comparacion_ganancias_list' %}">Comparación ganancias</a>
+                            <!--<a style="font-size: 15px;" class="dropdown-item" href="{% url 'Deudore_Acreedores_list' %}" >Deudores/Acreedores</a>-->
+                        </div>
+                    </li>
+                    {% endif %}{% endfor %}
+
                     {% for field in user.groups.all %} {% if field.name == 'Notificaciones' %}
                     <li class="nav-item ">
                         <a style="font-size: 18px;" class="nav-link  text-white" href="{% url 'notificacion_listar' %}">Notificaciones</a>

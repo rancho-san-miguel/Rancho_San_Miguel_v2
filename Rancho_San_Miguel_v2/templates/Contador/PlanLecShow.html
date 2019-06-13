@@ -1,0 +1,32 @@
+
+{% extends 'base/base.html' %}
+
+{% block title %}
+Detalles
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success">
+            <tr>
+                <th>Datos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <p><strong>Vacas en producción:</strong> {{ object.vacas_produccion }}</p>
+                    <p><strong>Producción promedio por vaca:</strong> {{ object.produccion_promedio }} litros</p>
+                    <p><strong>Precio por litro:</strong> $ {{ object.precio_litro }}</p>
+                    <p><strong>Dias calculados:</strong> {{ object.dias }}</p>
+                    <p><strong>Ingreso diario:</strong> $ {{ object.ingreso_diario }}</p>
+                    <p><strong>Estimado anual:</strong> $ {{ object.estimado_anual }}</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{% url 'list_plan2' %}">Regresar</a>
+
+
+{% endblock %}

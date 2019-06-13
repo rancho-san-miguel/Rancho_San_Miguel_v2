@@ -1037,6 +1037,13 @@ def AddGrupos(request, pk):
         except:
             pass
 
+        try:
+            op9 = request.POST['caja30']
+            grupos = Group.objects.get(name="Contador")
+            usuario.groups.add(grupos)
+        except:
+            pass
+
         return redirect('listar_usuario')
 
     dic = {
@@ -2225,3 +2232,104 @@ def Ganancias(request):
     }
 
     return render(request, 'Ganancias/ganancias_list.html', dic)
+
+
+#--------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------
+#contador
+
+class PlanList2(ListView):
+    queryset = Planes.objects.all()
+    template_name = 'Contador/planeacion_list.html'
+    paginate_by = 5
+
+
+def PlanAgroList2(request, pk):
+    queryset = PlaneacionAgricola.objects.filter(no_planeacion=pk)
+    dic = {
+        'object_list':queryset,
+    }
+    return render(request, 'Contador/PlanAgroList.html', dic)
+
+class PlanAgroShow2(DetailView):
+    model = PlaneacionAgricola
+    template_name = 'Contador/PlanAgroShow.html'
+
+def PlanBovList2(request, pk):
+    queryset = PlaneacionBovina.objects.filter(no_planeacion=pk)
+    dic = {
+        'object_list':queryset,
+    }
+    return render(request, 'Contador/PlanBovList.html', dic)
+
+class PlanBovShow2(DetailView):
+    model = PlaneacionBovina
+    template_name = 'Contador/PlanBovShow.html'
+
+
+def PlanLecList2(request, pk):
+    queryset = PlaneacionLeche.objects.filter(no_planeacion=pk)
+    dic = {
+        'object_list':queryset,
+    }
+    return render(request, 'Contador/PlanLecList.html', dic)
+
+class PlanLecheShow2(DetailView):
+    model = PlaneacionLeche
+    template_name = 'Contador/PlanLecShow.html'
+
+def PlanPorList2(request, pk):
+    queryset = PlaneacionPorcina.objects.filter(no_planeacion=pk)
+    dic = {
+        'object_list':queryset,
+    }
+    return render(request, 'Contador/PlanPorcList.html', dic)
+
+class PlanPorcinoShow2(DetailView):
+    model = PlaneacionPorcina
+    template_name = 'Contador/PlanPorcShow.html'
+
+
+def PlanProyGastList2(request, pk):
+    queryset = ProyeccionGastos.objects.filter(no_planeacion=pk)
+    dic = {
+        'object_list':queryset,
+    }
+    return render(request, 'Contador/PlanProyGastList.html', dic)
+
+class PlanProyGasShow2(DetailView):
+    model = ProyeccionGastos
+    template_name = 'Contador/PlanProyGasShow.html'
+
+
+def HistoriaList2(request):
+    Fecha_Actual = Notificaciones_function()
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+    fecha1 = str(year) + "-01-01"
+    fecha2 = str(year) + "-12-31"
+    m1 = '01'
+    m2 = '12'
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
+        year = ano
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
+    query = Gastos.objects.filter(fecha__year__range=[year, year]).filter(fecha__month__range=[m1, m2])
+    suma = 0
+    for i in range(len(query)):
+        suma = suma + query[i].monto
+    dic = {
+        'object_list':query,
+        'suma':suma,
+    }
+    return render(request, 'Contador/Historial_Compras_list.html', dic )
+
+
+class HistoriaDetail2(DetailView):
+    model = Gastos
+    template_name = 'Contador/Historial_Compras_show.html'
+

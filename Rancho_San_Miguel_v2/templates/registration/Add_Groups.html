@@ -137,6 +137,11 @@ Usuario
     <label> Notificaciones</label>
     <br>
 
+    <input type="checkbox" name="caja30" value="Contador"{% for field in form.groups.all %} {% if field.name == 'Contador' %} checked {% endif %} {% endfor %}>
+    <label> Contador</label>
+    <br>
+
+
 
 
     <div class="trans">

@@ -553,10 +553,35 @@ class GaleriaList2(ListView):
     template_name = 'home/portfolio.html'
 #-------------------------------------------------------------------------------------------------------------
 "porcinos"
-class Compra_Cerdos_List(ListView):
-    queryset = ComprasPorcinos.objects.all()
-    template_name = 'Ventas/ventas_cerdos_list.html'
-    paginate_by = 5
+def Compra_Cerdos_List(request):
+    Fecha_Actual = Notificaciones_function()
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+
+    fecha1 = str(year) + "-01-01"
+    fecha2 = str(year) + "-12-31"
+
+    m1 = '01'
+    m2 = '12'
+
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
+
+        year = ano
+
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
+
+    query = ComprasPorcinos.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2])
+
+    dic = {
+        'object_list':query,
+    }
+
+    return render(request, 'Ventas/ventas_cerdos_list.html', dic)
 
 def Compra_Cerdos_Create(request):
     var2 = InventarioPorcino.objects.all()
@@ -564,6 +589,8 @@ def Compra_Cerdos_Create(request):
         form = CompraPorcino_form(request.POST)
         if form.is_valid():
             var = form.save()
+            var.total_compra=var.cantidad*var.precio_unidad
+            var.save()
             suma = int(var2[0].cantidad)+int(var.cantidad)
 
             var3 = InventarioPorcino.objects.get(pk=var2[0].id)
@@ -577,6 +604,8 @@ def Compra_Cerdos_Create(request):
         'form':form,
     }
     return render(request, 'Ventas/ventas_cerdos_form.html', dic)
+
+
 
 # class InventCerdos_List(ListView):
 #     queryset = InventarioPorcino.objects.all()
@@ -659,15 +688,42 @@ def Abonos(request, pk):
 class AbonosList(ListView):
     queryset = MovimientosDya.objects.all()
     template_name = 'DeudoreAcreedores/AbonosList.html'
-    paginate_by = 5
+
 
 ###############################
 ##################################
 
-class Venta_Cerdos_List(ListView):
-    queryset = VentasPorcinos.objects.all()
-    template_name = 'Compras/Compras_cerdos_list.html'
-    paginate_by = 5
+def Venta_Cerdos_List(request):
+
+    Fecha_Actual = Notificaciones_function()
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+
+    fecha1 = str(year) + "-01-01"
+    fecha2 = str(year) + "-12-31"
+
+    m1 = '01'
+    m2 = '12'
+
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
+
+        year = ano
+
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
+
+    query = VentasPorcinos.objects.filter(fecha__year__range=[year , year ]).filter(fecha__month__range=[m1,m2])
+
+    dic = {
+        'object_list':query,
+    }
+
+    return render(request, 'Compras/Compras_cerdos_list.html', dic)
+
 
 def Venta_Cerdos_Create(request):
     # query = InventarioPorcino.objects.get_or_create(cantidad='0')
@@ -676,13 +732,22 @@ def Venta_Cerdos_Create(request):
         form = VentaPorcino_form(request.POST)
         if form.is_valid():
             var = form.save()
-            suma = int(var2[0].cantidad)-int(var.cantidad)
 
-            var3 = InventarioPorcino.objects.get(pk=var2[0].id)
-            var3.cantidad = suma
-            var3.save()
+            if int(var2[0].cantidad) >= int(var.cantidad) and int(var.cantidad>0):
 
-        return redirect('cerdos_listVenta')
+                var.total_venta=var.cantidad*var.precio_unidad
+                var.save()
+
+                suma = int(var2[0].cantidad)-int(var.cantidad)
+
+                var3 = InventarioPorcino.objects.get(pk=var2[0].id)
+                var3.cantidad = suma
+                var3.save()
+            else:
+                messages.info(request, 'Error. No se pudo vender verifica el valor')
+                var.delete()
+            return redirect('cerdos_listVenta')
+
     else:
         form = VentaPorcino_form()
     dic = {

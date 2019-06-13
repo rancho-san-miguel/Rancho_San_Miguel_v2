@@ -48,11 +48,11 @@ urlpatterns = [
     path('galerialist2/', GaleriaList2.as_view(), name='galeria_list2'),
     #Porcinos
     path('porcino/crear/', Compra_Cerdos_Create, name="cerdos_crear"),
-    path('porcino/list/', Compra_Cerdos_List.as_view(), name="cerdos_list"),
+    path('porcino/list/', Compra_Cerdos_List, name="cerdos_list"),
     #path('porcino/delete/<int:pk>', Venta_Cerdos_Delete, name="cerdos_delete"),
 
     path('porcino_C_crear/',Venta_Cerdos_Create, name="cerdos_crearVenta"),
-    path('porcino_C_list/', Venta_Cerdos_List.as_view(), name="cerdos_listVenta"),
+    path('porcino_C_list/', Venta_Cerdos_List, name="cerdos_listVenta"),
 
     path('porcinoinvent/', InventCerdos_List, name="cerdos_inventario"),
 

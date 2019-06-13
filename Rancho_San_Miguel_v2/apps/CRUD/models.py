@@ -212,7 +212,7 @@ class ComprasPorcinos(models.Model):
     no_compra = models.AutoField(primary_key=True)
     cantidad = models.IntegerField()
     precio_unidad = models.DecimalField(max_digits=10, decimal_places=0)
-    total_compra = models.DecimalField(max_digits=10, decimal_places=0)
+    total_compra = models.DecimalField(max_digits=10, decimal_places=0,default='0')
     fecha = models.DateField()
     vendedor = models.CharField(max_length=30)
 
@@ -255,7 +255,7 @@ class Galeria(models.Model):
 
 
 class Gastos(models.Model):
-    opciones = Choices('Sueldos','Conbustible','Insumo de alimentos','Rentas', 'Derecho de agua', 'Otros')
+    opciones = Choices('Sueldos','Combustible','Insumo de alimentos','Rentas', 'Derecho de agua', 'Otros')
     tipo = models.CharField(choices=opciones,max_length=50)
     motivo = models.CharField(max_length=240)
     monto = models.DecimalField(max_digits=10, decimal_places=0)
@@ -375,7 +375,7 @@ class PlaneacionPorcina(models.Model):
 
 
 class ProyeccionGastos(models.Model):
-    op1 = Choices('Sueldos','Conbustible','Insumo de alimentos','Rentas', 'Derecho de agua', 'Otros')
+    op1 = Choices('Sueldos','Combustible','Insumo de alimentos','Rentas', 'Derecho de agua', 'Otros')
     no_planeacion = models.CharField(max_length=50, default="0")
     tipo_gasto = models.CharField(choices=op1,max_length=40)
     descripcion = models.CharField(max_length=50)
@@ -417,7 +417,7 @@ class VentasPorcinos(models.Model):
     no_venta = models.AutoField(primary_key=True)
     cantidad = models.IntegerField()
     precio_unidad = models.DecimalField(max_digits=10, decimal_places=0)
-    total_venta = models.DecimalField(max_digits=10, decimal_places=0)
+    total_venta = models.DecimalField(max_digits=10, decimal_places=0,default='0')
     fecha = models.DateField()
     comprador = models.CharField(max_length=30)
 

@@ -15,7 +15,7 @@ Plan leche
         <thead class="bg-success">
             <tr>
                 <th>Vacas en producción</th>
-                <th>Producción promedio</th>
+                <th>Estimado anual</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -23,7 +23,7 @@ Plan leche
             {% for i in object_list %}
                     <tr>
                         <td>{{ i.vacas_produccion }}</td>
-                        <td>{{ i.produccion_promedio }}</td>
+                        <td>${{ i.estimado_anual }}</td>
                         <td>
                             <a class="btn btn-primary" href="{% url 'plan_leche_show' i.pk %}">&nbsp;&nbsp;&nbsp;&nbsp;Ver&nbsp;&nbsp;&nbsp;&nbsp;</a>
                             <a class="btn btn-success" href="{% url 'plan_leche_update' i.pk %}">&nbsp;&nbsp;Editar&nbsp;&nbsp;</a>

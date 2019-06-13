@@ -93,14 +93,15 @@ Comparación Bovino-Planeación
             <thead class="bg-success">
                 <tr>
                     <th>Tipo de ganado</th>
-                    <th>Cantidad</th>
+                    <th>Cantidad a vender</th>
+
                 </tr>
             </thead>
             <tbody>
                 {% for i in query2 %}
                     <tr>
                         <td>{{ i.tipo_ganado }}</td>
-                        <td> $ {{ i.venta }}</td>
+                        <td> {{ i.venta }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

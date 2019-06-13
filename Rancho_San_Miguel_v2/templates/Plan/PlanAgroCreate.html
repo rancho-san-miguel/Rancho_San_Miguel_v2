@@ -6,6 +6,12 @@ Plan
 
 
 {% block contenido %}
+
+<h4>Leyenda: </h4>
+<p>
+    Producción estimada = hectáreas * cantidad<br>
+    Total = producción estimada * costo
+</p>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div>

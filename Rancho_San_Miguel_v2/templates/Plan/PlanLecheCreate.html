@@ -6,6 +6,13 @@ Plan
 
 
 {% block contenido %}
+
+<h4>Leyenda: </h4>
+<p>
+    Ingreso diario = producción promedio * precio del litro<br>
+    Estimado anual = dias * ingreso diario
+</p>
+
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div>

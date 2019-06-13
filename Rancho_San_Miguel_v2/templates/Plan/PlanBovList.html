@@ -15,7 +15,7 @@ Plan bovino
         <thead class="bg-success">
             <tr>
                 <th>Ganado</th>
-                <th>Hato</th>
+                <th>Ingreso anual</th>
                 <th>Venta</th>
                 <th>Acciones</th>
             </tr>
@@ -24,7 +24,7 @@ Plan bovino
             {% for i in object_list %}
                     <tr>
                         <td>{{ i.tipo_ganado }}</td>
-                        <td>{{ i.hato }}</td>
+                        <td>${{ i.ingreso_anual }}</td>
                         <td>{{ i.venta }}</td>
 
                         <td>

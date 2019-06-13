@@ -616,7 +616,7 @@ class Plan_Leche_form(forms.ModelForm):
         }
         labels = {
             'vacas_produccion': 'Vacas en producción',
-            'produccion_promedio':'Producción',
+            'produccion_promedio':'Producción promedio de lts al dia',
             'precio_litro':'Precio por litro $',
             'dias':'Dias a estimar',
             # 'ingreso_diario':'Ingreso diario',
@@ -624,7 +624,7 @@ class Plan_Leche_form(forms.ModelForm):
         }
         widgets = {
             'vacas_produccion': forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad de vacas en producción'}),
-            'produccion_promedio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Producción promedio en litros por vaca'}),
+            'produccion_promedio': forms.TextInput(attrs={'class': 'form-control','placeholder':'Producción promedio por todas las vacas'}),
             'precio_litro': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Precio de la leche'}),
             'dias': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad de dias'}),
             # 'ingreso_diario':forms.TextInput(attrs={'class': 'form-control','placeholder':'Ingreso diario'}),

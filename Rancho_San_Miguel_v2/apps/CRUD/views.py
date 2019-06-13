@@ -2010,7 +2010,7 @@ def Comparacion_Gastos(request):
         for i in range(size):
             if query3[i].tipo_gasto == "Sueldos":
                 sueldo_planeado = sueldo_planeado + int(query3[i].total_anual)
-            if query3[i].tipo_gasto == "Conbustible":
+            if query3[i].tipo_gasto == "Combustible":
                 Conbustible = Conbustible + int(query3[i].total_anual)
             if query3[i].tipo_gasto == "Insumo de alimentos":
                 Insumo = Insumo +  int(query3[i].total_anual)

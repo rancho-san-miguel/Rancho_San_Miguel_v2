@@ -85,7 +85,7 @@ urlpatterns = [
     path('compra_agricola/registrar_retiro/<pk>', Abaja_create, name='retiraragricola_crear'),
 
     path('historia/', HistoriaCreate.as_view(), name='Historial_Compras_create'),
-    path('historialist/', HistoriaList.as_view(), name='Historial_Compras_list'),
+    path('historialist/', HistoriaList, name='Historial_Compras_list'),
     path('historiadelete/<int:pk>/', HistoriaDelete.as_view(), name='Historial_Compras_delete'),
     path('historiahow/<int:pk>/', HistoriaDetail.as_view(), name='Historial_Compras_show'),
     path('historiaupdate/<int:pk>/', HistoriaUpdate.as_view(), name='Historial_Compras_update'),

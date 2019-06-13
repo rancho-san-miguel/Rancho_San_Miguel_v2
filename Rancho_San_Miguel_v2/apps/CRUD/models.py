@@ -44,6 +44,7 @@ class Ganado(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'ganado'
 
     def __str__(self):
@@ -67,6 +68,7 @@ class Ganado_sin_registro(models.Model):
     img2 = models.ImageField(verbose_name="Imagen2", upload_to='Ganado', blank=True, null=True)
 
     class Meta:
+        ordering = ['-id']
         db_table = 'ganado2'
 
     def __str__(self):
@@ -86,6 +88,7 @@ class ControlVentaGanado(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-no_venta']
         db_table = 'control_venta_ganado'
 
 class VentasGanado(models.Model):
@@ -95,6 +98,7 @@ class VentasGanado(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-no_venta']
         db_table = 'ventas_ganado'
 
 
@@ -111,6 +115,7 @@ class ControlBitacoraGanado(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-no_registrob']
         db_table = 'control_bitacora_ganado'
 
 
@@ -135,6 +140,7 @@ class ControlGanado(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'control_ganado'
 
 class InventarioAgricola(models.Model):
@@ -146,6 +152,7 @@ class InventarioAgricola(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-cultivo']
         db_table = 'inventario_agricola'
 
     def __str__(self):
@@ -154,17 +161,18 @@ class InventarioAgricola(models.Model):
 
 class CompraVentaAgricola(models.Model):
     opciones = Choices('Compra', 'Venta', 'Baja')
-    tipo =  models.CharField(choices=opciones,max_length=15)
-    cultivo = models.ForeignKey(InventarioAgricola, models.DO_NOTHING, db_column='cultivo')
+    tipo =  models.CharField(choices=opciones,max_length=15, default="0")
+    cultivo = models.ForeignKey(InventarioAgricola, models.DO_NOTHING, db_column='cultivo', default="0")
     cantidad = models.IntegerField()
-    precio = models.DecimalField(max_digits=11, decimal_places=0)
-    comprador = models.CharField(max_length=30)
+    precio = models.DecimalField(max_digits=11, decimal_places=0, default="0", null=True)
+    comprador = models.CharField(max_length=30, default='Rancho San Miguel')
     fecha = models.DateField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'Compras_ventas_agricolas'
 
 
@@ -181,6 +189,7 @@ class Produccion(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'produccion'
 
 class Planes(models.Model):
@@ -189,6 +198,7 @@ class Planes(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-no_planeacion']
         db_table = 'planes'
 
     def __str__(self):
@@ -208,6 +218,7 @@ class ComprasPorcinos(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-no_compra']
         db_table = 'compras_porcinos'
 
 
@@ -224,6 +235,7 @@ class DeudoresAcreedores(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-created']
         db_table = 'deudores_acreedores'
 
     def __str__(self):
@@ -254,6 +266,7 @@ class Gastos(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-created']
         db_table = 'gastos'
 
 
@@ -265,6 +278,7 @@ class InventarioPorcino(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'inventario_porcino'
 
 
@@ -280,6 +294,7 @@ class MovimientosDya(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'movimientos_dya'
 
 
@@ -309,6 +324,7 @@ class PlaneacionAgricola(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'planeacion_agricola'
 
 
@@ -324,6 +340,7 @@ class PlaneacionBovina(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'planeacion_bovina'
 
 
@@ -338,6 +355,7 @@ class PlaneacionLeche(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'planeacion_leche'
 
 
@@ -352,6 +370,7 @@ class PlaneacionPorcina(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'planeacion_porcina'
 
 
@@ -367,6 +386,7 @@ class ProyeccionGastos(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'proyeccion_gastos'
 
 
@@ -379,6 +399,7 @@ class VentaLeche(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-no_venta']
         db_table = 'venta_leche'
 
 
@@ -402,6 +423,7 @@ class VentasPorcinos(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-no_venta']
         db_table = 'ventas_porcinos'
 
 
@@ -418,6 +440,7 @@ class CompraVentaAgricola(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'Compras_ventas_agricolas'
 
 
@@ -453,18 +476,20 @@ class InventarioNoAgricola(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-articulo']
         db_table = 'inventario_noagricola'
 
     def __str__(self):
         return str(self.articulo)
 
 
+
 class CompraVentaNoAgricola(models.Model):
     opciones = Choices('Compra',  'Baja')
-    tipo =  models.CharField(choices=opciones,max_length=15)
+    tipo =  models.CharField(choices=opciones,max_length=15, default="0", null=True)
     articulo = models.ForeignKey(InventarioNoAgricola, models.DO_NOTHING, db_column='articulo')
     cantidad = models.IntegerField()
-    precio = models.DecimalField(max_digits=11, decimal_places=0)
+    precio = models.DecimalField(max_digits=11, decimal_places=0, default="0", null=True)
     # comprador = models.CharField(max_length=30)
     fecha = models.DateField()
     created = models.DateTimeField(auto_now_add=True)
@@ -472,4 +497,5 @@ class CompraVentaNoAgricola(models.Model):
 
     class Meta:
         #managed = False
+        ordering = ['-id']
         db_table = 'Compras_retiro_noagricolas'

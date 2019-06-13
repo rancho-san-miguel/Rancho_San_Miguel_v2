@@ -676,7 +676,7 @@ class Proyeccion_Gastos_form(forms.ModelForm):
         widgets = {
             'tipo_gasto': forms.Select(attrs={'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripción'}),
-            'cantidad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Total por dia $'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Costo al año $'}),
         }
 
 
@@ -751,6 +751,113 @@ class Registro_NoAgricola_form(forms.ModelForm):
         widgets = {
             'articulo':forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del producto Ej. Maíz, Frijol'}),
             'unidad_medida': forms.Select(attrs={'class': 'form-control'}),
-            'cantidad': forms.TextInput(attrs={'class': 'form-control','placeholder':'Ejemplo: $ 100'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control'}),
             'precio': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+class CompraVentaAgricola_form(forms.ModelForm):
+    class Meta:
+        model = CompraVentaAgricola
+        fields = {
+            'cultivo',
+            'comprador',
+            'cantidad',
+            'fecha',
+        }
+        labels = {
+            'cultivo':'Confirma producto',
+            'comprador': 'Nombre del comprador:',
+            'cantidad':'Cantidad',
+            'fecha':'Fecha'
+        }
+        widgets = {
+            'cultivo':forms.Select(attrs={'class': 'form-control'}),
+            'comprador': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+class CompraVentaAgricola_form2(forms.ModelForm):
+    class Meta:
+        model = CompraVentaAgricola
+        fields = {
+            'precio',
+            'cultivo',
+            'comprador',
+            'cantidad',
+            'fecha',
+        }
+        labels = {
+            'precio':'Precio de compra por unidad $:',
+            'cultivo':'Confirma producto:',
+            'comprador': 'Nombre del comprador:',
+            'cantidad':'Cantidad',
+            'fecha':'Fecha'
+        }
+        widgets = {
+            'precio': forms.TextInput(attrs={'class': 'form-control'}),
+            'cultivo':forms.Select(attrs={'class': 'form-control'}),
+            'comprador': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+class CompraVentaAgricola_form3(forms.ModelForm):
+    class Meta:
+        model = CompraVentaAgricola
+        fields = {
+            'cultivo',
+            'cantidad',
+            'fecha',
+        }
+        labels = {
+            'cultivo': 'Confirma producto:',
+            'cantidad':'Cantidad',
+            'fecha':'Fecha'
+        }
+        widgets = {
+            'cultivo': forms.Select(attrs={'class': 'form-control'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+class CompraVentaNOAgricola_form(forms.ModelForm):
+    class Meta:
+        model = CompraVentaNoAgricola
+        fields = {
+            'articulo',
+            'precio',
+            'cantidad',
+            'fecha',
+        }
+        labels = {
+            'articulo': 'Confirma producto:',
+            'precio':'Precio de la compra $',
+            'cantidad':'Cantidad',
+            'fecha':'Fecha'
+        }
+        widgets = {
+            'articulo': forms.Select(attrs={'class': 'form-control'}),
+            'precio': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+class CompraVentaNOAgricola_form2(forms.ModelForm):
+    class Meta:
+        model = CompraVentaNoAgricola
+        fields = {
+            'articulo',
+            'cantidad',
+            'fecha',
+        }
+        labels = {
+            'articulo': 'Confirma producto:',
+            'cantidad':'Cantidad',
+            'fecha':'Fecha',
+        }
+        widgets = {
+            'articulo': forms.Select(attrs={'class': 'form-control'}),
+            'cantidad': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
         }

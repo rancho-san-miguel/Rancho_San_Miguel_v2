@@ -421,18 +421,29 @@ def AVender_create(request, pk):
     query1 = InventarioAgricola.objects.get(cultivo=pk)
     # print ("QUE ES ESTO**********************************************************************************", query3)
     if request.method == 'POST':
-        nombre = request.POST['nombre_vendedor']
-        canti = int(request.POST['cantidad_comprar'])
-        fecha = request.POST['fecha_final']
-        b = CompraVentaAgricola(tipo='Venta', cultivo=query1, cantidad=canti, precio=(query1.precio * canti),
-                                comprador=nombre, fecha=fecha)
-        b.save()
-        query1.cantidad = query1.cantidad - canti
-        query1.save()
+        form = CompraVentaAgricola_form(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.tipo = 'Venta'
+            var.precio = query1.precio * var.cantidad
+            query1.cantidad = int(query1.cantidad) - int(var.cantidad)
+            query1.save()
+            var.save()
+        # nombre = request.POST['nombre_vendedor']
+        # canti = int(request.POST['cantidad_comprar'])
+        # fecha = request.POST['fecha_final']
+        # b = CompraVentaAgricola(tipo='Venta', cultivo=query1, cantidad=canti, precio=(query1.precio * canti),
+        #                         comprador=nombre, fecha=fecha)
+        # b.save()
+        # query1.cantidad = query1.cantidad - canti
+        # query1.save()
         return redirect('compraryvenderagricola')
+    else:
+        form = CompraVentaAgricola_form()
 
     dic = {
         'object': query1,
+        'form':form,
     }
     return render(request, 'Inventario_agricola/AV_form.html', dic)
 
@@ -441,18 +452,28 @@ def Acomprar_create(request, pk):
     query1 = InventarioAgricola.objects.get(cultivo=pk)
     #print ("QUE ES ESTO**********************************************************************************", query3)
     if request.method == 'POST':
-        nombre = request.POST['nombre_vendedor']
-        canti = int(request.POST['cantidad_comprar'])
-        precio = float(request.POST['precio_compra'])
-        fecha = request.POST['fecha_final']
-        b = CompraVentaAgricola(tipo='Compra', cultivo=query1, cantidad=canti, precio=(precio*canti),comprador=nombre, fecha=fecha)
-        b.save()
-        query1.cantidad = canti + query1.cantidad
-        query1.save()
-        return redirect('compraryvenderagricola')
+        form = CompraVentaAgricola_form2(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.tipo = 'Compra'
+            var.precio = var.precio * var.cantidad
+            query1.cantidad = var.cantidad + query1.cantidad
+            query1.save()
+            var.save()
+        # nombre = request.POST['nombre_vendedor']
+        # canti = int(request.POST['cantidad_comprar'])
+        # precio = float(request.POST['precio_compra'])
+        # fecha = request.POST['fecha_final']
+        # b = CompraVentaAgricola(tipo='Compra', cultivo=query1, cantidad=canti, precio=(precio*canti),comprador=nombre, fecha=fecha)
+        # b.save()
+        # query1.cantidad = canti + query1.cantidad
 
+        return redirect('compraryvenderagricola')
+    else:
+        form = CompraVentaAgricola_form2()
     dic = {
         'object': query1,
+        'form':form,
     }
     return render(request, 'Inventario_agricola/AC_form.html', dic)
 
@@ -460,17 +481,30 @@ def Abaja_create(request, pk):
     query1 = InventarioAgricola.objects.get(cultivo=pk)
     # print ("QUE ES ESTO**********************************************************************************", query3)
     if request.method == 'POST':
-        canti = int(request.POST['cantidad_comprar'])
-        fecha = request.POST['fecha_final']
-        b = CompraVentaAgricola(tipo='Baja', cultivo=query1, cantidad=canti, precio=0,
-                                comprador="Rancho San Miguel", fecha=fecha)
-        b.save()
-        query1.cantidad = query1.cantidad - canti
-        query1.save()
+        form = CompraVentaAgricola_form3(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.tipo = 'Baja'
+            var.precio = 0
+            var.comprador = "Rancho San Miguel"
+            query1.cantidad = query1.cantidad - var.cantidad
+            query1.save()
+            var.save()
+
+        # canti = int(request.POST['cantidad_comprar'])
+        # fecha = request.POST['fecha_final']
+        # b = CompraVentaAgricola(tipo='Baja', cultivo=query1, cantidad=canti, precio=0,
+        #                         comprador="Rancho San Miguel", fecha=fecha)
+        # b.save()
+        # query1.cantidad = query1.cantidad - canti
+        # query1.save()
         return redirect('compraryvenderagricola')
+    else:
+        form = CompraVentaAgricola_form3()
 
     dic = {
         'object': query1,
+        'form':form,
     }
     return render(request, 'Inventario_agricola/AB_form.html', dic)
 
@@ -665,10 +699,44 @@ class HistoriaCreate(CreateView):
     template_name = 'Compras/Historial_Compras_form.html'
     success_url = reverse_lazy('Historial_Compras_list')
 
-class HistoriaList(ListView):
-    queryset = Gastos.objects.all()
-    template_name = 'Compras/Historial_Compras_list.html'
-    paginate_by = 5
+# class HistoriaList(ListView):
+#     queryset = Gastos.objects.all()
+#     template_name = 'Compras/Historial_Compras_list.html'
+#     paginate_by = 5
+
+def HistoriaList(request):
+    Fecha_Actual = Notificaciones_function()
+    day = Fecha_Actual.day
+    month = Fecha_Actual.month
+    year = Fecha_Actual.year
+
+    fecha1 = str(year) + "-01-01"
+    fecha2 = str(year) + "-12-31"
+
+    m1 = '01'
+    m2 = '12'
+
+    if request.method == 'POST':
+        ano = request.POST['ano']
+        m1 = request.POST['c1']
+        m2 = request.POST['c2']
+
+        year = ano
+
+        fecha1 = str(ano) + "-" + m1
+        fecha2 = str(ano) + "-" + m2
+
+    query = Gastos.objects.filter(fecha__year__range=[year, year]).filter(fecha__month__range=[m1, m2])
+    suma = 0
+
+    for i in range(len(query)):
+        suma = suma + query[i].monto
+
+    dic = {
+        'object_list':query,
+        'suma':suma,
+    }
+    return render(request, 'Compras/Historial_Compras_list.html', dic )
 
 class HistoriaDetail(DetailView):
     model = Gastos
@@ -1080,18 +1148,28 @@ def NAcomprar_create(request, pk):
     query1 = InventarioNoAgricola.objects.get(articulo=pk)
     #print ("QUE ES ESTO**********************************************************************************", query3)
     if request.method == 'POST':
-
-        canti = int(request.POST['cantidad_comprar'])
-        precio = float(request.POST['precio_compra'])
-        fecha = request.POST['fecha_final']
-        b = CompraVentaNoAgricola(tipo='Compra', articulo=query1, cantidad=canti, precio=(precio*canti), fecha=fecha)
-        b.save()
-        query1.cantidad = canti + query1.cantidad
-        query1.save()
+        form = CompraVentaNOAgricola_form(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.tipo = 'Compra'
+            var.precio = var.precio * var.cantidad
+            query1.cantidad = var.cantidad + query1.cantidad
+            query1.save()
+            var.save()
+        # canti = int(request.POST['cantidad_comprar'])
+        # precio = float(request.POST['precio_compra'])
+        # fecha = request.POST['fecha_final']
+        # b = CompraVentaNoAgricola(tipo='Compra', articulo=query1, cantidad=canti, precio=(precio*canti), fecha=fecha)
+        # b.save()
+        # query1.cantidad = canti + query1.cantidad
+        # query1.save()
         return redirect('compraryvendernoagricola')
+    else:
+        form = CompraVentaNOAgricola_form()
 
     dic = {
         'object': query1,
+        'form':form,
     }
     return render(request, 'Inventario_agricola/AC2_form.html', dic)
 
@@ -1099,17 +1177,29 @@ def NAbaja_create(request, pk):
     query1 = InventarioNoAgricola.objects.get(articulo=pk)
     # print ("QUE ES ESTO**********************************************************************************", query3)
     if request.method == 'POST':
-        canti = int(request.POST['cantidad_comprar'])
-        fecha = request.POST['fecha_final']
-        b = CompraVentaNoAgricola(tipo='Baja', articulo=query1, cantidad=canti, precio=0,
-                                 fecha=fecha)
-        b.save()
-        query1.cantidad = query1.cantidad - canti
-        query1.save()
+        form = CompraVentaNOAgricola_form2(request.POST)
+        if form.is_valid():
+            var = form.save()
+            var.tipo = 'Baja'
+            var.precio = 0
+            query1.cantidad = query1.cantidad - var.cantidad
+            query1.save()
+            var.save()
+
+        # canti = int(request.POST['cantidad_comprar'])
+        # fecha = request.POST['fecha_final']
+        # b = CompraVentaNoAgricola(tipo='Baja', articulo=query1, cantidad=canti, precio=0,
+        #                          fecha=fecha)
+        # b.save()
+
         return redirect('compraryvendernoagricola')
+    else:
+        form = CompraVentaNOAgricola_form2()
+
 
     dic = {
         'object': query1,
+        'form': form,
     }
     return render(request, 'Inventario_agricola/AB2_form.html', dic)
 
@@ -1165,8 +1255,8 @@ def PlanAgroCreate(request,pk):
         if form.is_valid():
             var = form.save()
             var.no_planeacion = query.no_planeacion
-            var.produccion_estimada = var.hectareas * var.costo
-            var.total = var.produccion_estimada * var.cantidad
+            var.produccion_estimada = var.hectareas * var.cantidad
+            var.total = var.produccion_estimada * var.costo
             var.save()
         return redirect('list_plan')
     else:
@@ -1199,8 +1289,8 @@ def PlanAgroUpdate(request, pk):
         if form.is_valid():
             var = form.save()
             var.no_planeacion = query.no_planeacion
-            var.produccion_estimada = var.hectareas * var.costo
-            var.total = var.produccion_estimada * var.cantidad
+            var.produccion_estimada = var.hectareas * var.cantidad
+            var.total = var.produccion_estimada * var.costo
             var.save()
         return redirect('list_plan')
     dic = {
@@ -1285,7 +1375,7 @@ def PlanLecheCreate(request,pk):
         if form.is_valid():
             var = form.save()
             var.no_planeacion = query.no_planeacion
-            var.ingreso_diario = var.produccion_promedio * var.precio_litro * var.vacas_produccion
+            var.ingreso_diario = var.produccion_promedio * var.precio_litro
             var.estimado_anual = var.ingreso_diario * var.dias
             var.save()
         return redirect('list_plan')
@@ -1348,7 +1438,7 @@ def PlanPorCreate(request,pk):
             var = form.save()
             var.no_planeacion = query.no_planeacion
             var.ingresos = (var.cerdos + var.lechones) * var.precio_venta
-            var.inversion = (var.cerdos + var.lechones) * var.precio_compra
+            var.inversion = var.lechones * var.precio_compra
             var.save()
         return redirect('list_plan')
     else:
@@ -1383,7 +1473,7 @@ def PlanPorcUpdate(request, pk):
             var = form.save()
             var.no_planeacion = query.no_planeacion
             var.ingresos = (var.cerdos + var.lechones) * var.precio_venta
-            var.inversion = (var.cerdos + var.lechones) * var.precio_compra
+            var.inversion = var.lechones * var.precio_compra
             var.save()
 
         return redirect('list_plan')
@@ -1410,8 +1500,8 @@ def PlanProyGastCreate(request,pk):
         if form.is_valid():
             var = form.save()
             var.no_planeacion = query.no_planeacion
-            var.semanal = var.cantidad * 7
-            var.total_anual = var.semanal * 52
+            var.semanal = var.cantidad
+            var.total_anual = var.cantidad
             var.save()
         return redirect('list_plan')
     else:
@@ -1443,8 +1533,8 @@ def PlanProyGasUpdate(request, pk):
         if form.is_valid():
             var = form.save()
             var.no_planeacion = query.no_planeacion
-            var.semanal = var.cantidad * 7
-            var.total_anual = var.semanal * 52
+            var.semanal = var.cantidad
+            var.total_anual = var.cantidad
             var.save()
         return redirect('list_plan')
     dic = {

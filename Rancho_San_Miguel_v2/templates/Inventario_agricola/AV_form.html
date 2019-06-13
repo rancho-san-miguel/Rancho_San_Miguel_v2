@@ -19,20 +19,23 @@ Vender productos
 <p><strong>Precio de venta por unidad $:</strong> {{ object.precio }}</p>
 
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
-    <!--<div class="col-md-6">-->
-    <label>Nombre del comprador:</label>
-    <input class="form-control" type="text" name="nombre_vendedor">
+    <label>{{ form.cultivo.label }}</label>
+    {{ form.cultivo }}
     <br>
-    <label>Cantidad de {{ object.unidad_medida }} a vender:</label>
-    <input class="form-control" type="number" min=0 name="cantidad_comprar" required>
+
+    <label>{{ form.comprador.label }}</label>
+    {{ form.comprador }}
     <br>
+
+    <label>{{ form.cantidad.label }} de {{ object.unidad_medida }} a vender:</label>
+    {{ form.cantidad }}
     <br>
-     <div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroup-sizing-default">Fecha</span>
-  </div>
-        <input class="form-control" id="date" type="date" min="2019-01-01" name="fecha_final" aria-describedby="inputGroup-sizing-default" required>
-</div>
+
+    <label>{{ form.fecha.label }}</label>
+    {{ form.fecha }}
+    <br><br>
+
+
     <div class="trans">
         <button class="btn btn-success" type="submit">Guardar</button>
     </div>

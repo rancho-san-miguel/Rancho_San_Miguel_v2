@@ -17,22 +17,22 @@ Comprar Productos
 <p><strong>Producto a comprar:</strong> {{ object.articulo }}</p>
 <p><strong>Cantidad actual:</strong> {{ object.cantidad }} {{ object.unidad_medida }}</p>
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
-    <!--<div class="col-md-6">-->
-    <!--<label>Nombre del vendedor:</label>-->
-    <!--<input class="form-control" type="text" name="nombre_vendedor", required>-->
-    <!--<br>-->
-    <label>Cantidad de {{ object.unidad_medida }} a comprar:</label>
-    <input class="form-control" type="number" name="cantidad_comprar" min="1" required>
+
+    <label>{{ form.articulo.label }}</label>
+    {{ form.articulo }}
     <br>
-    <label>Precio de compra por unidad $ :</label>
-    <input class="form-control" type="number" name="precio_compra" min=1 required>
+
+    <label>{{ form.cantidad.label }}</label>
+    {{ form.cantidad }}
     <br>
-    <div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroup-sizing-default">Fecha</span>
-  </div>
-        <input class="form-control" id="date" type="date" min="2019-01-01" name="fecha_final" aria-describedby="inputGroup-sizing-default" required>
-</div>
+
+    <label>{{ form.precio.label }}</label>
+    {{ form.precio }}
+    <br>
+
+    <label>{{ form.fecha.label }}</label>
+    {{ form.fecha }}
+    <br><br>
 
     <div class="trans">
         <button class="btn btn-success" type="submit">Guardar</button>

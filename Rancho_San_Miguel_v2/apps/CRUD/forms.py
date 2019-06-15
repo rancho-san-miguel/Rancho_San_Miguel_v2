@@ -861,3 +861,41 @@ class CompraVentaNOAgricola_form2(forms.ModelForm):
             'cantidad': forms.TextInput(attrs={'class': 'form-control'}),
             'fecha': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
         }
+
+class Produccion_form(forms.ModelForm):
+    class Meta:
+        model = Produccion
+        fields = {
+            'produccion_obtenida',
+            'fecha_final',
+        }
+        labels = {
+            'produccion_obtenida':'Producción obtenida',
+            'fecha_final': 'Fecha de finalizacion:',
+        }
+        widgets = {
+            'produccion_obtenida': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha_final': forms.SelectDateWidget(attrs={'class': 'form-control snps-inline-select'}),
+        }
+
+class Contacto_form(forms.ModelForm):
+    class Meta:
+        model = Contacto
+        fields = {
+            'nombre',
+            'direc',
+            'telefono',
+            'correo'
+        }
+        labels = {
+            'nombre':'Nombre completo',
+            'direc': 'Dirección',
+            'telefono': 'Teléfono',
+            'correo':'Correo electronico',
+        }
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'direc': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+            'correo': forms.TextInput(attrs={'class': 'form-control'}),
+        }

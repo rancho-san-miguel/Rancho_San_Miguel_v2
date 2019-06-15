@@ -259,9 +259,9 @@ class En_Proceso_Update(UpdateView):
     success_url = reverse_lazy('cultivo_en_proceso_list')
 
 class En_Proceso_Delete(DeleteView):
-    model = Produccion
+    model = CompraVentaAgricola
     template_name = 'Producciones/cultivo_en_proceso_delete.html'
-    success_url = reverse_lazy('cultivo_en_proceso_list')
+    success_url = reverse_lazy('compraryvenderagricola')
 
 class En_Proceso_Show(DetailView):
     model = Produccion
@@ -271,16 +271,25 @@ def En_Proceso_Fin(request, pk):
     query1 = Produccion.objects.get(pk=pk)
     query3 = InventarioAgricola.objects.get(cultivo=query1.cultivo)
     # print ("QUE ES ESTO**********************************************************************************", query3)
-    if request.method == 'POST':
-        n1 = int(request.POST['produccion_obtenida'])
-        n3 = request.POST['fecha_final']
-        Produccion.objects.filter(pk=pk).update(produccion_obtenida=n1,fecha_final=n3)
-        query3.cantidad = n1 + query3.cantidad
-        query3.save()
+    if request.method == 'GET':
+        form = Produccion_form(instance=query1)
+
+        # n1 = int(request.POST['produccion_obtenida'])
+        # n3 = request.POST['fecha_final']
+        # Produccion.objects.filter(pk=pk).update(produccion_obtenida=n1,fecha_final=n3)
+        # query3.cantidad = n1 + query3.cantidad
+        # query3.save()
+        # return redirect('cultivo_en_proceso_list')
+    else:
+        form = Produccion_form(request.POST, instance=query1)
+        if form.is_valid():
+            var = form.save()
+            query3.cantidad = var.produccion_obtenida + query3.cantidad
+            query3.save()
         return redirect('cultivo_en_proceso_list')
 
     dic = {
-        'object':query1,
+        'form':form,
     }
 
     return render(request, 'Producciones/finalizar_produccion.html', dic)
@@ -2333,3 +2342,40 @@ class HistoriaDetail2(DetailView):
     model = Gastos
     template_name = 'Contador/Historial_Compras_show.html'
 
+class DeudoresAcreedoresList2(ListView):
+    queryset = DeudoresAcreedores.objects.all()
+    template_name = 'Contador/Deudore_Acreedores_list.html'
+    paginate_by = 5
+
+class AbonosList2(ListView):
+    queryset = MovimientosDya.objects.all()
+    template_name = 'Contador/AbonosList.html'
+
+class Contacto_Create(CreateView):
+    model = Contacto
+    form_class = Contacto_form
+    template_name = 'Contacto/contacto_form.html'
+    success_url = reverse_lazy('contacto_list')
+
+class Contacto_List(ListView):
+    queryset = Contacto.objects.all()
+    template_name = 'Contacto/contacto_list.html'
+
+class Contacto_List2(ListView):
+    queryset = Contacto.objects.all()
+    template_name = 'home/contacto.html'
+
+class Contacto_Show(DetailView):
+    model = Contacto
+    template_name = 'Contacto/contacto_show.html'
+
+class Contacto_Update(UpdateView):
+    model = Contacto
+    form_class = Contacto_form
+    template_name = 'Contacto/contacto_form.html'
+    success_url = reverse_lazy('contacto_list')
+
+class Contacto_Delete(DeleteView):
+    model = Contacto
+    template_name = 'Contacto/contacto_delete.html'
+    success_url = reverse_lazy('contacto_list')

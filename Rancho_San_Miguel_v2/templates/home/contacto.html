@@ -46,7 +46,7 @@
 				<li><a href="{% url 'about' %}">Información</a></li>
 				<li><a href="#">Venta</a></li>
 				<li><a href="{% url 'galeria_list2' %}">Galería</a></li>
-				<li><a href="{% url 'contact' %}">Contacto</a></li>
+				<li><a href="{% url 'contacto_list2' %}">Contacto</a></li>
 				{% if user.is_authenticated %}
 					<li><a href="{% url 'logout' %}">Logout</a></li>
 					<li><a href="{% url 'index2' %}">Panel</a></li>
@@ -74,19 +74,27 @@
 			<div class="section-title pt-5">
 				<h1>Estamos a sus órdenes</h1>
 			</div>
+			{% if object_list %}
 			<div class="row">
-				<div class="col-lg-3 contact-info mb-5 mb-lg-0">
-					<p>Direccion: 1481 Creektlalalh, CA 93424 </p>
-					<p>Telefono: +52 345 795 3324</p>
-					<p>Correo Electronico: sanmiguel@gmail.com</p>
+				{% for i in object_list %}
+				<div class="col-lg-6 contact-info mb-5 mb-lg-0">
+					<p><h3>Nombre: {{ i.nombre }}</h3></p>
+					<p><h3>Direccion: {{ i.direc }}</h3></p>
+					<p><h3>Telefono: {{ i.telefono }}</h3></p>
+					<p><h3>Correo Electronico: {{ i.correo }}</h3></p>
 					<!--<div class="cf-social">-->
 						<!--<a href="https://www.facebook.com/SanMiguelTemoloasco/about?lst=100001713947278%3A100008981527615%3A1553197655&section=education"><i class="fa fa-facebook"></i></a>-->
 					<!--</div>-->
 				</div>
-				<div class="col-lg-5 pt-4">
-					<img src="{% static 'inicio/rancho4.jpg' %}" alt="">
-				</div>
+				<br><br>
+				{% endfor %}
+				<!--<div class="col-lg-5 pt-4">-->
+					<!--<img src="{% static 'inicio/rancho4.jpg' %}" alt="">-->
+				<!--</div>-->
 			</div>
+			{% else %}
+				<h2>No hay registros de contacto</h2>
+			{% endif %}
 		</div>
 	</section>
 	<!-- Page section end -->

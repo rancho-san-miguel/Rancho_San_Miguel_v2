@@ -9,6 +9,6 @@ Eliminar registro del cultivo
     {% csrf_token %}
     <h2>¿Estas seguro que deseas eliminar la producción seleccionada?</h2>
     <button class="btn btn-danger" type="submit">Si, Eliminar</button>
-    <a class="btn btn-primary" href="{% url 'cultivo_en_proceso_list' %}">No, Cancelar</a>
+    <a class="btn btn-primary" href="{% url 'compraryvenderagricola' %}">No, Cancelar</a>
 </form>
 {% endblock %}

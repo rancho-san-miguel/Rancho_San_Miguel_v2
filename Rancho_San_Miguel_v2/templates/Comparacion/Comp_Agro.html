@@ -54,6 +54,42 @@ Comparación Agrícola-Planeación
             <button class="btn btn-primary" type="submit">Buscar</button>
         </div>
     </form>
+<br>
+{% if cultivo_plan %}
+    <h3>Planeado</h3>
+        <table class="table table-striped table-bordered">
+            <thead class="bg-success">
+                <tr>
+                    <th>Cultivo</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                        <td>
+                            {% for i in cultivo_plan %}
+                                {{ i }}<br>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for i in cantidad_plan %}
+                                {{ i }}<br>
+                            {% endfor %}
+                        </td>
+
+                        <td>
+                            {% for i in total %}
+                                ${{ i }}<br>
+                            {% endfor %}
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Ganancias esperadas ${{ g2 }}</h4>
+    {% else %}
+        <h2>No hay registros de la planeación</h2>
+    {% endif %}
 
 {% if cultivo %}
     <h3>Vendido </h3>
@@ -91,41 +127,7 @@ Comparación Agrícola-Planeación
         <h2>No hay registros de ventas</h2>
     {% endif %}
     <br>
-    {% if cultivo_plan %}
-    <h3>Planeado</h3>
-        <table class="table table-striped table-bordered">
-            <thead class="bg-success">
-                <tr>
-                    <th>Cultivo</th>
-                    <th>Cantidad</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                        <td>
-                            {% for i in cultivo_plan %}
-                                {{ i }}<br>
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for i in cantidad_plan %}
-                                {{ i }}<br>
-                            {% endfor %}
-                        </td>
 
-                        <td>
-                            {% for i in total %}
-                                ${{ i }}<br>
-                            {% endfor %}
-                        </td>
-                </tr>
-            </tbody>
-        </table>
-        <h4>Ganancias esperadas ${{ g2 }}</h4>
-    {% else %}
-        <h2>No hay registros de la planeación</h2>
-    {% endif %}
 
 
     <div class="container" align="center">

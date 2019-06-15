@@ -170,4 +170,15 @@ urlpatterns = [
     path('plan/gastos/show/contador/<int:pk>', PlanProyGasShow2.as_view(), name='plan_proyec_gasto_show2'),
     path('historialist/contador/', HistoriaList2, name='Historial_Compras_list2'),
     path('historiahow/contador/<int:pk>/', HistoriaDetail2.as_view(), name='Historial_Compras_show2'),
+
+    path('DeudoresAcreedoreslist/contador/', DeudoresAcreedoresList2.as_view(), name='Deudore_Acreedores_list2'),
+    path('Abonoslist/venta/contador/', AbonosList2.as_view(), name="Abono_list2"),
+
+    #Apartado de contactos
+    path('Contacto/create/', Contacto_Create.as_view(), name="contacto_create"),
+    path('Contacto/list/', Contacto_List.as_view(), name="contacto_list"),
+    path('Contacto/list2/', Contacto_List2.as_view(), name="contacto_list2"),
+    path('Contacto/show/<int:pk>', Contacto_Show.as_view(), name="contacto_show"),
+    path('Contacto/update/<int:pk>', Contacto_Update.as_view(), name="contacto_update"),
+    path('Contacto/delete/<int:pk>', Contacto_Delete.as_view(), name="contacto_delete"),
 ]

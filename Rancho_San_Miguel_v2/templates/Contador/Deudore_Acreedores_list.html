@@ -6,8 +6,8 @@ Deudores y Acreedores
 
 {%block contenido%}
 
-    <a class="btn btn-primary" href="{% url 'Deudore_Acreedores_create' %}">Agregar</a>
-    <a class="btn btn-primary" href="{% url 'Abono_list' %}">Historial</a>
+    <!--<a class="btn btn-primary" href="{% url 'Deudore_Acreedores_create' %}">Agregar</a>-->
+    <a class="btn btn-primary" href="{% url 'Abono_list2' %}">Historial</a>
     {% if object_list %}
     <table class="table table-striped table-bordered">
         <thead class="bg-success" >
@@ -16,7 +16,7 @@ Deudores y Acreedores
                 <th>Tipo</th>
                 <th>Motivo</th>
                 <th>Deuda</th>
-                <th>Acciones</th>
+                <!--<th>Acciones</th>-->
             </tr>
         </thead>
         <tbody>
@@ -27,12 +27,12 @@ Deudores y Acreedores
                         <td>{{ i.tipo }}</td>
                         <td>{{ i.motivo }}</td>
                         <td>${{ i.deuda }}</td>
-                        <td>
-                            <a class="btn btn-primary" href="{% url 'Deudore_Acreedores_show' i.pk %}">Ver</a>
-                            <a class="btn btn-success" href="{% url 'Abonar' i.pk %}">Abonar</a>
-                            <a class="btn btn-danger" href="{% url 'Deudore_Acreedores_delete' i.pk %}">Eliminar</a>
+                        <!--<td>-->
+                            <!--<a class="btn btn-primary" href="{% url 'Deudore_Acreedores_show' i.pk %}">Ver</a>-->
+                            <!--<a class="btn btn-success" href="{% url 'Abonar' i.pk %}">Abonar</a>-->
+                            <!--<a class="btn btn-danger" href="{% url 'Deudore_Acreedores_delete' i.pk %}">Eliminar</a>-->
 
-                        </td>
+                        <!--</td>-->
                     </tr>
                 {% endfor %}
             {% else %}

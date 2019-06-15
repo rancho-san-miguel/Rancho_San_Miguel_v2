@@ -1,0 +1,33 @@
+
+{% extends 'base/base.html' %}
+
+{% block title %}
+Detalles de contacto
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead class="bg-success" >
+            <tr>
+                <th>Datos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    <p><strong>Nombre:</strong> {{ object.nombre }}</p>
+                    <p><strong>Dirección:</strong> {{ object.direc }}</p>
+                    <p><strong>Teléfono:</strong> {{ object.telefono }}</p>
+                    <p><strong>Correo:</strong> {{ object.correo }}</p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{% url 'contacto_list' %}">Regresar</a>
+    <br>
+    <br>
+    <br>
+
+{% endblock %}

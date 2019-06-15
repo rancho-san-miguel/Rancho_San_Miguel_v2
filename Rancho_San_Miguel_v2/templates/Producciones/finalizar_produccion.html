@@ -15,11 +15,13 @@ Finalizar cultivo
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
     <!--<div class="col-md-6">-->
     <label>Producción obtenida:</label>
-    <input class="form-control" type="text" name="produccion_obtenida">
+    <!--<input class="form-control" type="text" name="produccion_obtenida">-->
+    {{ form.produccion_obtenida }}
+
     <br>
     <label>Fecha de finalizacion:</label>
-    <input class="form-control" id="date" type="date" min="2019-01-02" name="fecha_final">
-
+    <!--<input class="form-control" id="date" type="date" min="2019-01-02" name="fecha_final">-->
+    {{ form.fecha_final }}
     <br>
     <div class="trans">
         <button class="btn btn-success" type="submit">Guardar</button>

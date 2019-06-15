@@ -39,8 +39,8 @@ class Ganado(models.Model):
     tipo = models.CharField(choices=tipo_g, max_length=40)
     galeria_venta = models.BooleanField(default=False)
     costo = models.FloatField(default='0')
-    img = models.ImageField(verbose_name="Imagen", upload_to='Ganado', blank=True, null=True)
-    img2 = models.ImageField(verbose_name="Imagen2", upload_to='Ganado', blank=True, null=True)
+    img = models.ImageField(verbose_name="Imagen", upload_to='Ganado')
+    img2 = models.ImageField(verbose_name="Imagen2", upload_to='Ganado')
 
     class Meta:
         #managed = False
@@ -64,8 +64,8 @@ class Ganado_sin_registro(models.Model):
     tipo = models.CharField(max_length=40, default='Sin registro')
     galeria_venta = models.BooleanField(default=False)
     costo = models.FloatField(default='0')
-    img = models.ImageField(verbose_name="Imagen", upload_to='Ganado', blank=True, null=True)
-    img2 = models.ImageField(verbose_name="Imagen2", upload_to='Ganado', blank=True, null=True)
+    img = models.ImageField(verbose_name="Imagen", upload_to='Ganado')
+    img2 = models.ImageField(verbose_name="Imagen2", upload_to='Ganado')
 
     class Meta:
         ordering = ['-id']
@@ -499,3 +499,14 @@ class CompraVentaNoAgricola(models.Model):
         #managed = False
         ordering = ['-id']
         db_table = 'Compras_retiro_noagricolas'
+
+class Contacto(models.Model):
+    nombre = models.CharField(max_length=60)
+    direc = models.CharField(max_length=60)
+    telefono = models.CharField(max_length=60)
+    correo = models.EmailField()
+
+    class Meta:
+        #managed = False
+        ordering = ['-id']
+        db_table = 'Contacto'
